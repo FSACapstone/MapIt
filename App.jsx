@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import GoogleMap from './GoogleMap';
+import Login from './Login';
+
 export default class App extends Component {
   constructor() {
     super() 
@@ -10,9 +13,12 @@ export default class App extends Component {
   render() {
     return (
       <div>
-         
-        <GoogleMap />
-
+      <Router> 
+        <Switch>              
+          <Route exact path="/" component={GoogleMap}></Route>
+          <Route exact path="/login" component={Login}></Route>
+        </Switch>
+      </Router>
       </div>
     )
     
