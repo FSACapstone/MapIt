@@ -1,0 +1,30 @@
+[debug] [2018-03-16T20:47:52.931Z] ----------------------------------------------------------------------
+[debug] [2018-03-16T20:47:52.935Z] Command:       /usr/local/Cellar/node/8.9.1/bin/node /usr/local/bin/firebase experimental:functions:shell
+[debug] [2018-03-16T20:47:52.935Z] CLI Version:   3.17.6
+[debug] [2018-03-16T20:47:52.936Z] Platform:      darwin
+[debug] [2018-03-16T20:47:52.936Z] Node Version:  v8.9.1
+[debug] [2018-03-16T20:47:52.937Z] Time:          Fri Mar 16 2018 16:47:52 GMT-0400 (EDT)
+[debug] [2018-03-16T20:47:52.937Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-16T20:47:52.958Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-16T20:47:52.958Z] > authorizing via signed-in user
+[debug] [2018-03-16T20:47:52.962Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/map-it-fsa  
+  
+ Fri Mar 16 2018 16:47:52 GMT-0400 (EDT)
+[debug] [2018-03-16T20:47:53.380Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-16T20:47:53.382Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/map-it-fsa/tokens  
+  
+ Fri Mar 16 2018 16:47:53 GMT-0400 (EDT)
+[debug] [2018-03-16T20:47:53.669Z] <<< HTTP RESPONSE 200
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-03-16T20:47:55.387Z] Fetching environment
+[debug] [2018-03-16T20:47:55.391Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/map-it-fsa  
+  
+ Fri Mar 16 2018 16:47:55 GMT-0400 (EDT)
+[debug] [2018-03-16T20:47:55.676Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-16T20:47:55.677Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469:getServerAppConfig  
+  
+ Fri Mar 16 2018 16:47:55 GMT-0400 (EDT)
+[debug] [2018-03-16T20:47:56.053Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-16T20:47:56.054Z] Starting @google-cloud/functions-emulator
+[debug] [2018-03-16T20:47:58.622Z] Parsing function triggers
