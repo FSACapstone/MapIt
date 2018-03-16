@@ -4,23 +4,44 @@ import firebase, {auth} from '~/fire'
 class Login extends Component {
   constructor() {
     super()
-    this.handleClick = this.handleClick.bind(this);
+    this.logIn = this.logIn.bind(this);
+    this.logOut = this.logOut.bind(this);
   }
 
   componentDidMount() {
-
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ user });
+      }
+    });
   }
 
-  handleClick() {
-    const google = new firebase.auth.GoogleAuthProvider()
-    auth.signInWithPopup(google);
-  
+  logOut() {
+    auth.signOut()
+      .then(() => {
+        this.setState({
+          user: null
+        });
+      });
+  }
+
+  logIn() {
+    const google = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(google)
+    .then((result) => {
+        const user = result.user;
+        this.setState({
+          user
+        });
+      });
   }
 
   render() {
+    console.log(this.state);
     return (
       <div>
-        <button onClick={this.handleClick}>Sign In With Google</button>
+        <button onClick={this.logIn}>Sign In With Google</button>
+        <button onClick={this.logOut}>Logout</button>
       </div>
     )
   }
