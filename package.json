@@ -36,6 +36,7 @@
     "chokidar": "^1.7.0",
     "firebase": "^4.7.0",
     "google-maps-react": "^1.1.4",
+    "material-ui": "^0.20.0",
     "minimist": "^1.2.0",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",

@@ -1,5 +1,6 @@
 {
   "projects": {
-    "mapit": "map-it-fsa"
+    "mapit": "map-it-fsa",
+    "mapit ": "map-it-fsa"
   }
 }

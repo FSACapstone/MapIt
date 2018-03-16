@@ -1,54 +1,46 @@
-[debug] [2018-03-16T17:32:17.814Z] ----------------------------------------------------------------------
-[debug] [2018-03-16T17:32:17.821Z] Command:       /usr/local/Cellar/node/8.9.1/bin/node /Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt/node_modules/.bin/firebase serve --only functions,hosting
-[debug] [2018-03-16T17:32:17.822Z] CLI Version:   3.14.0
-[debug] [2018-03-16T17:32:17.822Z] Platform:      darwin
-[debug] [2018-03-16T17:32:17.822Z] Node Version:  v8.9.1
-[debug] [2018-03-16T17:32:17.825Z] Time:          Fri Mar 16 2018 13:32:17 GMT-0400 (EDT)
-[debug] [2018-03-16T17:32:17.826Z] ----------------------------------------------------------------------
+[debug] [2018-03-16T21:00:12.680Z] ----------------------------------------------------------------------
+[debug] [2018-03-16T21:00:12.685Z] Command:       /usr/local/Cellar/node/8.9.1/bin/node /Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt/node_modules/.bin/firebase serve --only functions,hosting
+[debug] [2018-03-16T21:00:12.685Z] CLI Version:   3.14.0
+[debug] [2018-03-16T21:00:12.686Z] Platform:      darwin
+[debug] [2018-03-16T21:00:12.686Z] Node Version:  v8.9.1
+[debug] [2018-03-16T21:00:12.687Z] Time:          Fri Mar 16 2018 17:00:12 GMT-0400 (EDT)
+[debug] [2018-03-16T21:00:12.687Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2018-03-16T17:32:17.873Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-03-16T17:32:17.874Z] > authorizing via signed-in user
-[debug] [2018-03-16T17:32:17.877Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2018-03-16T17:32:17.878Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/IgyOkOuNXpEbEkKQnRUcVhrs9u72RDZJfzFkCgIsUxo',
-  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
-  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
-  grant_type: 'refresh_token',
-  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
- Fri Mar 16 2018 13:32:17 GMT-0400 (EDT)
-[debug] [2018-03-16T17:32:18.256Z] <<< HTTP RESPONSE 200
-[debug] [2018-03-16T17:32:18.273Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/map-it-fsa  
- Fri Mar 16 2018 13:32:18 GMT-0400 (EDT)
-[debug] [2018-03-16T17:32:18.682Z] <<< HTTP RESPONSE 200
-[debug] [2018-03-16T17:32:18.683Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/map-it-fsa/tokens  
- Fri Mar 16 2018 13:32:18 GMT-0400 (EDT)
-[debug] [2018-03-16T17:32:19.067Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-16T21:00:12.718Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-16T21:00:12.719Z] > authorizing via signed-in user
+[debug] [2018-03-16T21:00:12.723Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/map-it-fsa  
+ Fri Mar 16 2018 17:00:12 GMT-0400 (EDT)
+[debug] [2018-03-16T21:00:13.390Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-16T21:00:13.392Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/map-it-fsa/tokens  
+ Fri Mar 16 2018 17:00:13 GMT-0400 (EDT)
+[debug] [2018-03-16T21:00:13.806Z] <<< HTTP RESPONSE 200
 [info] 
 [info] === Serving from '/Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt'...
 [info] 
 [info] i  functions: Preparing to emulate functions.
-[debug] [2018-03-16T17:32:19.951Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/map-it-fsa  
- Fri Mar 16 2018 13:32:19 GMT-0400 (EDT)
-[debug] [2018-03-16T17:32:19.952Z] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/map-it-fsa/apiKeys  
- Fri Mar 16 2018 13:32:19 GMT-0400 (EDT)
-[debug] [2018-03-16T17:32:19.952Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/map-it-fsa  
- Fri Mar 16 2018 13:32:19 GMT-0400 (EDT)
-[debug] [2018-03-16T17:32:20.325Z] <<< HTTP RESPONSE 200
-[debug] [2018-03-16T17:32:20.355Z] <<< HTTP RESPONSE 200
-[debug] [2018-03-16T17:32:20.357Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469/clients/_:getWebAppConfig  
- Fri Mar 16 2018 13:32:20 GMT-0400 (EDT)
-[debug] [2018-03-16T17:32:20.444Z] <<< HTTP RESPONSE 200
-[debug] [2018-03-16T17:32:20.786Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-16T21:00:14.798Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/map-it-fsa  
+ Fri Mar 16 2018 17:00:14 GMT-0400 (EDT)
+[debug] [2018-03-16T21:00:14.799Z] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/map-it-fsa/apiKeys  
+ Fri Mar 16 2018 17:00:14 GMT-0400 (EDT)
+[debug] [2018-03-16T21:00:14.799Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/map-it-fsa  
+ Fri Mar 16 2018 17:00:14 GMT-0400 (EDT)
+[debug] [2018-03-16T21:00:15.123Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-16T21:00:15.159Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-16T21:00:15.160Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469/clients/_:getWebAppConfig  
+ Fri Mar 16 2018 17:00:15 GMT-0400 (EDT)
+[debug] [2018-03-16T21:00:15.375Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-16T21:00:15.545Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: public
 [info] ✔  hosting: Local server: http://localhost:5000
 
 [warn] ⚠  functions: Failed to emulate helloWorld
 [info] Shutting down...
-[debug] [2018-03-16T20:17:24.487Z] Error: write EPIPE
+[debug] [2018-03-16T21:13:43.662Z] Error: write EPIPE
     at _errnoException (util.js:1024:11)
     at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
 [error] 
 [error] Error: An unexpected error has occurred.
-[debug] [2018-03-16T20:17:24.488Z] Error: write EPIPE
+[debug] [2018-03-16T21:13:43.663Z] Error: write EPIPE
     at _errnoException (util.js:1024:11)
     at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
 [error] 
