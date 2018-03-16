@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
-import {createMarker, Marker} from 'google-maps-react'
-import TextField from 'material-ui/TextField';
+import { createMarker, Marker } from 'google-maps-react'
 
 export default class GoogleMap extends Component {
 
   componentDidUpdate() {
-
     this.loadMap(); // call loadMap function to load the google map
   }
 
@@ -45,29 +43,16 @@ export default class GoogleMap extends Component {
 
       var autocomplete = new google.maps.places.Autocomplete(input, options);
 
-
-      // var marker = new google.maps.Marker({
-      //   position: google.loc,
-      //   map: this.map,
-      //   title: 'boobs'
-      // })
       service.nearbySearch(request, (results, status) => {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
-          //console.log(google.maps.Marker)
           var resultArr = []
           for (var i = 0; i < results.length; i++) {
             var place = results[i];
-            //console.log(place.geometry.location.lat(),place.geometry.location.lng())
             var marker = new google.maps.Marker( {position: {lat:place.geometry.location.lat(),lng: place.geometry.location.lng()}, map: this.map , title: 'work'})
             resultArr.push(place)
           }
-          console.log(resultArr)
-          //return resultArr
         }
-
-        //var marker = new google.maps.Marker( {position: {}, map: this.map , title: 'work'})
-        //console.log(place.geometry.location.lat(),resultArr[0].geometry.location.lng())
-      })
+    })
     }
   }
 
@@ -83,24 +68,9 @@ export default class GoogleMap extends Component {
         <button/>
         loading map...
       </div>
-      <input id='pac-input' class='controls' type = 'text' placeholder ='search for location'/>
+      <input id='pac-input' className='controls' type = 'text' placeholder ='search for location'/>
     </div>
 
     )
   }
 }
-
-// var defaultBounds = new this.props.google.maps.LatLngBounds(
-//   new this.props.google.maps.LatLng(-33.8902, 151.1759),
-//   new this.props.google.maps.LatLng(-33.8474, 151.2631));
-
-//   var input = document.getElementById('pac-input');
-//   var options = {
-//     bounds: defaultBounds,
-//     types: ['establishment']
-//   };
-
-// var autocomplete = new this.props.google.maps.places.Autocomplete(input, options);
-
-
-

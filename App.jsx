@@ -1,29 +1,46 @@
 import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import GoogleMap from './GoogleMap';
+import Login from './Login';
+import Sidebar from './Sidebar';
 import { GoogleApiWrapper } from 'google-maps-react'
+import firebase, { auth } from '~/fire';
+
 class App extends Component {
+
   constructor() {
-    super()
-
+    super();
+    this.state = {
+      user: null
+    }
   }
+
   componentDidMount() {
-
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ user });
+      }
+    });
   }
+
   render() {
-    console.log(this.props)
+    const user = this.state.user;
+    if (!user) return <Login />;
     return (
       <div>
-
-        <GoogleMap google={{...this.props.google, loc:{lat: 40.2549, lng:-75.0890}} } />
-
+        <Switch>
+            <Route
+            exact path="/" render={() => (
+            <GoogleMap google={{...this.props.google, loc: {lat: 40.2549, lng: -75.0890}}} />
+            )}
+            />
+            <Route exact path="/sidebar" render={() => <Sidebar user={user} />} />
+        </Switch>
       </div>
     )
-
   }
 }
-console.log(GoogleApiWrapper)
+
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyBNO9SHxnyzMG6J1FCDYcle7DjXMjg6jBU',
 })(App)
-// export default App;
-// export default () => '🔥 Ready.'
