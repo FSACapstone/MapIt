@@ -6,12 +6,16 @@ import Sidebar from './Sidebar';
 import { GoogleApiWrapper } from 'google-maps-react'
 import firebase, { auth } from '~/fire';
 
+
+const db = firebase.firestore();
+
 class App extends Component {
 
   constructor() {
     super();
     this.state = {
-      user: null
+      user: null,
+      users: []
     }
   }
 
@@ -20,11 +24,34 @@ class App extends Component {
       if (user) {
         this.setState({ user });
       }
+
+      db.collection('users').where('email', '==', user.email)
+      .get()
+      .then(querySnapshot => {
+        if (querySnapshot.empty) {
+            db.collection('users').add({
+              displayName: this.state.user.displayName,
+              email: this.state.user.email,
+              photoURL: this.state.user.photoURL,
+              uid: this.state.user.uid
+            })
+            .then((user) => {
+              console.log('user added', user)
+            })
+        }
+      })
     });
+
+    db.collection('users').get().then(querySnapshot => {
+      const arrayOfUsers = []
+      querySnapshot.forEach( doc => arrayOfUsers.push(doc.data()))
+      this.setState({users: arrayOfUsers})
+    })
   }
 
   render() {
-    const user = this.state.user;
+    const user = this.state.user;    
+
     if (!user) return <Login />;
     return (
       <div>
@@ -35,7 +62,8 @@ class App extends Component {
             )}
             />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/sidebar" render={() => <Sidebar user={user} />} />
+            <Route exact path="/:user" render={() => <Sidebar user={user} />} />
+            <Route exact path="/:userId" render={() => <SingleUser users={users} />} />
         </Switch>
       </div>
     )

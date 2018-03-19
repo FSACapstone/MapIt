@@ -5,7 +5,9 @@ import { createMarker, Marker } from 'google-maps-react'
 export default class GoogleMap extends Component {
 
   componentDidMount() {
-    this.loadMap();
+    if (this.props.google.maps) {
+      this.loadMap();
+    }
   }
 
   componentDidUpdate() {
