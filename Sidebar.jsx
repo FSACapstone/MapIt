@@ -23,7 +23,8 @@ class Sidebar extends Component {
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => console.log(doc.data()))
-    });
+    })
+    .catch(err => console.error(err));
   }
 
   render() {
@@ -31,7 +32,7 @@ class Sidebar extends Component {
 
   return (
     <div> 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={this.handleSubmit}>
         <input 
           type="text"
           name="displayName"
