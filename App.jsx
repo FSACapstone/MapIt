@@ -3,9 +3,9 @@ import { Route, Switch } from 'react-router-dom';
 import GoogleMap from './GoogleMap';
 import Login from './Login';
 import Sidebar from './Sidebar';
+import SingleUser from './SingleUser';
 import { GoogleApiWrapper } from 'google-maps-react'
 import firebase, { auth } from '~/fire';
-
 
 const db = firebase.firestore();
 
@@ -15,11 +15,13 @@ class App extends Component {
     super();
     this.state = {
       user: null,
-      users: []
+      users: [],
+      documentId: ''
     }
   }
 
   componentDidMount() {
+
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.setState({ user });
@@ -28,6 +30,7 @@ class App extends Component {
       db.collection('users').where('email', '==', user.email)
       .get()
       .then(querySnapshot => {
+        this.setState({documentId: querySnapshot.docs[0].id});
         if (querySnapshot.empty) {
             db.collection('users').add({
               displayName: this.state.user.displayName,
@@ -50,7 +53,8 @@ class App extends Component {
   }
 
   render() {
-    const user = this.state.user;    
+    const user = this.state.user;  
+    const documentId = this.state.documentId;
 
     if (!user) return <Login />;
     return (
@@ -62,8 +66,8 @@ class App extends Component {
             )}
             />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/:user" render={() => <Sidebar user={user} />} />
-            <Route exact path="/:userId" render={() => <SingleUser users={users} />} />
+            <Route exact path="/:user" render={() => <Sidebar user={user} documentId={documentId} />} />
+            <Route exact path="/user/:uid" render={() => <SingleUser documentId={documentId} /> } />
         </Switch>
       </div>
     )
