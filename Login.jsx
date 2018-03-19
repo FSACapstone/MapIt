@@ -22,22 +22,24 @@ class Login extends Component {
         this.setState({
           user: null
         });
-      });
+      })
+      .catch(err => console.error(err));
   }
 
   logIn() {
     const google = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(google)
+    auth.signInWithRedirect(google)
     .then((result) => {
-        const user = result.user;
-        this.setState({
-          user
-        });
+      const user = result.user;
+      this.setState({
+        user
       });
+    })
+    .catch(err => console.error(err));
   }
 
   render() {
-    console.log(this.state);
+  
     return (
       <div>
         <button onClick={this.logIn}>Sign In With Google</button>
