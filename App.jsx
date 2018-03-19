@@ -28,12 +28,13 @@ class App extends Component {
     if (!user) return <Login />;
     return (
       <div>
-        <Switch>
+        <Switch>         
             <Route
             exact path="/" render={() => (
             <GoogleMap google={{...this.props.google, loc: {lat: 40.2549, lng: -75.0890}}} />
             )}
             />
+            <Route exact path="/login" component={Login} />
             <Route exact path="/sidebar" render={() => <Sidebar user={user} />} />
         </Switch>
       </div>
