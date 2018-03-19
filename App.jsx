@@ -30,7 +30,7 @@ class App extends Component {
       .then(querySnapshot => {
         if (querySnapshot.empty) {
             db.collection('users').add({
-              displayName: this.state.user.email,
+              displayName: this.state.user.displayName,
               email: this.state.user.email,
               photoURL: this.state.user.photoURL,
               uid: this.state.user.uid
@@ -40,22 +40,17 @@ class App extends Component {
             })
         }
       })
-
     });
 
     db.collection('users').get().then(querySnapshot => {
-      
-      querySnapshot.forEach( doc => this.setState({users: doc.data()}))
+      const arrayOfUsers = []
+      querySnapshot.forEach( doc => arrayOfUsers.push(doc.data()))
+      this.setState({users: arrayOfUsers})
     })
-    .then(() => console.log(this.state));
   }
 
   render() {
-    const user = this.state.user;
-    
-
-    console.log(user);
-    
+    const user = this.state.user;    
 
     if (!user) return <Login />;
     return (
@@ -67,7 +62,8 @@ class App extends Component {
             )}
             />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/:userId" render={() => <Sidebar user={user} />} />
+            <Route exact path="/:user" render={() => <Sidebar user={user} />} />
+            <Route exact path="/:userId" render={() => <SingleUser users={users} />} />
         </Switch>
       </div>
     )
