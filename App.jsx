@@ -15,6 +15,10 @@ class App extends Component {
     }
   }
 
+
+
+
+
   componentDidMount() {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -24,16 +28,20 @@ class App extends Component {
   }
 
   render() {
+
     const user = this.state.user;
     if (!user) return <Login />;
     return (
       <div>
-        <Switch>         
+        <Switch>
             <Route
             exact path="/" render={() => (
-            <GoogleMap google={{...this.props.google, loc: {lat: 40.2549, lng: -75.0890}}} />
+            <GoogleMap google={{...this.props.google, loc: {lat:20,lng:0}}} />
             )}
             />
+            <Route exact path="/newmap" render={()=>(
+              <GoogleMap/>
+            )}/>
             <Route exact path="/login" component={Login} />
             <Route exact path="/sidebar" render={() => <Sidebar user={user} />} />
         </Switch>
@@ -45,3 +53,6 @@ class App extends Component {
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyBNO9SHxnyzMG6J1FCDYcle7DjXMjg6jBU',
 })(App)
+
+
+
