@@ -62,8 +62,8 @@ class AddFollower extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.handleFollow}>Follow Button</button>
-        <button onClick={this.handleUnfollow}>Unfollow Button</button>
+        <button onClick={this.handleFollow}>Follow</button>
+        <button onClick={this.handleUnfollow}>Unfollow</button>
       </div>
     );
   }
