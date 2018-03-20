@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { withRouter } from "react-router-dom";
 import { createMarker, Marker } from 'google-maps-react';
 import firebase from '~/fire';
 
 const db = firebase.firestore();
 
-export default class GoogleMap extends Component {
+class GoogleMap extends Component {
 
   constructor() {
     super();
@@ -21,7 +22,13 @@ export default class GoogleMap extends Component {
     db.collection('maps').add({
       center: center,
       user: this.props.google.user.uid
+    }).then(map=>{
+      console.log(map)
+      this.props.history.push(`/newmap/${map.id}`)
     });
+
+
+    //this.props.history.push()
     console.log(center);
   }
 
@@ -78,7 +85,7 @@ export default class GoogleMap extends Component {
       const input = document.getElementById('center-point');
       const options = {
         bounds: defaultBounds,
-        types: ['establishment']
+       // types: ['establishment']
       };
       const autocomplete = new google.maps.places.Autocomplete(input, options);
     }
@@ -106,3 +113,6 @@ export default class GoogleMap extends Component {
     );
   }
 }
+
+
+export default withRouter(GoogleMap);
