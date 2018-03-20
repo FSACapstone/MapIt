@@ -31,7 +31,12 @@ class App extends Component {
         .get()
         .then(querySnapshot => {
           if (querySnapshot.empty) {
-                uid: this.state.user.uid
+            db.collection('users').add({
+              displayName: this.state.user.displayName,
+              email: this.state.user.email,
+              photoURL: this.state.user.photoURL,
+              uid: this.state.user.uid
+            })
               .then((user) => {
                 console.log('user added', user)
               })
