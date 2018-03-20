@@ -34,16 +34,16 @@ class App extends Component {
     return (
       <div>
         <Switch>
-            <Route
+          <Route
             exact path="/" render={() => (
-            <GoogleMap google={{...this.props.google, loc: {lat:20,lng:0}}} />
+              <GoogleMap google={{ ...this.props.google, loc: { lat: 20, lng: 0 } }} />
             )}
-            />
-            <Route exact path="/newmap" render={()=>(
-              <GoogleMap/>
-            )}/>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/sidebar" render={() => <Sidebar user={user} />} />
+          />
+          <Route exact path="/newmap" render={() => (
+            <GoogleMap />
+          )} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/sidebar" render={() => <Sidebar user={user} />} />
         </Switch>
       </div>
     )

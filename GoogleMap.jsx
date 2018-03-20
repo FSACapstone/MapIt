@@ -12,6 +12,8 @@ export default class GoogleMap extends Component {
 
   getCenter() {
     var c = this.map.getCenter()
+    var center = {lat:c.lat(), lng:c.lng()}
+    console.log(center)
   }
 
   onSearchClick() {
@@ -22,14 +24,16 @@ export default class GoogleMap extends Component {
 
     const holder = this
 
-    const {geocode} = geocoder
+    const { geocode } = geocoder
 
     geocode({ address: input.value }, function (results, status) {
 
       if (status == google.maps.GeocoderStatus.OK) {
-          holder.map.setCenter({ lat:  results[0].geometry.location.lat(),
-            lng:  results[0].geometry.location.lng() })
-            holder.map.setZoom(15)
+        holder.map.setCenter({
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
+        })
+        holder.map.setZoom(15)
       } else {
         alert("Something got wrong " + status);
       }
@@ -74,13 +78,13 @@ export default class GoogleMap extends Component {
         new google.maps.LatLng(-33.8902, 151.1759),
         new google.maps.LatLng(-33.8474, 151.2631));
 
-      // var input = document.getElementById('pac-input');
-      // var options = {
-      //   bounds: defaultBounds,
-      //   types: ['establishment']
-      // };
+      var input = document.getElementById('center-point');
+      var options = {
+        bounds: defaultBounds,
+        types: ['establishment']
+      };
 
-      //var autocomplete = new google.maps.places.Autocomplete(input, options);
+      var autocomplete = new google.maps.places.Autocomplete(input, options);
 
 
     }
