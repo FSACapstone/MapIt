@@ -61,16 +61,21 @@ class App extends Component {
     if (!user) return <Login />;
     return (
       <div>
-        <Switch>
-          <Route
-            exact path="/" render={() => (
-              <GoogleMap
-                google=
-                {{
-                  ...this.props.google,
-                  loc: { lat: 20, lng: 0 },
-                  user: user
-                }}
+        <div className="flex-container">
+            <Sidebar user={user} documentId={documentId} />
+          <div>
+            <Switch>
+              <Route
+                exact path="/" render={() => (
+                  <GoogleMap
+                    google=
+                    {{
+                      ...this.props.google,
+                      loc: { lat: 20, lng: 0 },
+                      user: user
+                    }}
+                  />
+                )}
               />
             )}
           />
@@ -95,6 +100,8 @@ class App extends Component {
             }
           />
         </Switch>
+        </div>
+        </div>
       </div>
     )
   }

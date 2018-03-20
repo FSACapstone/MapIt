@@ -23,19 +23,16 @@ class GoogleMap extends Component {
       center: center,
       user: this.props.google.user.uid
     }).then(map=>{
-      console.log(map)
       this.props.history.push(`/newmap/${map.id}`)
     });
 
-
-    //this.props.history.push()
-    console.log(center);
   }
 
   onSearchClick() {
 
     const input = document.getElementById('center-point');
     const geocoder = new google.maps.Geocoder();
+    // change to --> {geocoder} = this.props.google.maps.Geocoder();
     const holder = this;
     const { geocode } = geocoder;
 
@@ -52,7 +49,6 @@ class GoogleMap extends Component {
     });
 
   }
-
 
   componentDidMount() {
     if (this.props.google.maps) {
@@ -82,7 +78,7 @@ class GoogleMap extends Component {
         new google.maps.LatLng(-33.8902, 151.1759),
         new google.maps.LatLng(-33.8474, 151.2631)
       );
-      const input = document.getElementById('center-point');
+      const input = document.getElementById('center-point'); // use a ref instead
       const options = {
         bounds: defaultBounds,
        // types: ['establishment']
@@ -94,7 +90,7 @@ class GoogleMap extends Component {
   render() {
 
     const style = { // MUST specify dimensions of the Google map or it will not work. Also works best when style is specified inside the render function and created as an object
-      width: '90vw', // 90vw basically means take up 90% of the width screen. px also works.
+      width: '100vw', // 90vw basically means take up 90% of the width screen. px also works.
       height: '75vh' // 75vh similarly will take up roughly 75% of the height of the screen. px also works.
     };
 

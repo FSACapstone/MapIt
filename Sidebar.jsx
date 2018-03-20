@@ -20,28 +20,30 @@ class Sidebar extends Component {
       .collection("users")
       .where("displayName", "==", displayName)
       .get()
-      .then(querySnapshot => {  
+      .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          let data = doc.data()
+          let data = doc.data();
           this.props.history.push(`/user/${data.uid}`);
-        });      
+        });
       })
       .catch(err => console.error(err));
   }
 
   render() {
-    const {user, documentId} = this.props;
-    console.log(user);
+    const { user, documentId } = this.props;
 
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" name="displayName" />
-        </form>
-        <img src={user.photoURL} />
-        <h1>{user.displayName}</h1>
-        <h2>{user.email}</h2>
-        <AddFollower user={user} documentId={documentId} />
+      <div id="sidebar">
+        <div className="sidebar-1">
+          <img src={user.photoURL} />
+        </div>
+        <div className="sidebar-2">
+          <form onSubmit={this.handleSubmit}>
+            <input type="text" name="displayName" />
+          </form>
+          <p>{user.displayName}</p>
+          <p>{user.email}</p>
+        </div>
       </div>
     );
   }

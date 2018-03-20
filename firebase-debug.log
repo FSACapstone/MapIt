@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [debug] [2018-03-20T17:48:36.175Z] ----------------------------------------------------------------------
 [debug] [2018-03-20T17:48:36.178Z] Command:       /usr/local/bin/node /Users/danielryan/capstone/MapIt/node_modules/.bin/firebase serve --only functions,hosting
 [debug] [2018-03-20T17:48:36.178Z] CLI Version:   3.17.6
@@ -50,11 +51,69 @@
 [info] ✔  functions: helloWorld: http://localhost:5001/map-it-fsa/us-central1/helloWorld
 [info] Shutting down...
 [debug] [2018-03-20T21:49:28.913Z] Error: write EPIPE
+=======
+[debug] [2018-03-20T17:14:18.827Z] ----------------------------------------------------------------------
+[debug] [2018-03-20T17:14:18.831Z] Command:       /usr/local/Cellar/node/8.9.1/bin/node /Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt/node_modules/.bin/firebase serve --only functions,hosting
+[debug] [2018-03-20T17:14:18.832Z] CLI Version:   3.17.6
+[debug] [2018-03-20T17:14:18.832Z] Platform:      darwin
+[debug] [2018-03-20T17:14:18.832Z] Node Version:  v8.9.1
+[debug] [2018-03-20T17:14:18.833Z] Time:          Tue Mar 20 2018 13:14:18 GMT-0400 (EDT)
+[debug] [2018-03-20T17:14:18.833Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-20T17:14:18.853Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-20T17:14:18.853Z] > authorizing via signed-in user
+[debug] [2018-03-20T17:14:18.857Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/map-it-fsa  
+  
+ Tue Mar 20 2018 13:14:18 GMT-0400 (EDT)
+[debug] [2018-03-20T17:14:19.369Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-20T17:14:19.371Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/map-it-fsa/tokens  
+  
+ Tue Mar 20 2018 13:14:19 GMT-0400 (EDT)
+[debug] [2018-03-20T17:14:19.855Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-20T17:14:19.857Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/map-it-fsa  
+  
+ Tue Mar 20 2018 13:14:19 GMT-0400 (EDT)
+[debug] [2018-03-20T17:14:20.188Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-03-20T17:14:22.385Z] Fetching environment
+[debug] [2018-03-20T17:14:22.390Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469:getServerAppConfig  
+  
+ Tue Mar 20 2018 13:14:22 GMT-0400 (EDT)
+[debug] [2018-03-20T17:14:22.391Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469/clients/_:getWebAppConfig  
+  
+ Tue Mar 20 2018 13:14:22 GMT-0400 (EDT)
+[debug] [2018-03-20T17:14:22.972Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-20T17:14:22.973Z] Starting @google-cloud/functions-emulator
+[debug] [2018-03-20T17:14:23.088Z] <<< HTTP RESPONSE 200
+[warn] ⚠  hosting: Port 5000 is not available. Trying another port...
+[debug] [2018-03-20T17:14:23.122Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469/clients/_:getWebAppConfig  
+  
+ Tue Mar 20 2018 13:14:23 GMT-0400 (EDT)
+[debug] [2018-03-20T17:14:23.806Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5004
+
+[debug] [2018-03-20T17:14:26.070Z] Parsing function triggers
+[debug] [2018-03-20T17:14:26.741Z] Error while deploy to emulator: Error: connect ECONNREFUSED 127.0.0.1:5002
+    at Object._errnoException (util.js:1024:11)
+    at _exceptionWithHostPort (util.js:1046:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
+[warn] ⚠  functions: Failed to emulate helloWorld
+[info] Shutting down...
+[debug] [2018-03-20T18:51:20.190Z] Error: write EPIPE
+>>>>>>> 97c55e868f4e4ae4f1dd6e427a3c1086ea4233cd
     at _errnoException (util.js:1024:11)
     at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
 [error] 
 [error] Error: An unexpected error has occurred.
+<<<<<<< HEAD
 [debug] [2018-03-20T21:49:28.916Z] Error: write EPIPE
+=======
+[debug] [2018-03-20T18:51:20.191Z] Error: write EPIPE
+>>>>>>> 97c55e868f4e4ae4f1dd6e427a3c1086ea4233cd
     at _errnoException (util.js:1024:11)
     at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
 [error] 

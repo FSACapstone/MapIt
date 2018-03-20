@@ -32,7 +32,6 @@ class SingleUser extends Component {
     const signedInUser = this.props.signedInUser
     const documentId = this.props.documentId;
     const userDocId = this.state.userDocId
-    console.log(signedInUser)
     
     if (!user) return <div>Loading...</div>;
     return (
