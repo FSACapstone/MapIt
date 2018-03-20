@@ -7,36 +7,65 @@ class AddFollower extends Component {
   constructor(props) {
     super(props);
 
-    this.handleAdd = this.handleAdd.bind(this);
+    this.state = {
+      following: false
+    };
+    this.handleFollow = this.handleFollow.bind(this);
+    this.handleUnfollow = this.handleUnfollow.bind(this);
   }
 
-  handleAdd(event) {
+  // WIP:
+  // componentDidMount() {
+  //   const { user, documentId, userDocId, signedInUser } = this.props;
+  // }
+
+  handleFollow(event) {
     event.preventDefault();
+
     const { user, documentId, userDocId, signedInUser } = this.props;
-    console.log(user);
-    console.log(signedInUser)
+
     db
       .collection("users")
       .doc(documentId)
       .collection("following")
-      .add(user)
-      .then(user => console.log("user followed", user));
+      .doc(user.uid)
+      .set({ uid: user.uid });
 
     db
       .collection("users")
       .doc(userDocId)
       .collection("followers")
-      .add({
-        displayName: signedInUser.displayName,
-        email: signedInUser.email,
-        photoURL: signedInUser.photoURL,
-        uid: signedInUser.uid
-      })
-      .then(user => console.log("user is a follower", user));
+      .doc(signedInUser.uid)
+      .set({ uid: signedInUser.uid });
+  }
+
+  handleUnfollow(event) {
+    event.preventDefault();
+
+    const { user, documentId, userDocId, signedInUser } = this.props;
+
+    db
+      .collection("users")
+      .doc(documentId)
+      .collection("following")
+      .doc(user.uid)
+      .delete();
+
+    db
+      .collection("users")
+      .doc(userDocId)
+      .collection("followers")
+      .doc(signedInUser.uid)
+      .delete();
   }
 
   render() {
-    return <button onClick={this.handleAdd}>Follow Button</button>;
+    return (
+      <div>
+        <button onClick={this.handleFollow}>Follow Button</button>
+        <button onClick={this.handleUnfollow}>Unfollow Button</button>
+      </div>
+    );
   }
 }
 
