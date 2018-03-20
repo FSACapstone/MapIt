@@ -32,33 +32,34 @@ class App extends Component {
       }
 
       db.collection('users').where('email', '==', user.email)
-      .get()
-      .then(querySnapshot => {
-        this.setState({documentId: querySnapshot.docs[0].id});
-        if (querySnapshot.empty) {
+        .get()
+        .then(querySnapshot => {
+          if (querySnapshot.empty) {
             db.collection('users').add({
               displayName: this.state.user.displayName,
               email: this.state.user.email,
               photoURL: this.state.user.photoURL,
               uid: this.state.user.uid
             })
-            .then((user) => {
-              console.log('user added', user)
-            })
-        }
-      })
+              .then((user) => {
+                console.log('user added', user)
+              })
+            }
+            this.setState({ documentId: querySnapshot.docs[0].id });
+        })
     });
 
     db.collection('users').get().then(querySnapshot => {
       const arrayOfUsers = []
-      querySnapshot.forEach( doc => arrayOfUsers.push(doc.data()))
-      this.setState({users: arrayOfUsers})
+      querySnapshot.forEach(doc => arrayOfUsers.push(doc.data()))
+      this.setState({ users: arrayOfUsers })
     })
   }
 
   render() {
     const user = this.state.user;
     const documentId = this.state.documentId;
+    console.log(documentId)
 
     if (!user) return <Login />;
     return (
@@ -68,10 +69,10 @@ class App extends Component {
             exact path="/" render={() => (
               <GoogleMap google={{ ...this.props.google, loc: { lat: 20, lng: 0 } }} />
             )}
-            />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/:user" render={() => <Sidebar user={user} documentId={documentId} />} />
-            <Route exact path="/user/:uid" render={() => <SingleUser documentId={documentId} /> } />
+          />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/:user" render={() => <Sidebar user={user} documentId={documentId} />} />
+          <Route exact path="/user/:uid" render={() => <SingleUser documentId={documentId} signedInUser={user} />} />
         </Switch>
       </div>
     )
