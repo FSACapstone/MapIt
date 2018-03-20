@@ -20,6 +20,10 @@ class App extends Component {
     }
   }
 
+
+
+
+
   componentDidMount() {
 
     auth.onAuthStateChanged((user) => {
@@ -53,16 +57,16 @@ class App extends Component {
   }
 
   render() {
-    const user = this.state.user;  
+    const user = this.state.user;
     const documentId = this.state.documentId;
 
     if (!user) return <Login />;
     return (
       <div>
-        <Switch>         
-            <Route
+        <Switch>
+          <Route
             exact path="/" render={() => (
-            <GoogleMap google={{...this.props.google, loc: {lat: 40.2549, lng: -75.0890}}} />
+              <GoogleMap google={{ ...this.props.google, loc: { lat: 20, lng: 0 } }} />
             )}
             />
             <Route exact path="/login" component={Login} />
@@ -77,3 +81,6 @@ class App extends Component {
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyBNO9SHxnyzMG6J1FCDYcle7DjXMjg6jBU',
 })(App)
+
+
+
