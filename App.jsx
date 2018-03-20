@@ -26,7 +26,6 @@ class App extends Component {
       if (user) {
         this.setState({ user });
       }
-<<<<<<< HEAD
 
       db.collection('users').where('email', '==', user.email)
         .get()
@@ -51,31 +50,6 @@ class App extends Component {
       querySnapshot.forEach(doc => arrayOfUsers.push(doc.data()))
       this.setState({ users: arrayOfUsers })
     })
-=======
-    db.collection('users').where('email', '==', user.email)
-    .get()
-    .then(querySnapshot => {
-      this.setState({documentId: querySnapshot.docs[0].id});
-      if (querySnapshot.empty) {
-        db.collection('users').add({
-          displayName: this.state.user.displayName,
-          email: this.state.user.email,
-          photoURL: this.state.user.photoURL,
-          uid: this.state.user.uid
-        })
-        .then((user) => {
-          console.log('user added', user)
-        })
-      }})
-    });
-
-    db.collection('users').get().then(querySnapshot => {
-      const arrayOfUsers = [];
-      querySnapshot.forEach( doc => arrayOfUsers.push(doc.data()))
-      this.setState({users: arrayOfUsers});
-    });
-
->>>>>>> 71155f54b3c4be1ab4d82feb8ccf8f89907b73f5
   }
 
   render() {
