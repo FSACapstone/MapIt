@@ -1,0 +1,33 @@
+.flex-container {
+  display: flex;
+
+}
+/* 
+.sidebar-flex-container {
+  display: flex;
+  align-content: center;
+}
+
+.sidebar-1 {
+}
+
+.flex-main-1 {
+
+}
+
+.flex-main-2 {
+}
+
+
+/* Sidebar */
+
+#sidebar {
+  text-align: center;
+}
+
+
+#sidebar img {
+  display: inline-block;
+  border-radius: 100%;
+  max-width: 20%;
+}
