@@ -31,7 +31,7 @@ class Sidebar extends Component {
 
   render() {
     const {user, documentId} = this.props;
-    console.log(this.props.documentId);
+    console.log(user);
 
     return (
       <div>

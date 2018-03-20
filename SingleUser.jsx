@@ -10,7 +10,8 @@ class SingleUser extends Component {
     super(props);
 
     this.state = {
-      user: {}
+      user: {},
+      userDocId: ''
     };
   }
 
@@ -21,21 +22,25 @@ class SingleUser extends Component {
       .where("uid", "==", userId)
       .get()
       .then(querySnapshot => {
+        this.setState({ userDocId: querySnapshot.docs[0].id})
         querySnapshot.forEach(user => this.setState({ user: user.data() }));
       });
   }
 
   render() {
     const user = this.state.user;
+    const signedInUser = this.props.signedInUser
     const documentId = this.props.documentId;
-
+    const userDocId = this.state.userDocId
+    console.log(signedInUser)
+    
     if (!user) return <div>Loading...</div>;
     return (
       <div>
         <img src={user.photoURL} />
         <h1>{user.displayName}</h1>
         <h2>{user.email}</h2>
-        <AddFollower user={user} documentId={documentId} />
+        <AddFollower signedInUser={signedInUser} user={user} documentId={documentId} userDocId={userDocId} />
       </div>
     );
   }

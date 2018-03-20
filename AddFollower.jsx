@@ -12,13 +12,27 @@ class AddFollower extends Component {
 
   handleAdd(event) {
     event.preventDefault();
-    const { user, documentId } = this.props;
+    const { user, documentId, userDocId, signedInUser } = this.props;
+    console.log(user);
+    console.log(signedInUser)
     db
       .collection("users")
       .doc(documentId)
-      .collection("followers")
+      .collection("following")
       .add(user)
       .then(user => console.log("user followed", user));
+
+    db
+      .collection("users")
+      .doc(userDocId)
+      .collection("followers")
+      .add({
+        displayName: signedInUser.displayName,
+        email: signedInUser.email,
+        photoURL: signedInUser.photoURL,
+        uid: signedInUser.uid
+      })
+      .then(user => console.log("user is a follower", user));
   }
 
   render() {
