@@ -73,11 +73,6 @@ class App extends Component {
               />
             )}
           />
-<<<<<<< HEAD
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/:user" render={() => <Sidebar user={user} documentId={documentId} />} />
-          <Route exact path="/user/:uid" render={() => <SingleUser documentId={documentId} signedInUser={user} />} />
-=======
           <Route
             exact path="/login"
             component={Login}
@@ -88,9 +83,10 @@ class App extends Component {
           />
           <Route
             exact path="/user/:uid"
-            render={() => <SingleUser documentId={documentId} /> }
+            render={() =>
+              <SingleUser documentId={documentId} signedInUser={user} />
+            }
           />
->>>>>>> 71155f54b3c4be1ab4d82feb8ccf8f89907b73f5
         </Switch>
       </div>
     )
