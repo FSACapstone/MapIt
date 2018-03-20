@@ -6,6 +6,7 @@ import Sidebar from './Sidebar';
 import SingleUser from './SingleUser';
 import { GoogleApiWrapper } from 'google-maps-react'
 import firebase, { auth } from '~/fire';
+import NewMap from './NewMap'
 
 const db = firebase.firestore();
 
@@ -76,19 +77,31 @@ class App extends Component {
                   />
                 )}
               />
-              <Route
-                exact path="/login"
-                component={Login}
-              />
-              <Route
-                exact path="/user/:uid"
-                render={() =>
-                  <SingleUser documentId={documentId} signedInUser={user} />
-                }
-              />
-            </Switch>
-            </div>
-          </div>
+            )}
+          />
+          <Route
+            exact path="/login"
+            component={Login}
+          />
+          <Route
+            exact path="/:user"
+            render={() => <Sidebar user={user} documentId={documentId} />}
+          />
+          <Route
+            exact path="/user/:uid"
+            render={() =>
+              <SingleUser documentId={documentId} signedInUser={user} />
+            }
+          />
+          <Route
+            exact path="/newmap/:id"
+            render={() =>
+              <NewMap google = {this.props.google}/>
+            }
+          />
+        </Switch>
+        </div>
+        </div>
       </div>
     )
   }

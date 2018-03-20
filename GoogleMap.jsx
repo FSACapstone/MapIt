@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { withRouter } from "react-router-dom";
 import { createMarker, Marker } from 'google-maps-react';
 import firebase from '~/fire';
 
 const db = firebase.firestore();
 
-export default class GoogleMap extends Component {
+class GoogleMap extends Component {
 
   constructor() {
     super();
@@ -21,8 +22,10 @@ export default class GoogleMap extends Component {
     db.collection('maps').add({
       center: center,
       user: this.props.google.user.uid
+    }).then(map=>{
+      this.props.history.push(`/newmap/${map.id}`)
     });
-    // console.log(center);
+
   }
 
   onSearchClick() {
@@ -78,7 +81,7 @@ export default class GoogleMap extends Component {
       const input = document.getElementById('center-point'); // use a ref instead
       const options = {
         bounds: defaultBounds,
-        types: ['establishment']
+       // types: ['establishment']
       };
       const autocomplete = new google.maps.places.Autocomplete(input, options);
     }
@@ -107,4 +110,5 @@ export default class GoogleMap extends Component {
   }
 }
 
-// in input tag add 'ref={}' --> line 101
+
+export default withRouter(GoogleMap);
