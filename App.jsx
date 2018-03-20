@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
-import GoogleMap from "./GoogleMap";
-import Login from "./Login";
-import Sidebar from "./Sidebar";
-import SingleUser from "./SingleUser";
-import { GoogleApiWrapper } from "google-maps-react";
-import firebase, { auth } from "~/fire";
-=======
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import GoogleMap from './GoogleMap';
@@ -17,7 +7,6 @@ import SingleUser from './SingleUser';
 import { GoogleApiWrapper } from 'google-maps-react'
 import firebase, { auth } from '~/fire';
 import NewMap from './NewMap'
->>>>>>> 687b91e9d62ba427f1b6d3fe9de57f9823a6b609
 
 const db = firebase.firestore();
 
@@ -95,18 +84,6 @@ class App extends Component {
                   />
                 )}
               />
-<<<<<<< HEAD
-              <Route exact path="/login" component={Login} />
-              <Route
-                exact
-                path="/user/:uid"
-                render={() => (
-                  <SingleUser documentId={documentId} signedInUser={user} />
-                )}
-              />
-            </Switch>
-          </div>
-=======
             )}
           />
           <Route
@@ -131,7 +108,6 @@ class App extends Component {
           />
         </Switch>
         </div>
->>>>>>> 687b91e9d62ba427f1b6d3fe9de57f9823a6b609
         </div>
       </div>
     );
