@@ -1,19 +1,49 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import { createMarker, Marker } from 'google-maps-react'
-import CitySearch from './CitySearch'
 
 export default class GoogleMap extends Component {
 
-  constructor(){
+  constructor() {
     super()
+    this.onSearchClick = this.onSearchClick.bind(this)
+    this.getCenter = this.getCenter.bind(this)
+  }
+
+  getCenter() {
+    var c = this.map.getCenter()
+  }
+
+  onSearchClick() {
+
+    var input = document.getElementById('center-point');
+
+    var geocoder = new google.maps.Geocoder();
+
+    const holder = this
+
+    const {geocode} = geocoder
+
+    geocode({ address: input.value }, function (results, status) {
+
+      if (status == google.maps.GeocoderStatus.OK) {
+          holder.map.setCenter({ lat:  results[0].geometry.location.lat(),
+            lng:  results[0].geometry.location.lng() })
+            holder.map.setZoom(15)
+      } else {
+        alert("Something got wrong " + status);
+      }
+    })
+
   }
 
 
   componentDidMount() {
-    if(this.props.google.maps){
+    if (this.props.google.maps) {
       console.log('did mount')
-    this.loadMap()}}
+      this.loadMap()
+    }
+  }
 
 
   componentDidUpdate() {
@@ -23,9 +53,8 @@ export default class GoogleMap extends Component {
   }
 
   loadMap() {
-    //var location= {lat: 40.2549, lng:-75.0890}
     if (this.props && this.props.google) { // checks to make sure that props have been passed
-      const {google} = this.props; // sets props equal to google
+      const { google } = this.props; // sets props equal to google
       const maps = google.maps; // sets maps to google maps props
 
       const mapRef = this.refs.map; // looks for HTML div ref 'map'. Returned in render below.
@@ -45,11 +74,11 @@ export default class GoogleMap extends Component {
         new google.maps.LatLng(-33.8902, 151.1759),
         new google.maps.LatLng(-33.8474, 151.2631));
 
-        // var input = document.getElementById('pac-input');
-        // var options = {
-        //   bounds: defaultBounds,
-        //   types: ['establishment']
-        // };
+      // var input = document.getElementById('pac-input');
+      // var options = {
+      //   bounds: defaultBounds,
+      //   types: ['establishment']
+      // };
 
       //var autocomplete = new google.maps.places.Autocomplete(input, options);
 
@@ -66,17 +95,15 @@ export default class GoogleMap extends Component {
 
     return ( // in our return function you must return a div with ref='map' and style.
 
-     <div>
-      <div ref="map" style={style}>
-        loading map...
+      <div>
+        <div ref="map" style={style}>
+          loading map...
       </div>
 
-      <CitySearch props = {this.props}/>
-      <button onClick = {()=>{
-        var c=this.map.getCenter()
-        console.log(c.lat(),c.lng())
-      }}/>
-    </div>
+        <input id='center-point' className='controls' type='text' placeholder='search for location' />
+        <button onClick={this.onSearchClick} />
+        <button onClick={this.getCenter} />
+      </div>
 
     )
   }
