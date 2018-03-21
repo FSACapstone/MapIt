@@ -62,7 +62,6 @@ class App extends Component {
   render() {
     const user = this.state.user;
     const documentId = this.state.documentId;
-    console.log(documentId);
 
     if (!user) return <Login />;
     return (
@@ -92,7 +91,9 @@ class App extends Component {
           />
           <Route
             exact path="/:user"
-            render={() => <Sidebar user={user} documentId={documentId} />}
+            render={() =>
+              <Sidebar user={user} documentId={documentId} />
+            }
           />
           <Route
             exact path="/user/:uid"

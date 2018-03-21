@@ -9,6 +9,9 @@ class Sidebar extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+
+    }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -30,7 +33,7 @@ class Sidebar extends Component {
   }
 
   render() {
-    const { user, documentId } = this.props;
+    const { user } = this.props;
 
     return (
       <div id="sidebar">
