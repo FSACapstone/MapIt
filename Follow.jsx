@@ -5,38 +5,57 @@ import { withRouter } from "react-router-dom";
 const db = firebase.firestore();
 
 class Follow extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleFollow = this.handleFollow.bind(this);
+  componentDidMount() {
+    this.listen(this.props);
   }
 
-  // WIP:
-  // componentDidMount() {
-  //
-  // }
+  componentWillReceiveProps(props) {
+    this.listen(props);
+  }
 
-  handleFollow(event) {
-    event.preventDefault();
-    const { user, signedInUser } = this.props;
-    db
+  componentWillUnmount() {
+    this.unsubscribe && this.unsubscribe();
+  }
+
+  listen({followerId, followingId}) {
+    this.unsubscribe = db
       .collection("relationships")
+      .where("follower", "==", followerId)
+      .where("following", "==", followingId)
+      .onSnapshot(querySnapshot => {
+        if (!querySnapshot.empty) {
+          return this.setState({
+            relationshipRef: querySnapshot.docs[0].ref,
+            relationshipExists: true
+          });
+        }
+        this.setState({
+          relationshipRef: null,
+          relationshipExists: false,
+        });
+      });
+  }
+
+  handleFollow = (event) => {
+    event.preventDefault();
+    const { followerId, followingId } = this.props;
+    db.collection("relationships")
       .add({
-        follower: signedInUser.uid,
-        following: user.uid
-      })
-      .then( () => {
-        this.props.history.push(`/user/${user.uid}`);
-      })
-      .catch(err => console.error(err));
+        follower: followerId,
+        following: followingId,
+      });
+  }
+
+  handleUnfollow = (event) => {
+    event.preventDefault()
+    return this.state.relationshipRef.delete()
   }
 
   render() {
-    return (
-      <div>
-        <button onClick={this.handleFollow}>Follow</button>
-      </div>
-    );
+    const { relationshipExists } = this.state || {};
+    return relationshipExists
+        ? <button onClick={this.handleUnfollow}>Unfollow</button>
+        : <button onClick={this.handleFollow}>Follow</button>;
   }
 }
 
