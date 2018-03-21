@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Follow from "./Follow";
-import Unfollow from "./Unfollow";
 import { withRouter } from "react-router-dom";
 import firebase from "~/fire";
 
