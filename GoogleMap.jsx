@@ -105,9 +105,9 @@ class GoogleMap extends Component {
 
       <div>
         <div className="google-map-buttons text-align-center">
-          <Search />
-          <input id='center-point' className='controls google-map-input' type='text' placeholder='Search For Location' />
-
+      
+            <input id='center-point' className='controls google-map-input' type='text' placeholder='Search Locations' />
+        
           <Button variant="raised" color="primary" className={classes.button} onClick={this.onSearchClick}>Center Map</Button>
           <Button variant="raised" color="primary" onClick={this.getCenter}>Start Adding Places</Button>
 
@@ -131,6 +131,7 @@ GoogleMap.propTypes = {
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
+    'border-radius': '5px'
   },
 });
 

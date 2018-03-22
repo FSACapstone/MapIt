@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
@@ -11,32 +12,19 @@ import Switch from 'material-ui/Switch';
 import { FormControlLabel, FormGroup } from 'material-ui/Form';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import SearchBar from './SearchBar';
-import firebase from "~/fire";
+import firebase, { auth } from "~/fire";
 
 const db = firebase.firestore();
 
-const styles = {
-  root: {
-    flexGrow: 1,
-    position: 'fixed',
-    width: '100vw',
-    top: 0,
-    'z-index': 101
-  },
-  flex: {
-    flex: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-};
-
 class MenuAppBar extends React.Component {
-  state = {
-    auth: true,
-    anchorEl: null,
-  };
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+      auth: true,
+      anchorEl: null,
+    };
+  }
 
   handleChange = (event, checked) => {
     this.setState({ auth: checked });
@@ -67,20 +55,37 @@ class MenuAppBar extends React.Component {
       .catch(err => console.error(err));
   }
 
+  logOut() {
+    auth
+      .signOut()
+      .then(() => {
+        this.setState({
+          user: null
+        });
+      })
+      .catch(err => console.error(err));
+    
+      this.setState({ anchorEl: null });
+
+  }
+
   render() {
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
+    const user = this.props.user;
 
     return (
+        
       <div className={classes.root}>
+       {(user) &&
         <AppBar position="static">
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
               <MenuIcon />
             </IconButton>
             <Typography variant="title" color="inherit" className={classes.flex}>
-              MapStack
+              <Link to={`/`} className="mapstack">MapStack</Link>
             </Typography>
             <SearchBar />
             {auth && (
@@ -108,17 +113,38 @@ class MenuAppBar extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                  <MenuItem onClick={this.handleClose}><Link to={`/user/${user.uid}`}>Profile</Link></MenuItem>
+                  <MenuItem onClick={this.handleClose}>Logout</MenuItem>
                 </Menu>
               </div>
             )}
           </Toolbar>
         </AppBar>
+          }
       </div>
+      
     );
+  
   }
+
 }
+
+const styles = {
+  root: {
+    flexGrow: 1,
+    position: 'fixed',
+    width: '100vw',
+    top: 0,
+    'z-index': 101
+  },
+  flex: {
+    flex: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+};
 
 MenuAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
