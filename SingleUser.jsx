@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import AddFollower from "./AddFollower";
+import Follow from "./Follow";
 import { withRouter } from "react-router-dom";
 import firebase from "~/fire";
 
@@ -8,38 +8,49 @@ const db = firebase.firestore();
 class SingleUser extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       user: {},
-      userDocId: ''
+      relationshipDocId: "",
+      relationshipExists: false
     };
   }
 
   componentDidMount() {
-    const userId = this.props.match.params.uid;
+    this.updateUserView(this.props);
+  }
+
+  componentWillReceiveProps(props) {
+    this.updateUserView(props);
+  }
+
+  updateUserView(props) {
+    const userId = props.match.params.uid;
     db
       .collection("users")
       .where("uid", "==", userId)
       .get()
       .then(querySnapshot => {
-        this.setState({ userDocId: querySnapshot.docs[0].id})
-        querySnapshot.forEach(user => this.setState({ user: user.data() }));
+        querySnapshot.forEach(user =>
+          this.setState({
+            user: user.data()
+          })
+        );
       });
   }
 
   render() {
     const user = this.state.user;
     const signedInUser = this.props.signedInUser
-    const documentId = this.props.documentId;
-    const userDocId = this.state.userDocId
+    const userId = this.props.match.params.uid;
     
-    if (!user) return <div>Loading...</div>;
-    return (
-      <div className="text-align-center">
-        <img src={user.photoURL} className="margin-top-5" />
+    return !user ? (
+      <div>Loading...</div>
+    ) : (
+      <div>
+        <img src={user.photoURL} />
         <h1>{user.displayName}</h1>
         <h2>{user.email}</h2>
-        <AddFollower signedInUser={signedInUser} user={user} documentId={documentId} userDocId={userDocId} />
+        <Follow followerId={signedInUser.uid} followingId={userId} />
       </div>
     );
   }

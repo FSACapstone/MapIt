@@ -7,11 +7,11 @@ import SingleUser from './SingleUser';
 import { GoogleApiWrapper } from 'google-maps-react';
 import firebase, { auth } from '~/fire';
 import NavBar from './Navbar';
+import NewMap from "./NewMap";
 
 const db = firebase.firestore();
 
 class App extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -24,41 +24,47 @@ class App extends Component {
   handleToggle = () => this.setState({open: !this.state.open});
 
   componentDidMount() {
-
-    auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged(user => {
       if (user) {
         this.setState({ user });
       }
 
-      db.collection('users').where('email', '==', user.email)
+      db
+        .collection("users")
+        .where("email", "==", user.email)
         .get()
         .then(querySnapshot => {
           if (querySnapshot.empty) {
-            db.collection('users').add({
-              displayName: this.state.user.displayName,
-              email: this.state.user.email,
-              photoURL: this.state.user.photoURL,
-              uid: this.state.user.uid
-            })
-              .then((user) => {
-                console.log('user added', user)
+            db
+              .collection("users")
+              .doc(this.state.user.uid)
+              .set({
+                displayName: this.state.user.displayName,
+                email: this.state.user.email,
+                photoURL: this.state.user.photoURL,
+                uid: this.state.user.uid
               })
-            }
-            this.setState({ documentId: querySnapshot.docs[0].id });
-        })
+              .then(user => {
+                console.log("user added", user);
+              });
+          }
+          this.setState({ documentId: querySnapshot.docs[0].id });
+        });
     });
 
-    db.collection('users').get().then(querySnapshot => {
-      const arrayOfUsers = []
-      querySnapshot.forEach(doc => arrayOfUsers.push(doc.data()))
-      this.setState({ users: arrayOfUsers })
-    })
+    db
+      .collection("users")
+      .get()
+      .then(querySnapshot => {
+        const arrayOfUsers = [];
+        querySnapshot.forEach(doc => arrayOfUsers.push(doc.data()));
+        this.setState({ users: arrayOfUsers });
+      });
   }
 
   render() {
     const user = this.state.user;
     const documentId = this.state.documentId;
-
 
     if (!user) return <Login />;
     return (
@@ -74,10 +80,11 @@ class App extends Component {
           <div className="col-2">
             <Switch>
               <Route
-                exact path="/" render={() => (
+                exact
+                path="/"
+                render={() => (
                   <GoogleMap
-                    google=
-                    {{
+                    google={{
                       ...this.props.google,
                       loc: { lat: 20, lng: 0 },
                       user: user
@@ -85,24 +92,33 @@ class App extends Component {
                   />
                 )}
               />
+              )} />
+              <Route exact path="/login" component={Login} />
               <Route
-                exact path="/login"
-                component={Login}
+                exact
+                path="/:user"
+                render={() => <Sidebar user={user} documentId={documentId} />}
               />
               <Route
-                exact path="/user/:uid"
-                render={() =>
+                exact
+                path="/user/:uid"
+                render={() => (
                   <SingleUser documentId={documentId} signedInUser={user} />
-                }
+                )}
+              />
+              <Route
+                exact
+                path="/newmap/:id"
+                render={() => <NewMap google={this.props.google} />}
               />
             </Switch>
             </div>
             </div>
       </div>
-    )
+    );
   }
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyBNO9SHxnyzMG6J1FCDYcle7DjXMjg6jBU',
+  apiKey: "AIzaSyBNO9SHxnyzMG6J1FCDYcle7DjXMjg6jBU"
 })(App);

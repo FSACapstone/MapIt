@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { withRouter } from "react-router-dom";
 import { createMarker, Marker } from 'google-maps-react';
 import firebase from '~/fire';
+import Button from 'material-ui/Button';
+import { withStyles } from 'material-ui/styles';
+import PropTypes from 'prop-types';
+import Input, { InputLabel } from 'material-ui/Input';
+import { FormControl, FormHelperText } from 'material-ui/Form';
+import { Search } from 'material-ui-icons';
 
 const db = firebase.firestore();
 
-export default class GoogleMap extends Component {
+class GoogleMap extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.onSearchClick = this.onSearchClick.bind(this);
     this.getCenter = this.getCenter.bind(this);
   }
@@ -21,8 +28,10 @@ export default class GoogleMap extends Component {
     db.collection('maps').add({
       center: center,
       user: this.props.google.user.uid
+    }).then(map=>{
+      this.props.history.push(`/newmap/${map.id}`)
     });
-    // console.log(center);
+
   }
 
   onSearchClick() {
@@ -78,13 +87,14 @@ export default class GoogleMap extends Component {
       const input = document.getElementById('center-point'); // use a ref instead
       const options = {
         bounds: defaultBounds,
-        types: ['establishment']
+       // types: ['establishment']
       };
       const autocomplete = new google.maps.places.Autocomplete(input, options);
     }
   }
 
   render() {
+    const { classes } = this.props;
 
     const style = { // MUST specify dimensions of the Google map or it will not work. Also works best when style is specified inside the render function and created as an object
       width: '100vw', // 90vw basically means take up 90% of the width screen. px also works.
@@ -95,17 +105,33 @@ export default class GoogleMap extends Component {
 
       <div>
         <div className="google-map-buttons text-align-center">
-          <input id='center-point' className='controls' type='text' placeholder='search for location' />      
-          <button onClick={this.onSearchClick}>Center Map</button>
-          <button onClick={this.getCenter}>Start Adding Places</button>
+          <Search />
+          <input id='center-point' className='controls google-map-input' type='text' placeholder='Search For Location' />
+
+          <Button variant="raised" color="primary" className={classes.button} onClick={this.onSearchClick}>Center Map</Button>
+          <Button variant="raised" color="primary" onClick={this.getCenter}>Start Adding Places</Button>
+
         </div>
+
         <div ref="map" className="google-map">
           Loading map...
-        </div>    
+        </div>
+
       </div>
 
     );
   }
 }
 
-// in input tag add 'ref={}' --> line 101
+GoogleMap.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+});
+
+export default (withStyles(styles))(withRouter(GoogleMap));
