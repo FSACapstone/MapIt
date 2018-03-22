@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Follow from "./Follow";
+import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
 import { withRouter } from "react-router-dom";
 import firebase from "~/fire";
 
@@ -11,7 +12,8 @@ class SingleUser extends Component {
     this.state = {
       user: {},
       relationshipDocId: "",
-      relationshipExists: false
+      relationshipExists: false,
+      createdMaps: []
     };
   }
 
@@ -36,21 +38,42 @@ class SingleUser extends Component {
           })
         );
       });
+    db
+      .collection("maps")
+      .where("uid", "==", userId)
+      .get()
+      .then(querySnapshot => {
+        const mapTitleArr = [];
+        querySnapshot.forEach( map => {
+          mapTitleArr.push(map.data().title);
+        });
+        this.setState({
+          createdMaps: mapTitleArr
+        });
+      });
   }
 
   render() {
-    const user = this.state.user;
-    const signedInUser = this.props.signedInUser
+    const { user, createdMaps } = this.state;
+    const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
-    
+
     return !user ? (
       <div>Loading...</div>
     ) : (
       <div className="text-align-center">
         <img src={user.photoURL} className="margin-top-5" />
         <h1>{user.displayName}</h1>
-        <h2>{user.email}</h2>
         <Follow followerId={signedInUser.uid} followingId={userId} />
+        <div className="text-align-center">
+          <h3>UID: {userId}</h3>
+          <h4>Maps created:</h4>
+          {
+            createdMaps.length && createdMaps.map( mapTitle => {
+              return <p>{mapTitle}</p>;
+            })
+          }
+        </div>
       </div>
     );
   }
