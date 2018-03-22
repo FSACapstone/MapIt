@@ -9,14 +9,31 @@ class Sidebar extends Component {
     super(props);
 
     this.state = {
-
-    }
+      numFollowing: 0,
+      numFollowers: 0
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    const { user } = this.props;
+    db
+      .collection("relationships")
+      .where("following", "==", user.uid)
+      .get()
+      .then(res => this.setState({ numFollowers: res.size }));
+
+    db
+      .collection("relationships")
+      .where("follower", "==", user.uid)
+      .get()
+      .then(res => this.setState({ numFollowing: res.size }));
   }
 
   handleSubmit(event) {
     event.preventDefault();
     const displayName = event.target.displayName.value;
+    const { user } = this.props;
 
     db
       .collection("users")
@@ -32,6 +49,7 @@ class Sidebar extends Component {
   }
 
   render() {
+    const { numFollowing, numFollowers } = this.state;
     const { user } = this.props;
 
     return (
@@ -45,6 +63,8 @@ class Sidebar extends Component {
           </form>
           <p>{user.displayName}</p>
           <p>{user.email}</p>
+          <p>Following: {numFollowing}</p>
+          <p>Followers: {numFollowers}</p>
         </div>
       </div>
     );

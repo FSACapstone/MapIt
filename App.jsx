@@ -15,7 +15,6 @@ class App extends Component {
     super();
     this.state = {
       user: null,
-      users: [],
       documentId: ""
     };
   }
@@ -39,7 +38,7 @@ class App extends Component {
                 displayName: this.state.user.displayName,
                 email: this.state.user.email,
                 photoURL: this.state.user.photoURL,
-                uid: this.state.user.uid
+                uid: this.state.user.uid,
               })
               .then(user => {
                 console.log("user added", user);
@@ -49,14 +48,6 @@ class App extends Component {
         });
     });
 
-    db
-      .collection("users")
-      .get()
-      .then(querySnapshot => {
-        const arrayOfUsers = [];
-        querySnapshot.forEach(doc => arrayOfUsers.push(doc.data()));
-        this.setState({ users: arrayOfUsers });
-      });
   }
 
   render() {

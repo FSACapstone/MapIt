@@ -9,6 +9,8 @@ class SingleUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      numFollowing: 0,
+      numFollwer: 0,
       user: {},
       relationshipDocId: "",
       relationshipExists: false
@@ -36,10 +38,22 @@ class SingleUser extends Component {
           })
         );
       });
+
+      db
+      .collection("relationships")
+      .where("following", "==", userId)
+      .get()
+      .then(res => this.setState({numFollowers: res.size}))
+
+      db
+      .collection("relationships")
+      .where("follower", "==", userId)
+      .get()
+      .then(res => this.setState({numFollowing: res.size}))
   }
 
   render() {
-    const user = this.state.user;
+    const { user, numFollowing, numFollowers } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
     return !user ? (
@@ -49,6 +63,8 @@ class SingleUser extends Component {
         <img src={user.photoURL} />
         <h1>{user.displayName}</h1>
         <h2>{user.email}</h2>
+        <h2>Following: {numFollowing}</h2>
+        <h2>Followers: {numFollowers}</h2>
         <Follow followerId={signedInUser.uid} followingId={userId} />
       </div>
     );
