@@ -61,7 +61,7 @@ class App extends Component {
     if (!user) return <Login />;
     return (
       <div>
-    
+
         <NavBar />
 
             <div className="position-fixed">
