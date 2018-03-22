@@ -16,28 +16,49 @@ class Sidebar extends Component {
   }
 
   componentDidMount() {
-    const { user } = this.props;
+    console.log(this.props)
+    this.setNumFollowers()
+    this.setNumFollowing()
+  }
+
+  setNumFollowers() {
+    const { user, numFollowers } = this.props;
     db
       .collection("relationships")
       .where("following", "==", user.uid)
       .onSnapshot(querySnapshot => {
-        let relationships = []
-        querySnapshot.forEach(doc => {
-          relationships.push(doc.data())
-          this.setState({ numFollowers: relationships.length })
+        querySnapshot.docChanges.forEach(change => {
+          if (change.type === "added") {
+            this.setState(prevState => { 
+              return {numFollowers: prevState.numFollowers + 1}
+            })
+          }
+          if (change.type === "removed") {
+            this.setState(prevState => { 
+              return {numFollowers: prevState.numFollowers - 1}
+            })
+          }
         })
       })
-      // .get()
-      // .then(res => this.setState({ numFollowers: res.size }));
+  }
 
+  setNumFollowing() {
+    const { user, numFollowing } = this.props;
     db
       .collection("relationships")
       .where("follower", "==", user.uid)
       .onSnapshot(querySnapshot => {
-        let relationships = []
-        querySnapshot.forEach(doc => {
-          relationships.push(doc.data())
-          this.setState({ numFollowing: relationships.length })
+        querySnapshot.docChanges.forEach(change => {
+          if (change.type === "added") {
+            this.setState(prevState => { 
+              return {numFollowing: prevState.numFollowing + 1}
+            })
+          }
+          if (change.type === "removed") {
+            this.setState(prevState => { 
+              return {numFollowing: prevState.numFollowing - 1 }
+            })
+          }
         })
       })
   }
