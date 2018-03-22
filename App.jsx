@@ -91,7 +91,7 @@ class App extends Component {
     const documentId = this.state.documentId;
     if (this.state.loading === true) return <CircularLoad />
     if (!user) return <Login user={user} />;
-    // if (user && <Route exact path="/login"></Route>) return <Login />
+
     return (
       <div>
         <NavBar user={user}/>
