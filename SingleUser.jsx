@@ -35,8 +35,8 @@ class SingleUser extends Component {
     
     if (!user) return <div>Loading...</div>;
     return (
-      <div>
-        <img src={user.photoURL} />
+      <div className="text-align-center">
+        <img src={user.photoURL} className="margin-top-5" />
         <h1>{user.displayName}</h1>
         <h2>{user.email}</h2>
         <AddFollower signedInUser={signedInUser} user={user} documentId={documentId} userDocId={userDocId} />

@@ -4,13 +4,24 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
+import AccountCircle from 'material-ui-icons/AccountCircle';
+import Switch from 'material-ui/Switch';
+import { FormControlLabel, FormGroup } from 'material-ui/Form';
+import Menu, { MenuItem } from 'material-ui/Menu';
+import SearchBar from './SearchBar';
+import firebase from "~/fire";
+
+const db = firebase.firestore();
 
 const styles = {
   root: {
     flexGrow: 1,
+    position: 'fixed',
+    width: '100vw',
+    top: 0,
+    'z-index': 101
   },
   flex: {
     flex: 1,
@@ -21,32 +32,96 @@ const styles = {
   },
 };
 
+class MenuAppBar extends React.Component {
+  state = {
+    auth: true,
+    anchorEl: null,
+  };
 
+  handleChange = (event, checked) => {
+    this.setState({ auth: checked });
+  };
 
-function ButtonAppBar(props) {
-  const { classes } = props;
-  function hello() {
-    console.log(props);
+  handleMenu = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const displayName = event.target.displayName.value;
+
+    db
+      .collection("users")
+      .where("displayName", "==", displayName)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          let data = doc.data();
+          this.props.history.push(`/user/${data.uid}`);
+        });
+      })
+      .catch(err => console.error(err));
   }
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-            <MenuIcon onClick={props.onLeftIconButtonClick} />
-          </IconButton>
-          <Typography variant="title" color="inherit" className={classes.flex}>
-            Maps
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+
+  render() {
+    const { classes } = this.props;
+    const { auth, anchorEl } = this.state;
+    const open = Boolean(anchorEl);
+
+    return (
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="title" color="inherit" className={classes.flex}>
+              MapStack
+            </Typography>
+            <SearchBar />
+            {auth && (
+              <div>
+                <IconButton
+                  aria-owns={open ? 'menu-appbar' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleMenu}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+               
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={open}
+                  onClose={this.handleClose}
+                >
+                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                </Menu>
+              </div>
+            )}
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }
 }
 
-ButtonAppBar.propTypes = {
+MenuAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ButtonAppBar);
+export default withStyles(styles)(MenuAppBar);

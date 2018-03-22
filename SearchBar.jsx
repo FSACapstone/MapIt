@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import AddFollower from "./AddFollower";
 import firebase from "~/fire";
-
 const db = firebase.firestore();
 
-class Sidebar extends Component {
+class SearchBar extends Component {
   constructor(props) {
     super(props);
 
@@ -30,27 +28,17 @@ class Sidebar extends Component {
   }
 
   render() {
-    const { user, documentId } = this.props;
+    
 
     return (
-      <div id="sidebar">
-
-        <div className="sidebar-margin">
-          <div>
-            <img src={user.photoURL} />
-          </div>
-       
-        <div>
+ 
           <form onSubmit={this.handleSubmit}>
             <input type="text" name="displayName" />
           </form>
-          <p>{user.displayName}</p>
-          <p>{user.email}</p>
-        </div>
-        </div>
-      </div>
+          
+    
     );
   }
 }
 
-export default withRouter(Sidebar);
+export default withRouter(SearchBar);
