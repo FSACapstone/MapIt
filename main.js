@@ -7,11 +7,9 @@ import App from '~/App'
 
 function main() {
   render(
-    <AppContainer>
       <Router>
       <App />
-      </Router>
-    </AppContainer>,
+      </Router>,
     document.getElementById('main'))
 }
 

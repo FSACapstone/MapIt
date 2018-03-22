@@ -4,9 +4,10 @@ import GoogleMap from './GoogleMap';
 import Login from './Login';
 import Sidebar from './Sidebar';
 import SingleUser from './SingleUser';
-import { GoogleApiWrapper } from 'google-maps-react'
+import { GoogleApiWrapper } from 'google-maps-react';
 import firebase, { auth } from '~/fire';
-import NewMap from './NewMap'
+import NavBar from './Navbar';
+import NewMap from "./NewMap";
 
 const db = firebase.firestore();
 
@@ -16,9 +17,11 @@ class App extends Component {
     this.state = {
       user: null,
       users: [],
-      documentId: ""
-    };
+      documentId: '',
+    }
   }
+
+  handleToggle = () => this.setState({open: !this.state.open});
 
   componentDidMount() {
     auth.onAuthStateChanged(user => {
@@ -62,14 +65,19 @@ class App extends Component {
   render() {
     const user = this.state.user;
     const documentId = this.state.documentId;
-    console.log(documentId);
 
     if (!user) return <Login />;
     return (
       <div>
-        <div className="flex-container">
-          <Sidebar user={user} documentId={documentId} />
-          <div>
+
+        <NavBar />
+
+            <div className="position-fixed">
+              <Sidebar user={user} documentId={documentId} />
+            </div>
+        <div className="wrapper">
+          <div className="col-1"></div>
+          <div className="col-2">
             <Switch>
               <Route
                 exact
@@ -84,31 +92,28 @@ class App extends Component {
                   />
                 )}
               />
-            )}
-          />
-          <Route
-            exact path="/login"
-            component={Login}
-          />
-          <Route
-            exact path="/:user"
-            render={() => <Sidebar user={user} documentId={documentId} />}
-          />
-          <Route
-            exact path="/user/:uid"
-            render={() =>
-              <SingleUser documentId={documentId} signedInUser={user} />
-            }
-          />
-          <Route
-            exact path="/newmap/:id"
-            render={() =>
-              <NewMap google = {this.props.google}/>
-            }
-          />
-        </Switch>
-        </div>
-        </div>
+              )} />
+              <Route exact path="/login" component={Login} />
+              <Route
+                exact
+                path="/:user"
+                render={() => <Sidebar user={user} documentId={documentId} />}
+              />
+              <Route
+                exact
+                path="/user/:uid"
+                render={() => (
+                  <SingleUser documentId={documentId} signedInUser={user} />
+                )}
+              />
+              <Route
+                exact
+                path="/newmap/:id"
+                render={() => <NewMap google={this.props.google} />}
+              />
+            </Switch>
+            </div>
+            </div>
       </div>
     );
   }
