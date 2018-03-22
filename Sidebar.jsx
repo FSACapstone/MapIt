@@ -54,10 +54,13 @@ class Sidebar extends Component {
 
     return (
       <div id="sidebar">
-        <div className="sidebar-1">
-          <img src={user.photoURL} />
-        </div>
-        <div className="sidebar-2">
+
+        <div className="sidebar-margin">
+          <div>
+            <img src={user.photoURL} />
+          </div>
+       
+        <div>
           <form onSubmit={this.handleSubmit}>
             <input type="text" name="displayName" />
           </form>
@@ -65,6 +68,7 @@ class Sidebar extends Component {
           <p>{user.email}</p>
           <p>Following: {numFollowing}</p>
           <p>Followers: {numFollowers}</p>
+        </div>
         </div>
       </div>
     );

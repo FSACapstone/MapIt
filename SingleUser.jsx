@@ -56,11 +56,12 @@ class SingleUser extends Component {
     const { user, numFollowing, numFollowers } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
+    
     return !user ? (
       <div>Loading...</div>
     ) : (
-      <div>
-        <img src={user.photoURL} />
+      <div className="text-align-center">
+        <img src={user.photoURL} className="margin-top-5" />
         <h1>{user.displayName}</h1>
         <h2>{user.email}</h2>
         <h2>Following: {numFollowing}</h2>
