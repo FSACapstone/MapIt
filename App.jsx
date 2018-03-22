@@ -1,11 +1,12 @@
-import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
-import GoogleMap from "./GoogleMap";
-import Login from "./Login";
-import Sidebar from "./Sidebar";
-import SingleUser from "./SingleUser";
-import { GoogleApiWrapper } from "google-maps-react";
-import firebase, { auth } from "~/fire";
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import GoogleMap from './GoogleMap';
+import Login from './Login';
+import Sidebar from './Sidebar';
+import SingleUser from './SingleUser';
+import { GoogleApiWrapper } from 'google-maps-react';
+import firebase, { auth } from '~/fire';
+import NavBar from './Navbar';
 import NewMap from "./NewMap";
 
 const db = firebase.firestore();
@@ -16,9 +17,11 @@ class App extends Component {
     this.state = {
       user: null,
       users: [],
-      documentId: ""
-    };
+      documentId: '',
+    }
   }
+
+  handleToggle = () => this.setState({open: !this.state.open});
 
   componentDidMount() {
     auth.onAuthStateChanged(user => {
@@ -66,9 +69,15 @@ class App extends Component {
     if (!user) return <Login />;
     return (
       <div>
-        <div className="flex-container">
-          <Sidebar user={user} documentId={documentId} />
-          <div>
+    
+        <NavBar />
+
+            <div className="position-fixed">
+              <Sidebar user={user} documentId={documentId} />
+            </div>
+        <div className="wrapper">
+          <div className="col-1"></div>
+          <div className="col-2">
             <Switch>
               <Route
                 exact
@@ -103,8 +112,8 @@ class App extends Component {
                 render={() => <NewMap google={this.props.google} />}
               />
             </Switch>
-          </div>
-        </div>
+            </div>
+            </div>
       </div>
     );
   }

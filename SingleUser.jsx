@@ -40,13 +40,14 @@ class SingleUser extends Component {
 
   render() {
     const user = this.state.user;
-    const signedInUser = this.props.signedInUser;
+    const signedInUser = this.props.signedInUser
     const userId = this.props.match.params.uid;
+    
     return !user ? (
       <div>Loading...</div>
     ) : (
-      <div>
-        <img src={user.photoURL} />
+      <div className="text-align-center">
+        <img src={user.photoURL} className="margin-top-5" />
         <h1>{user.displayName}</h1>
         <h2>{user.email}</h2>
         <Follow followerId={signedInUser.uid} followingId={userId} />
