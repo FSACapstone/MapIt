@@ -42,14 +42,26 @@ class SingleUser extends Component {
       db
       .collection("relationships")
       .where("following", "==", userId)
-      .get()
-      .then(res => this.setState({numFollowers: res.size}))
+      .onSnapshot(querySnapshot => {
+        let relationships = []
+        querySnapshot.forEach(doc => {
+          relationships.push(doc.data())
+          this.setState({ numFollowers: relationships.length })
+        })
+      })
 
       db
       .collection("relationships")
       .where("follower", "==", userId)
-      .get()
-      .then(res => this.setState({numFollowing: res.size}))
+      .onSnapshot(querySnapshot => {
+        let relationships = []
+        querySnapshot.forEach(doc => {
+          relationships.push(doc.data())
+          this.setState({ numFollowing: relationships.length })
+        })
+      })
+      // .get()
+      // .then(res => this.setState({numFollowing: res.size}))
   }
 
   render() {
