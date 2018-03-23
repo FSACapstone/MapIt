@@ -11,9 +11,6 @@ class SingleUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
-      numFollowers: 0,
-      numFollowing: 0,
       user: {},
       relationshipDocId: "",
       relationshipExists: false,
@@ -68,21 +65,24 @@ class SingleUser extends Component {
   }
 
   render() {
-    const { user, numFollowing, numFollowers, loading } = this.state;
+    const { user } = this.state;
     const { createdMaps } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
-
-    return !user ? (
-      <div>Loading...</div>
-    ) : (
+    console.log(user.uid, userId);
+    // return !user ? (
+    //   <div>Loading...</div>
+    // ) : (
+      return (
       <div className="text-align-center">
         <img src={user.photoURL} className="margin-top-5" />
         <h1>{user.displayName}</h1>
         <h2>{user.email}</h2>
         <h2>Following: <Count of={this.following} /></h2>
         <h2>Followers: <Count of={this.followers} /></h2>
-        <Follow followerId={signedInUser.uid} followingId={userId} />
+        {
+          user.uid !== userId && <Follow followerId={signedInUser.uid} followingId={userId} />
+        }
         <div className="text-align-center">
           <h3>UID: {userId}</h3>
           <h4>Maps created:</h4>

@@ -249,3 +249,67 @@
     at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
 [error] 
 [error] Error: An unexpected error has occurred.
+[debug] [2018-03-23T15:11:48.477Z] ----------------------------------------------------------------------
+[debug] [2018-03-23T15:11:48.480Z] Command:       /usr/local/bin/node /Users/LuisMiguel/Desktop/FullStack1801/MapIt/node_modules/.bin/firebase serve --only functions,hosting
+[debug] [2018-03-23T15:11:48.481Z] CLI Version:   3.17.6
+[debug] [2018-03-23T15:11:48.481Z] Platform:      darwin
+[debug] [2018-03-23T15:11:48.481Z] Node Version:  v8.10.0
+[debug] [2018-03-23T15:11:48.482Z] Time:          Fri Mar 23 2018 11:11:48 GMT-0400 (EDT)
+[debug] [2018-03-23T15:11:48.482Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-23T15:11:48.604Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-23T15:11:48.605Z] > authorizing via signed-in user
+[debug] [2018-03-23T15:11:48.607Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-03-23T15:11:48.608Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/3FRKcLny2xJzA5i4O1wazTRJqHcGh1IBcJyha3_FUb4',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Fri Mar 23 2018 11:11:48 GMT-0400 (EDT)
+[debug] [2018-03-23T15:11:48.801Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-23T15:11:48.920Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/map-it-fsa  
+  
+ Fri Mar 23 2018 11:11:48 GMT-0400 (EDT)
+[debug] [2018-03-23T15:11:49.236Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-23T15:11:49.237Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/map-it-fsa/tokens  
+  
+ Fri Mar 23 2018 11:11:49 GMT-0400 (EDT)
+[debug] [2018-03-23T15:11:49.584Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-23T15:11:49.585Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/map-it-fsa  
+  
+ Fri Mar 23 2018 11:11:49 GMT-0400 (EDT)
+[debug] [2018-03-23T15:11:50.209Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/LuisMiguel/Desktop/FullStack1801/MapIt'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-03-23T15:11:51.938Z] Fetching environment
+[debug] [2018-03-23T15:11:51.941Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469:getServerAppConfig  
+  
+ Fri Mar 23 2018 11:11:51 GMT-0400 (EDT)
+[debug] [2018-03-23T15:11:51.941Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469/clients/_:getWebAppConfig  
+  
+ Fri Mar 23 2018 11:11:51 GMT-0400 (EDT)
+[debug] [2018-03-23T15:11:52.176Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-23T15:11:52.318Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-23T15:11:52.318Z] Starting @google-cloud/functions-emulator
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[warn] ⚠  functions: Error from emulator. Error: Timeout waiting for emulator start
+[debug] [2018-03-23T15:12:12.135Z] Error: Timeout waiting for emulator start
+    at client.testConnection.catch (/Users/LuisMiguel/Desktop/FullStack1801/MapIt/node_modules/@google-cloud/functions-emulator/src/cli/controller.js:219:17)
+    at <anonymous>
+    at process._tickDomainCallback (internal/process/next_tick.js:228:7)
+[info] Shutting down...
+[debug] [2018-03-23T15:29:00.109Z] Error: write EPIPE
+    at _errnoException (util.js:1022:11)
+    at WriteWrap.afterWrite [as oncomplete] (net.js:880:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2018-03-23T15:29:01.078Z] Error: write EPIPE
+    at _errnoException (util.js:1022:11)
+    at WriteWrap.afterWrite [as oncomplete] (net.js:880:14)
+[error] 
+[error] Error: An unexpected error has occurred.
