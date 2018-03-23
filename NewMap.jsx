@@ -4,10 +4,11 @@ import firebase from '~/fire';
 import { withRouter } from "react-router-dom";
 import ResultList from './ResultList'
 
-
 const db = firebase.firestore();
+
 var searchMarkersArray = [];
-var addedMarkersArr = []
+var addedMarkersArr = [];
+
 function clearOverlays(arr) {
   for (var i = 0; i < arr.length; i++) {
     arr[i].setMap(null);
@@ -40,9 +41,12 @@ class NewMap extends Component {
     marker.id = place.place_id
     addedMarkersArr.push(marker)
     marker.setMap(null)
+    console.log(place);
     obj[place.place_id] = {
       lat: place.geometry.location.lat(),
-      lng: place.geometry.location.lng()
+      lng: place.geometry.location.lng(),
+      name: place.name,
+      address: place.formatted_address,
     }
     var mapRef = db.collection('maps').doc(this.props.match.params.id);
     var getDoc = mapRef.set({
@@ -71,7 +75,6 @@ class NewMap extends Component {
     })
     var ref = db.collection('maps').where('mid', '==', this.props.match.params.id).get().then(function (querySnapshot) {
       querySnapshot.forEach(function (doc) {
-        // doc.data() is never undefined for query doc snapshots
         var placeObj = doc.data().places;
         var holder = marker.id
         delete placeObj[holder]
@@ -79,15 +82,10 @@ class NewMap extends Component {
         var getDoc = mapRef.update({
           places: placeObj
         })
-
       });
     }
     )
-
-
-
   }
-
 
   onClick = (event) => {
     event.preventDefault()
@@ -137,24 +135,19 @@ class NewMap extends Component {
                   getButton.addEventListener('click', () => { holder.addPlace(marker, place, infowindow) })
                 });
               }
-
             });
           }
         }
       }
       else { console.log('no results') }
     }
-
     service.nearbySearch(request, callback);
   }
 
-
   componentDidMount() {
-
     db.collection('maps').doc(this.props.match.params.id).set({
       mid: this.props.match.params.id
     }, { merge: true })
-
 
     db
       .collection('maps')
@@ -196,7 +189,7 @@ class NewMap extends Component {
             (() => {
               var latLng = { lat: arr[keysArr[i]].lat, lng: arr[keysArr[i]].lng }
               var placeName = keysArr[i]
-
+              var placeInfo=arr[placeName];
               var marker = new google.maps.Marker({
                 map: isthis.map,
                 position: latLng,
@@ -206,23 +199,21 @@ class NewMap extends Component {
               addedMarkersArr.push(marker)
               google.maps.event.addListener(marker, 'click', function () {
                 infowindow.setContent('<div><strong>Work in Progress</strong><br>' +
-                  'Place ID:' + placeName + '<br><button id="removePlaceButton">Remove Place</div ');
+                  'Place:' + placeInfo.name + 'Address' + placeInfo.address+ '<br><button id="removePlaceButton">Remove Place</div ');
                 infowindow.open(isthis.map, this);
                 const getButton = document.getElementById('removePlaceButton');
                 getButton.addEventListener('click', () => { isthis.removePlace(marker) })
               });
-
             })()
           }
         })
       })
-
   }
 
   render() {
-    const style = { // MUST specify dimensions of the Google map or it will not work. Also works best when style is specified inside the render function and created as an object
-      width: '90vw', // 90vw basically means take up 90% of the width screen. px also works.
-      height: '75vh' // 75vh similarly will take up roughly 75% of the height of the screen. px also works.
+    const style = {
+      width: '90vw',
+      height: '75vh'
     };
     return (
       <div>
@@ -232,23 +223,12 @@ class NewMap extends Component {
         <form onSubmit={this.onClick}>
           <input ref='center' id='center' className='controls' type='text' placeholder='search for place' name='search' />
           <button type='submit' />
-
         </form>
         <button onClick={this.clearSearch}>Clear Search </button>
       </div>
     )
   }
-
-
-
-
 }
 
-
-export default withRouter(NewMap)
-
-
-// {(this.state.results.length) ? <ResultList results={this.state.results} id={this.props.match.params.id} /> : <div>no results</div>}
-//         // <button onClick={this.clearSearch}>Clear Search </button>
-
+export default withRouter(NewMap);
 
