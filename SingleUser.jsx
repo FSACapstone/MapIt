@@ -10,6 +10,7 @@ class SingleUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: true,
       numFollowers: 0,
       numFollowing: 0,
       user: {},
@@ -24,59 +25,7 @@ class SingleUser extends Component {
 
   componentWillReceiveProps(props) {
     this.updateUserView(props);
-    // this.setFollowerFollowingState(props);
-    // this.updateNumFollowers(props);
-    // this.updateNumFollowing(props);
   }
-
-  // componentWillUnmount() {
-  //   this.unsubscribe && this.unsubscribe()
-  // }
-
-
-  // updateNumFollowers(props) {
-  //   const userId = props.match.params.uid;
-  //   const { initialNumFollwer } = this.state;
-  //   db
-  //     .collection("relationships")
-  //     .where("following", "==", userId)
-  //     .onSnapshot(querySnapshot => {
-  //       querySnapshot.docChanges.forEach(change => {
-  //         if (change.type === "added") {
-  //           this.setState({ numFollowers: this.state.numFollowers + 1 });
-  //         }
-  //         if (change.type === "removed") {
-  //           // this.setState(prevState => {
-  //           //   return { numFollowers: prevState.numFollowers - 1 };
-  //           // });
-  //           this.setState({ numFollowers: this.state.numFollowers - 1})
-  //         }
-  //       });
-  //     });
-  // }
-
-  // updateNumFollowing(props) {
-  //   const userId = props.match.params.uid;
-  //   db
-  //     .collection("relationships")
-  //     .where("follower", "==", userId)
-  //     .onSnapshot(querySnapshot => {
-  //       querySnapshot.docChanges.forEach(change => {
-  //         if (change.type === "added") {
-  //           // this.setState(prevState => {
-  //           //   return { numFollowing: prevState.numFollowing + 1 };
-  //           // });
-  //           this.setState({ numFollowing: this.state.numFollowing + 1 })
-  //         }
-  //         if (change.type === "removed") {
-  //           // this.setState(prevState => {
-  //           //   return { numFollowing: prevState.numFollowing - 1 };
-  //           // });
-  //           this.setState({ numFollowing : this.state.numFollowing - 1 })
-  //         }
-  //       });
-  //     });
-  // }
 
   updateUserView(props) {
     const userId = props.match.params.uid;
@@ -104,7 +53,7 @@ class SingleUser extends Component {
   }
 
   render() {
-    const { user, numFollowing, numFollowers } = this.state;
+    const { user, numFollowing, numFollowers, loading } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
 
