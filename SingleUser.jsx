@@ -3,7 +3,7 @@ import Follow from "./Follow";
 import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
 import { withRouter } from "react-router-dom";
 import firebase from "~/fire";
-import Count from './Count'
+import Count from "./Count";
 
 const db = firebase.firestore();
 
@@ -45,7 +45,7 @@ class SingleUser extends Component {
       .get()
       .then(querySnapshot => {
         const mapTitleArr = [];
-        querySnapshot.forEach( map => {
+        querySnapshot.forEach(map => {
           mapTitleArr.push(map.data().title);
         });
         this.setState({
@@ -56,12 +56,12 @@ class SingleUser extends Component {
 
   get followers() {
     const userId = this.props.match.params.uid;
-    return db.collection("relationships").where("following", "==", userId)
+    return db.collection("relationships").where("following", "==", userId);
   }
 
   get following() {
     const userId = this.props.match.params.uid;
-    return db.collection("relationships").where("follower", "==", userId)
+    return db.collection("relationships").where("follower", "==", userId);
   }
 
   render() {
@@ -77,17 +77,20 @@ class SingleUser extends Component {
         <img src={user.photoURL} className="margin-top-5" />
         <h1>{user.displayName}</h1>
         <h2>{user.email}</h2>
-        <h2>Following: <Count of={this.following} /></h2>
-        <h2>Followers: <Count of={this.followers} /></h2>
+        <h2>
+          Following: <Count of={this.following} />
+        </h2>
+        <h2>
+          Followers: <Count of={this.followers} />
+        </h2>
         <Follow followerId={signedInUser.uid} followingId={userId} />
         <div className="text-align-center">
           <h3>UID: {userId}</h3>
           <h4>Maps created:</h4>
-          {
-            createdMaps.length && createdMaps.map( mapTitle => {
+          {createdMaps.length &&
+            createdMaps.map(mapTitle => {
               return <p>{mapTitle}</p>;
-            })
-          }
+            })}
         </div>
       </div>
     );

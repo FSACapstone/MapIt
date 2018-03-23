@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import firebase from "~/fire";
-import Count from "./Count"
+import Count from "./Count";
 
 const db = firebase.firestore();
 
@@ -32,12 +32,12 @@ class Sidebar extends Component {
 
   get followers() {
     const { user } = this.props;
-    return db.collection("relationships").where("following", "==", user.uid)
+    return db.collection("relationships").where("following", "==", user.uid);
   }
 
   get following() {
     const { user } = this.props;
-    return db.collection("relationships").where("follower", "==", user.uid)
+    return db.collection("relationships").where("follower", "==", user.uid);
   }
 
   render() {
@@ -45,21 +45,24 @@ class Sidebar extends Component {
 
     return (
       <div id="sidebar">
-
         <div className="sidebar-margin">
           <div>
             <img src={user.photoURL} />
           </div>
-       
-        <div>
-          <form onSubmit={this.handleSubmit}>
-            <input type="text" name="displayName" />
-          </form>
-          <p>{user.displayName}</p>
-          <p>{user.email}</p>
-          <p>Following: <Count of={this.following} /></p>
-          <p>Followers: <Count of={this.followers} /></p>
-        </div>
+
+          <div>
+            <form onSubmit={this.handleSubmit}>
+              <input type="text" name="displayName" />
+            </form>
+            <p>{user.displayName}</p>
+            <p>{user.email}</p>
+            <p>
+              Following: <Count of={this.following} />
+            </p>
+            <p>
+              Followers: <Count of={this.followers} />
+            </p>
+          </div>
         </div>
       </div>
     );
