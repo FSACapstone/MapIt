@@ -136,7 +136,7 @@ class App extends Component {
                   <GoogleMap
                     google={{
                       ...this.props.google,
-                      loc: { lat: 20, lng: 0 },
+                      loc: { lat: 20, lng: -70 },
                       user: user
                     }}
                   />

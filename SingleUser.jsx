@@ -3,7 +3,7 @@ import Follow from "./Follow";
 import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
 import { withRouter, NavLink } from "react-router-dom";
 import firebase from "~/fire";
-import Count from "./Count";
+import Count from './Count'
 
 const db = firebase.firestore();
 
@@ -11,10 +11,13 @@ class SingleUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: true,
+      numFollowers: 0,
+      numFollowing: 0,
       user: {},
       relationshipDocId: "",
       relationshipExists: false,
-      createdMaps: []
+      createdMaps: {}
     };
   }
 
@@ -44,28 +47,28 @@ class SingleUser extends Component {
       .where("uid", "==", userId)
       .get()
       .then(querySnapshot => {
-        const mapTitleArr = [];
-        querySnapshot.forEach(map => {
-          mapTitleArr.push(map.data().title);
+        const mapObj = {};
+        querySnapshot.forEach( map => {
+          mapObj[map.id] = map.data();
         });
         this.setState({
-          createdMaps: mapTitleArr
+          createdMaps: mapObj
         });
       });
   }
 
   get followers() {
     const userId = this.props.match.params.uid;
-    return db.collection("relationships").where("following", "==", userId);
+    return db.collection("relationships").where("following", "==", userId)
   }
 
   get following() {
     const userId = this.props.match.params.uid;
-    return db.collection("relationships").where("follower", "==", userId);
+    return db.collection("relationships").where("follower", "==", userId)
   }
 
   render() {
-    const { user } = this.state;
+    const { user, numFollowing, numFollowers, loading } = this.state;
     const { createdMaps } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
@@ -98,10 +101,11 @@ class SingleUser extends Component {
         <div className="text-align-center">
           <h3>UID: {userId}</h3>
           <h4>Maps created:</h4>
-          {createdMaps.length &&
-            createdMaps.map(mapTitle => {
-              return <p>{mapTitle}</p>;
-            })}
+          {
+            Object.keys(createdMaps).length && Object.keys(createdMaps).map( mapId => {
+              return <p key={mapId}>{createdMaps[mapId].title}</p>;
+            })
+          }
         </div>
       </div>
     );

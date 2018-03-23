@@ -11,46 +11,80 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 import { Search } from 'material-ui-icons';
 
 const db = firebase.firestore();
-
+let tags;
+let title;
 class GoogleMap extends Component {
 
   constructor(props) {
     super(props);
     this.onSearchClick = this.onSearchClick.bind(this);
-    this.getCenter = this.getCenter.bind(this);
+    this.onCreateClick = this.onCreateClick.bind(this);
+    this.createNewMap = this.createNewMap.bind(this);
+
+    this.state = {
+      openNewForm: false,
+      title: '',
+      tags: '',
+      center: {}
+    }
   }
 
-  getCenter() {
+  onSubmitMapInfo = (e) => {
+    e.preventDefault();
+    this.createNewMap()
+  }
+
+  onChange = (e) => {
+    e.preventDefault()
+    if (e.target.name === 'title'){
+      title = e.target.value}
+    else if (e.target.name === 'tags'){
+      tags = e.target.value
+    }  
+  }
+
+  onCreateClick(e) {
+    e.preventDefault()
+    this.setState({openNewForm: !this.state.openNewForm})
+  }
+
+  mapInput(event) {
+    event.preventDefault();
+  }  
+
+  createNewMap() {
     let center = {
       lat: this.map.getCenter().lat(),
       lng: this.map.getCenter().lng()
-    };
-    db.collection('maps').add({
-      center: center,
-      uid: this.props.google.user.uid,
-      places:{},
-      title:''
+    };   
 
-    }).then(map=>{
+    db.collection('maps').add({
+      center: this.state.center,
+      uid: this.props.google.user.uid,
+      places: {},
+      title: title,
+      tags: tags
+
+    }).then(map => {
       this.props.history.push(`/newmap/${map.id}`)
     });
-
   }
 
   onSearchClick() {
 
     const input = document.getElementById('center-point');
     const geocoder = new google.maps.Geocoder();
-    // change to --> {geocoder} = this.props.google.maps.Geocoder();
     const holder = this;
     const { geocode } = geocoder;
 
     geocode({ address: input.value }, function (results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        holder.map.setCenter({
-          lat: results[0].geometry.location.lat(),
-          lng: results[0].geometry.location.lng()
-        });
+      if (status === google.maps.GeocoderStatus.OK) {
+        const center = {
+        lat: results[0].geometry.location.lat(),
+        lng: results[0].geometry.location.lng()
+        }
+        holder.setState({center});
+        holder.map.setCenter(center);
         holder.map.setZoom(15);
       } else {
         console.log('ERROR: ', status);
@@ -66,19 +100,30 @@ class GoogleMap extends Component {
   }
 
   componentDidUpdate() {
-    this.loadMap(); // call loadMap function to load the google map
+    this.loadMap();
   }
 
   loadMap() {
-    if (this.props && this.props.google) { // checks to make sure that props have been passed
-      const { google } = this.props; // sets props equal to google
-      const maps = google.maps; // sets maps to google maps props
-      const mapRef = this.refs.map; // looks for HTML div ref 'map'. Returned in render below.
-      const node = ReactDOM.findDOMNode(mapRef); // finds the 'map' div in the React DOM, names it node
+    if (this.props && this.props.google) { 
+      const { google } = this.props;
+      const maps = google.maps;
+      const mapRef = this.refs.map;
+      const node = ReactDOM.findDOMNode(mapRef);
+      let defaultCenter;
+      let zoom;
+ 
+      if (this.state.center.lat) {
+        defaultCenter = this.state.center;
+        zoom = 15;
+      }
+      else {
+        defaultCenter = google.loc
+        zoom = 3
+      }
       const mapConfig = Object.assign({},
         {
-          center: google.loc, // sets center of google map to NYC.
-          zoom: 2, // sets zoom. Lower numbers are zoomed further out.
+          center: defaultCenter, // sets center of google map to NYC.
+          zoom, // sets zoom. Lower numbers are zoomed further out.
           mapTypeId: 'roadmap' // optional main map layer. Terrain, satellite, hybrid or roadmap--if unspecified, defaults to roadmap.
         });
       this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
@@ -98,30 +143,33 @@ class GoogleMap extends Component {
 
   render() {
     const { classes } = this.props;
+    const { openNewForm } = this.state;
 
-    const style = { // MUST specify dimensions of the Google map or it will not work. Also works best when style is specified inside the render function and created as an object
-      width: '100vw', // 90vw basically means take up 90% of the width screen. px also works.
-      height: '100vh' // 75vh similarly will take up roughly 75% of the height of the screen. px also works.
+    const style = { 
+      width: '100vw',
+      height: '100vh'
     };
 
-    return ( // in our return function you must return a div with ref='map' and style.
-
+    return (
       <div>
         <div className="google-map-buttons text-align-center">
-      
             <input id='center-point' className='controls google-map-input' type='text' placeholder='Search Locations' />
-        
           <Button variant="raised" color="primary" className={classes.button} onClick={this.onSearchClick}>Center Map</Button>
-          <Button variant="raised" color="primary" onClick={this.getCenter}>Start Adding Places</Button>
-
+          <Button variant="raised" color="primary" onClick={this.onCreateClick}>Create New Map</Button>
+          <div className="google-map-buttons-2">
+          { (openNewForm) &&
+            <form onSubmit={this.onSubmitMapInfo} onChange = {this.onChange}>
+              <input name="title" placeholder="New Map Name"  required  />
+              <input name="tags" placeholder="Enter Hashtags" required />
+              <Button variant="raised" color="primary" className={classes.button} type="submit" >Submit</Button>
+            </form>
+          }
+          </div>
         </div>
-
         <div ref="map" className="google-map">
           Loading map...
         </div>
-
       </div>
-
     );
   }
 }
@@ -129,7 +177,6 @@ class GoogleMap extends Component {
 GoogleMap.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
 
 const styles = theme => ({
   button: {
