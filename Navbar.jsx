@@ -11,6 +11,7 @@ import AccountCircle from 'material-ui-icons/AccountCircle';
 import Switch from 'material-ui/Switch';
 import { FormControlLabel, FormGroup } from 'material-ui/Form';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import Home from 'material-ui-icons/Home';
 import SearchBar from './SearchBar';
 import firebase, { auth } from "~/fire";
 
@@ -82,7 +83,7 @@ class MenuAppBar extends React.Component {
         <AppBar position="static">
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon />
+              <Link to="/"><Home className="off-white"></Home></Link>
             </IconButton>
             <Typography variant="title" color="inherit" className={classes.flex}>
               <Link to={`/`} className="mapstack">MapStack</Link>

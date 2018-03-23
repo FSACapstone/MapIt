@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { withStyles } from "material-ui/styles";
+import Typography from "material-ui/Typography";
+import Divider from "material-ui/Divider";
 import firebase from "~/fire";
 
 const db = firebase.firestore();
@@ -16,9 +20,8 @@ class Sidebar extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
-    this.setNumFollowers()
-    this.setNumFollowing()
+    this.setNumFollowers();
+    this.setNumFollowing();
   }
 
   setNumFollowers() {
@@ -82,8 +85,9 @@ class Sidebar extends Component {
   }
 
   render() {
+
     const { numFollowing, numFollowers } = this.state;
-    const { user } = this.props;
+    const { user, classes } = this.props;
 
     return (
       <div id="sidebar">
@@ -94,10 +98,21 @@ class Sidebar extends Component {
           </div>
        
         <div>
-          <p>{user.displayName}</p>
-          <p>{user.email}</p>
-          <p>Following: {numFollowing}</p>
-          <p>Followers: {numFollowers}</p>
+          <Typography color="inherit" className={classes.typography}>{user.displayName}</Typography>
+          <div className="sidebar-flex-info">
+            <div className="sidebar-flex-inner">
+            <Typography color="inherit" className={classes.typography}>Following</Typography>
+            <Typography color="inherit" className={classes.typography}>{numFollowing}</Typography>
+            </div>
+            <div className="sidebar-flex-inner">
+            <Typography color="inherit" className={classes.typography}>Followers</Typography>
+            <Typography color="inherit" className={classes.typography}>{numFollowers}</Typography>
+            </div>
+            <div className="sidebar-flex-inner">
+            <Typography color="inherit" className={classes.typography}>Maps</Typography>
+            <Typography color="inherit" className={classes.typography}>0</Typography>
+            </div>
+          </div>
         </div>
         </div>
       </div>
@@ -105,4 +120,15 @@ class Sidebar extends Component {
   }
 }
 
-export default withRouter(Sidebar);
+const styles = {
+  typography: {
+    margin: '0.2rem',
+    'font-size': '1rem'
+  }
+};
+
+Sidebar.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(withRouter(Sidebar));
