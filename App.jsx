@@ -20,6 +20,8 @@ class App extends Component {
       user: null,
       users: [],
       documentId: '',
+      numFollowers: 0,
+      numFollowing: 0
     }
   }
 
@@ -57,6 +59,27 @@ class App extends Component {
         this.setState({ loading: false})
         return;
       }
+        db
+        .collection("relationships")
+        .where("following", "==", user.uid)
+        .onSnapshot(querySnapshot => {
+          let relationships = []
+          querySnapshot.forEach(doc => {
+            relationships.push(doc.data())
+          })
+          this.setState({ numFollowers: relationships.length })
+      })
+
+      db
+        .collection("relationships")
+        .where("follower", "==", user.uid)
+        .onSnapshot(querySnapshot => {
+          let relationships = []
+          querySnapshot.forEach(doc => {
+            relationships.push(doc.data())
+          })
+          this.setState({ numFollowing: relationships.length })
+      })
 
       db
         .collection("users")
@@ -71,7 +94,7 @@ class App extends Component {
                 displayName: this.state.user.displayName,
                 email: this.state.user.email,
                 photoURL: this.state.user.photoURL,
-                uid: this.state.user.uid
+                uid: this.state.user.uid,
               })
               .then(user => {
                 console.log("user added", user);
@@ -82,21 +105,18 @@ class App extends Component {
         .then(() => {
           this.setState({ loading: false});
         });
-
-    });
-  }
+  });
+}
 
   render() {
-    const user = this.state.user;
-    const documentId = this.state.documentId;
+    const {user, documentId, numFollowers, numFollowing } = this.state;
     if (this.state.loading === true) return <CircularLoad />
     if (!user) return <Login user={user} />;
-
     return (
       <div>
         <NavBar user={user}/>
         <div className="position-fixed">
-          <Sidebar user={user} documentId={documentId} />
+          <Sidebar user={user} documentId={documentId} numFollowers={numFollowers} numFollowing={numFollowing}/>
         </div>
         <div className="wrapper">
           <div className="col-1" />

@@ -188,3 +188,64 @@
     at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
 [error] 
 [error] Error: An unexpected error has occurred.
+[debug] [2018-03-23T14:21:46.830Z] ----------------------------------------------------------------------
+[debug] [2018-03-23T14:21:46.834Z] Command:       /usr/local/Cellar/node/8.9.1/bin/node /Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt/node_modules/.bin/firebase serve --only functions,hosting
+[debug] [2018-03-23T14:21:46.834Z] CLI Version:   3.17.6
+[debug] [2018-03-23T14:21:46.834Z] Platform:      darwin
+[debug] [2018-03-23T14:21:46.834Z] Node Version:  v8.9.1
+[debug] [2018-03-23T14:21:46.835Z] Time:          Fri Mar 23 2018 10:21:46 GMT-0400 (EDT)
+[debug] [2018-03-23T14:21:46.835Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-23T14:21:46.858Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-23T14:21:46.859Z] > authorizing via signed-in user
+[debug] [2018-03-23T14:21:46.862Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-03-23T14:21:46.863Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/_mD3J5zccVDF-IwMv991FHVtCn064DFwX1YTRxTTz5U',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Fri Mar 23 2018 10:21:46 GMT-0400 (EDT)
+[debug] [2018-03-23T14:21:47.410Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-23T14:21:47.431Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/map-it-fsa  
+  
+ Fri Mar 23 2018 10:21:47 GMT-0400 (EDT)
+[debug] [2018-03-23T14:21:48.124Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-23T14:21:48.126Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/map-it-fsa/tokens  
+  
+ Fri Mar 23 2018 10:21:48 GMT-0400 (EDT)
+[debug] [2018-03-23T14:21:48.578Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-23T14:21:48.579Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/map-it-fsa  
+  
+ Fri Mar 23 2018 10:21:48 GMT-0400 (EDT)
+[debug] [2018-03-23T14:21:48.909Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-03-23T14:21:50.838Z] Fetching environment
+[debug] [2018-03-23T14:21:50.845Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469:getServerAppConfig  
+  
+ Fri Mar 23 2018 10:21:50 GMT-0400 (EDT)
+[debug] [2018-03-23T14:21:50.846Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469/clients/_:getWebAppConfig  
+  
+ Fri Mar 23 2018 10:21:50 GMT-0400 (EDT)
+[debug] [2018-03-23T14:21:51.260Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-23T14:21:51.260Z] Starting @google-cloud/functions-emulator
+[debug] [2018-03-23T14:21:51.284Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[debug] [2018-03-23T14:21:54.359Z] Parsing function triggers
+[info] ✔  functions: helloWorld: http://localhost:5001/map-it-fsa/us-central1/helloWorld
+[info] Shutting down...
+[debug] [2018-03-23T14:25:51.214Z] Error: write EPIPE
+    at _errnoException (util.js:1024:11)
+    at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2018-03-23T14:25:51.216Z] Error: write EPIPE
+    at _errnoException (util.js:1024:11)
+    at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
+[error] 
+[error] Error: An unexpected error has occurred.

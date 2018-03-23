@@ -27,7 +27,10 @@ class GoogleMap extends Component {
     };
     db.collection('maps').add({
       center: center,
-      user: this.props.google.user.uid
+      uid: this.props.google.user.uid,
+      places:{},
+      title:''
+
     }).then(map=>{
       this.props.history.push(`/newmap/${map.id}`)
     });
