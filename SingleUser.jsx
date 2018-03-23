@@ -11,9 +11,6 @@ class SingleUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
-      numFollowers: 0,
-      numFollowing: 0,
       user: {},
       relationshipDocId: "",
       relationshipExists: false,
@@ -68,7 +65,7 @@ class SingleUser extends Component {
   }
 
   render() {
-    const { user, numFollowing, numFollowers, loading } = this.state;
+    const { user } = this.state;
     const { createdMaps } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
