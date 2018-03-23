@@ -69,25 +69,27 @@ class SingleUser extends Component {
     const { createdMaps } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
-    console.log(user.uid, userId);
+    console.log(signedInUser.uid, userId);
     // return !user ? (
     //   <div>Loading...</div>
     // ) : (
+
       return (
       <div className="text-align-center">
         <img src={user.photoURL} className="margin-top-5" />
         <h1>{user.displayName}</h1>
         <h2>{user.email}</h2>
-        {
-          user.uid !== userId && <Follow followerId={signedInUser.uid} followingId={userId} />
-        }
         <h2>
           Following: <Count of={this.following} />
         </h2>
         <h2>
           Followers: <Count of={this.followers} />
         </h2>
-        <Follow followerId={signedInUser.uid} followingId={userId} />
+        {
+          signedInUser.uid === userId
+          ? <div />
+          : <Follow followerId={signedInUser.uid} followingId={userId} />
+        }
         <div className="text-align-center">
           <h3>UID: {userId}</h3>
           <h4>Maps created:</h4>

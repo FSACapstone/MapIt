@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, NavLink } from "react-router-dom";
 import firebase from "~/fire";
 import Count from "./Count";
 
@@ -55,9 +55,11 @@ class Sidebar extends Component {
               <input type="text" name="displayName" />
             </form>
             <p>{user.displayName}</p>
-            <p>
-              Following: <Count of={this.following} />
-            </p>
+            
+              <p>
+                Following: <Count of={this.following} />
+              </p>
+            
             <p>
               Followers: <Count of={this.followers} />
             </p>
