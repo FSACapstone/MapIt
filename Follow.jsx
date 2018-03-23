@@ -43,7 +43,7 @@ class Follow extends Component {
       .add({
         follower: followerId,
         following: followingId,
-      });
+      });  
   }
 
   handleUnfollow = (event) => {

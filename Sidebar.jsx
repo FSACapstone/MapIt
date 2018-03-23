@@ -9,14 +9,64 @@ class Sidebar extends Component {
     super(props);
 
     this.state = {
-
-    }
+      numFollowing: 0,
+      numFollowers: 0
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    console.log(this.props)
+    this.setNumFollowers()
+    this.setNumFollowing()
+  }
+
+  setNumFollowers() {
+    const { user, numFollowers } = this.props;
+    db
+      .collection("relationships")
+      .where("following", "==", user.uid)
+      .onSnapshot(querySnapshot => {
+        querySnapshot.docChanges.forEach(change => {
+          if (change.type === "added") {
+            this.setState(prevState => { 
+              return {numFollowers: prevState.numFollowers + 1}
+            })
+          }
+          if (change.type === "removed") {
+            this.setState(prevState => { 
+              return {numFollowers: prevState.numFollowers - 1}
+            })
+          }
+        })
+      })
+  }
+
+  setNumFollowing() {
+    const { user, numFollowing } = this.props;
+    db
+      .collection("relationships")
+      .where("follower", "==", user.uid)
+      .onSnapshot(querySnapshot => {
+        querySnapshot.docChanges.forEach(change => {
+          if (change.type === "added") {
+            this.setState(prevState => { 
+              return {numFollowing: prevState.numFollowing + 1}
+            })
+          }
+          if (change.type === "removed") {
+            this.setState(prevState => { 
+              return {numFollowing: prevState.numFollowing - 1 }
+            })
+          }
+        })
+      })
   }
 
   handleSubmit(event) {
     event.preventDefault();
     const displayName = event.target.displayName.value;
+    const { user } = this.props;
 
     db
       .collection("users")
@@ -32,6 +82,7 @@ class Sidebar extends Component {
   }
 
   render() {
+    const { numFollowing, numFollowers } = this.state;
     const { user } = this.props;
 
     return (
@@ -48,6 +99,8 @@ class Sidebar extends Component {
           </form>
           <p>{user.displayName}</p>
           <p>{user.email}</p>
+          <p>Following: {numFollowing}</p>
+          <p>Followers: {numFollowers}</p>
         </div>
         </div>
       </div>
