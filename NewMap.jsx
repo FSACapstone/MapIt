@@ -4,14 +4,16 @@ import firebase from '~/fire';
 import { withRouter } from "react-router-dom";
 import ResultList from './ResultList'
 
-
 const db = firebase.firestore();
-var markersArray = [];
-function clearOverlays() {
-  for (var i = 0; i < markersArray.length; i++) {
-    markersArray[i].setMap(null);
+
+var searchMarkersArray = [];
+var addedMarkersArr = [];
+
+function clearOverlays(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    arr[i].setMap(null);
   }
-  markersArray.length = 0;
+  arr.length = 0;
 }
 class NewMap extends Component {
   constructor(props) {
@@ -26,26 +28,68 @@ class NewMap extends Component {
 
   clearSearch() {
     this.setState({ results: [] })
-    clearOverlays()
+    clearOverlays(searchMarkersArray)
     var search = this.refs.center
-    console.log(search)
     search.value = ''
   }
 
-  addPlace = (event) => {
-    event.preventDefault();
+  addPlace = (marker, place, infowindow) => {
+
+    //marker.setIcon('https://www.google.com/mapfiles/marker_green.png')
+    infowindow.close()
+    var obj = {}
+    marker.id = place.place_id
+    addedMarkersArr.push(marker)
+    marker.setMap(null)
+    console.log(place);
+    obj[place.place_id] = {
+      lat: place.geometry.location.lat(),
+      lng: place.geometry.location.lng(),
+      name: place.name,
+      address: place.formatted_address,
+    }
+    var mapRef = db.collection('maps').doc(this.props.match.params.id);
+    var getDoc = mapRef.set({
+      places: obj
+    }, { merge: true })
+      .then(doc => {
+        if (!doc.exists) {
+          console.log('No such document!');
+        } else {
+          console.log('Document data:', doc.data());
+        }
+      })
+      .catch(err => {
+        console.log('Error getting document', err);
+      });
   }
 
-  checkFireStore = () => {
-
-    //mapRef.get().then(doc => {return doc.data().places})
-
+  removePlace = (marker) => {
+    marker.setMap(null)
+    var thisHolder = this
+    addedMarkersArr.map((addedMarker) => {
+      if (marker.id === addedMarker.id) {
+        console.log('nothing')
+      }
+      else return addedMarker
+    })
+    var ref = db.collection('maps').where('mid', '==', this.props.match.params.id).get().then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        var placeObj = doc.data().places;
+        var holder = marker.id
+        delete placeObj[holder]
+        var mapRef = db.collection('maps').doc(thisHolder.props.match.params.id);
+        var getDoc = mapRef.update({
+          places: placeObj
+        })
+      });
+    }
+    )
   }
 
-  onClick(event) {
+  onClick = (event) => {
     event.preventDefault()
-    console.log(this.state)
-    if (markersArray.length) {
+    if (searchMarkersArray.length) {
       clearOverlays()
     }
 
@@ -64,63 +108,46 @@ class NewMap extends Component {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
         holder.setState({ results: results })
         for (var i = 0; i < results.length; i++) {
-          if(holder.state.places[results[i].place_id]){
+          if (holder.state.places[results[i].place_id]) {
             console.log('hello dan')
           }
-          else{
-          var place1 = results[i];
-          var center = {
-            lat: place1.geometry.location.lat(),
-            lng: place1.geometry.location.lng()
-          }
-          service.getDetails({
-            placeId: place1.place_id
-          }, function (place, status) {
-            if (status === google.maps.places.PlacesServiceStatus.OK) {
-              var marker = new google.maps.Marker({
-                map: holder.map,
-                position: place.geometry.location
-              });
-              markersArray.push(marker)
-              google.maps.event.addListener(marker, 'click', function () {
-                infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-                  'Place ID: ' + place.place_id + '<br>' +
-                  place.formatted_address + '<button id="addPlaceButton">Add Place</button></div ');
-                infowindow.open(holder.map, this);
-                const getButton = document.getElementById('addPlaceButton');
-                getButton.addEventListener('click', function () {
-                  marker.setIcon('https://www.google.com/mapfiles/marker_green.png')
-                  var obj = {}
-                  obj[place.place_id] = true
-                  var mapRef = db.collection('maps').doc(holder.props.match.params.id);
-                  var getDoc = mapRef.set({
-                    places: obj
-                  }, { merge: true })
-                    .then(doc => {
-                      if (!doc.exists) {
-                        console.log('No such document!');
-                      } else {
-                        console.log('Document data:', doc.data());
-                      }
-                    })
-                    .catch(err => {
-                      console.log('Error getting document', err);
-                    });
-                })
-              });
+          else {
+            var place1 = results[i];
+            var center = {
+              lat: place1.geometry.location.lat(),
+              lng: place1.geometry.location.lng()
             }
-
-          });
+            service.getDetails({
+              placeId: place1.place_id
+            }, function (place, status) {
+              if (status === google.maps.places.PlacesServiceStatus.OK) {
+                var marker = new google.maps.Marker({
+                  map: holder.map,
+                  position: place.geometry.location
+                });
+                searchMarkersArray.push(marker)
+                google.maps.event.addListener(marker, 'click', function () {
+                  infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+                    'Place ID: ' + place.place_id + '<br>' +
+                    place.formatted_address + '<button id="addPlaceButton">Add Place</button></div ');
+                  infowindow.open(holder.map, this);
+                  const getButton = document.getElementById('addPlaceButton');
+                  getButton.addEventListener('click', () => { holder.addPlace(marker, place, infowindow) })
+                });
+              }
+            });
+          }
         }
-      }}
+      }
       else { console.log('no results') }
     }
-
     service.nearbySearch(request, callback);
   }
 
-
   componentDidMount() {
+    db.collection('maps').doc(this.props.match.params.id).set({
+      mid: this.props.match.params.id
+    }, { merge: true })
 
     db
       .collection('maps')
@@ -152,31 +179,41 @@ class NewMap extends Component {
         };
         const autocomplete = new google.maps.places.Autocomplete(input, options);
         var checkedMap = db.collection('maps').doc(this.props.match.params.id).onSnapshot(function (doc) {
-          isthis.setState({places:doc.data().places})
-          for (var places in doc.data().places) {
-            service1.getDetails(
-              {
-                placeId: places
-              }, function (place, status) {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                  var marker = new google.maps.Marker({
-                    map: isthis.map,
-                    position: place.geometry.location,
-                    icon: ('https://www.google.com/mapfiles/marker_green.png')
-                  });
-                }
-              })
+          var infowindow = new google.maps.InfoWindow();
+
+          const arr = doc.data().places
+          isthis.setState({ places: arr })
+          const keysArr = Object.keys(arr)
+          clearOverlays(addedMarkersArr)
+          for (var i = 0; i < keysArr.length; i++) {
+            (() => {
+              var latLng = { lat: arr[keysArr[i]].lat, lng: arr[keysArr[i]].lng }
+              var placeName = keysArr[i]
+              var placeInfo=arr[placeName];
+              var marker = new google.maps.Marker({
+                map: isthis.map,
+                position: latLng,
+                icon: ('https://www.google.com/mapfiles/marker_green.png')
+              });
+              marker.id = placeName
+              addedMarkersArr.push(marker)
+              google.maps.event.addListener(marker, 'click', function () {
+                infowindow.setContent('<div><strong>Work in Progress</strong><br>' +
+                  'Place:' + placeInfo.name + 'Address' + placeInfo.address+ '<br><button id="removePlaceButton">Remove Place</div ');
+                infowindow.open(isthis.map, this);
+                const getButton = document.getElementById('removePlaceButton');
+                getButton.addEventListener('click', () => { isthis.removePlace(marker) })
+              });
+            })()
           }
         })
       })
-
-
   }
 
   render() {
-    const style = { // MUST specify dimensions of the Google map or it will not work. Also works best when style is specified inside the render function and created as an object
-      width: '90vw', // 90vw basically means take up 90% of the width screen. px also works.
-      height: '75vh' // 75vh similarly will take up roughly 75% of the height of the screen. px also works.
+    const style = {
+      width: '90vw',
+      height: '75vh'
     };
     return (
       <div>
@@ -186,21 +223,12 @@ class NewMap extends Component {
         <form onSubmit={this.onClick}>
           <input ref='center' id='center' className='controls' type='text' placeholder='search for place' name='search' />
           <button type='submit' />
-
         </form>
         <button onClick={this.clearSearch}>Clear Search </button>
       </div>
     )
   }
-
-
-
-
 }
 
+export default withRouter(NewMap);
 
-export default withRouter(NewMap)
-
-
-// {(this.state.results.length) ? <ResultList results={this.state.results} id={this.props.match.params.id} /> : <div>no results</div>}
-//         // <button onClick={this.clearSearch}>Clear Search </button>
