@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Follow from "./Follow";
+import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
 import { withRouter } from "react-router-dom";
 import firebase from "~/fire";
 import Count from './Count'
@@ -15,7 +16,8 @@ class SingleUser extends Component {
       numFollowing: 0,
       user: {},
       relationshipDocId: "",
-      relationshipExists: false
+      relationshipExists: false,
+      createdMaps: []
     };
   }
 
@@ -40,6 +42,19 @@ class SingleUser extends Component {
           })
         );
       });
+    db
+      .collection("maps")
+      .where("uid", "==", userId)
+      .get()
+      .then(querySnapshot => {
+        const mapTitleArr = [];
+        querySnapshot.forEach( map => {
+          mapTitleArr.push(map.data().title);
+        });
+        this.setState({
+          createdMaps: mapTitleArr
+        });
+      });
   }
 
   get followers() {
@@ -54,6 +69,7 @@ class SingleUser extends Component {
 
   render() {
     const { user, numFollowing, numFollowers, loading } = this.state;
+    const { createdMaps } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
 
@@ -67,6 +83,15 @@ class SingleUser extends Component {
         <h2>Following: <Count of={this.following} /></h2>
         <h2>Followers: <Count of={this.followers} /></h2>
         <Follow followerId={signedInUser.uid} followingId={userId} />
+        <div className="text-align-center">
+          <h3>UID: {userId}</h3>
+          <h4>Maps created:</h4>
+          {
+            createdMaps.length && createdMaps.map( mapTitle => {
+              return <p>{mapTitle}</p>;
+            })
+          }
+        </div>
       </div>
     );
   }
