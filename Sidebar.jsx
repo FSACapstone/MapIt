@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter, NavLink } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
 import Typography from "material-ui/Typography";
@@ -14,6 +14,10 @@ class Sidebar extends Component {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+
   }
 
   handleSubmit(event) {
@@ -34,6 +38,7 @@ class Sidebar extends Component {
       .catch(err => console.error(err));
   }
 
+
   get followers() {
     const { user } = this.props;
     return db.collection("relationships").where("following", "==", user.uid);
@@ -44,8 +49,14 @@ class Sidebar extends Component {
     return db.collection("relationships").where("follower", "==", user.uid);
   }
 
+  get mapsCreated() {
+    const { user } = this.props;
+    return db.collection("maps").where("uid", "==", user.uid);
+  }
+
   render() {
     const { user, classes } = this.props;
+    console.log(user)
 
     return (
       <div id="sidebar">
@@ -58,7 +69,7 @@ class Sidebar extends Component {
             <div className="sidebar-flex-info">
               <div className="sidebar-flex-inner">
               <Typography color="inherit" className={classes.typography}>Following</Typography>
-              <Typography color="inherit" className={classes.typography}><Count of={this.following}/>
+              <Typography color="inherit" className={classes.typography}><Count of={this.following} />
               </Typography>
               </div>
               <div className="sidebar-flex-inner">
@@ -67,7 +78,7 @@ class Sidebar extends Component {
               </div>
               <div className="sidebar-flex-inner">
               <Typography color="inherit" className={classes.typography}>Maps</Typography>
-              <Typography color="inherit" className={classes.typography}>0</Typography>
+              <Typography color="inherit" className={classes.typography}><Count of={this.mapsCreated} /></Typography>
               </div>
             </div>
           </div>
