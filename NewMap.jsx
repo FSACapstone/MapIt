@@ -219,7 +219,7 @@ class NewMap extends Component {
       <div>
         <div ref="newmap" style={style}>
           Loading map...
-      </div>
+        </div>
         <form onSubmit={this.onClick}>
           <input ref='center' id='center' className='controls' type='text' placeholder='search for place' name='search' />
           <button type='submit' />

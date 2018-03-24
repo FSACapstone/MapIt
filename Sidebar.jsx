@@ -53,22 +53,6 @@ class Sidebar extends Component {
           <div>
             <img src={user.photoURL} />
           </div>
-<<<<<<< HEAD
-
-          <div>
-            <form onSubmit={this.handleSubmit}>
-              <input type="text" name="displayName" />
-            </form>
-            <p>{user.displayName}</p>
-            
-              <p>
-                Following: <Count of={this.following} />
-              </p>
-            
-            <p>
-              Followers: <Count of={this.followers} />
-            </p>
-=======
        
         <div>
           <Typography color="inherit" className={classes.typography}>{user.displayName}</Typography>
@@ -87,7 +71,6 @@ class Sidebar extends Component {
             <Typography color="inherit" className={classes.typography}>0</Typography>
             </div>
           </div>
->>>>>>> f3464fe0ace55fdc69d06a10fec63a36e6d69391
           </div>
         </div>
       </div>

@@ -51,6 +51,7 @@ class UsersCreatedMaps extends Component {
         <h4>Maps created:</h4>
         {createdMaps.length &&
           createdMaps.map(map => {
+            console.log(map)
             return <p>{map.title}</p>;
           })}
       </div>
