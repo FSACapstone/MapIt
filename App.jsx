@@ -7,9 +7,10 @@ import SingleUser from './SingleUser';
 import { GoogleApiWrapper } from 'google-maps-react';
 import firebase, { auth } from '~/fire';
 import NavBar from './Navbar';
-import NewMap from "./NewMap";
+import NewMap from './NewMap';
 import CircularLoad from './CircularProgress';
-import CreatedMap from './components/CreatedMap'
+import CreatedMap from './components/CreatedMap';
+import NotFound from './NotFound';
 
 const db = firebase.firestore();
 
@@ -117,25 +118,12 @@ class App extends Component {
       <div>
         <NavBar user={user}/>
         <div className="position-fixed">
-          <Sidebar user={user} documentId={documentId} numFollowers={numFollowers} numFollowing={numFollowing}/>
+          <Sidebar user={user} documentId={documentId} numFollowers={numFollowers} numFollowing={numFollowing} />
         </div>
         <div className="wrapper">
           <div className="col-1" />
           <div className="col-2">
             <Switch>
-              <Route
-                exact path="/"
-                render={() => (
-                  <GoogleMap
-                    google={{
-                      ...this.props.google,
-                      loc: { lat: 20, lng: -70 },
-                      user: user
-                    }}
-                  />
-                )}
-              />
-              )} />
               <Route
                 exact
                 path="/:user"
@@ -158,7 +146,19 @@ class App extends Component {
                 path="/map/:id"
                 render={() => <CreatedMap google={this.props.google}  />}
               />
-
+              <Route
+                path="/"
+                render={() => (
+                  <GoogleMap
+                    google={{
+                      ...this.props.google,
+                      loc: { lat: 20, lng: -70 },
+                      user: user
+                    }}
+                  />
+                )}
+              />
+              )} />
             </Switch>
             </div>
             </div>

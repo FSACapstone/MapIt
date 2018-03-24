@@ -11,7 +11,6 @@ class CreatedMap extends Component {
   }
 
   componentDidMount() {
-
     db
       .collection('maps')
       .doc(this.props.match.params.id)
@@ -53,26 +52,14 @@ class CreatedMap extends Component {
               infowindow.open(this.map, this);
             });
           })()
-
         }
-
-
-
-
-
-
   })
 }
 
-  componentWillReceiveProps() {
-  }
+  componentWillReceiveProps() {}
 
 
-  updateUserView() {
-
-  }
-
-
+  updateUserView() {}
 
   render() {
     const style = {
@@ -81,9 +68,9 @@ class CreatedMap extends Component {
     };
 
     return (
-      <div ref="createdMap" style={style}>
-        Loading map...
-      </div>
+      <div ref="createdMap" className="google-map">
+          Loading map...
+        </div>
     );
   }
 }
