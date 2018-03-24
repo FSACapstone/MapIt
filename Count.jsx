@@ -14,15 +14,14 @@ export default class Count extends Component {
     this.unsubscribe && this.unsubscribe();
   }
 
-  listen({of}) {
-    this.unsubscribe = of
-      .onSnapshot(querySnapshot => {
-          this.setState({count: querySnapshot.size})
-      });
+  listen({ of }) {
+    this.unsubscribe = of.onSnapshot(querySnapshot => {
+      this.setState({ count: querySnapshot.size });
+    });
   }
 
   render() {
-    const { count = '' }  = this.state || {};
-    return count
+    const { count = "" } = this.state || {};
+    return count;
   }
 }

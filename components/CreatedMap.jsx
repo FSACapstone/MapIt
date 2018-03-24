@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 import { withRouter } from "react-router-dom";
 import firebase from "~/fire";
+import Button from "material-ui/Button";
 
 const db = firebase.firestore();
 
@@ -11,78 +12,125 @@ class CreatedMap extends Component {
   }
 
   componentDidMount() {
-
+    this.listen(this.props);
     db
-      .collection('maps')
+      .collection("maps")
       .doc(this.props.match.params.id)
       .get()
-      .then((map) => {
-        const dbMapRef = map.data()
-        const places = dbMapRef.places
-        console.log(places)
-
+      .then(map => {
+        const dbMapRef = map.data();
+        const places = dbMapRef.places;
         const { google } = this.props; // sets props equal to google
         const maps = google.maps; // sets maps to google maps props
         const mapRef = this.refs.createdMap; // looks for HTML div ref 'map'. Returned in render below.
         const node = ReactDOM.findDOMNode(mapRef); // finds the 'map' div in the React DOM, names it node
-        const mapConfig = Object.assign({},
-
+        const mapConfig = Object.assign(
+          {},
           {
             center: dbMapRef.center, // sets center of google map to NYC.
             zoom: 15, // sets zoom. Lower numbers are zoomed further out.
-            mapTypeId: 'roadmap' // optional main map layer. Terrain, satellite, hybrid or roadmap--if unspecified, defaults to roadmap.
-          });
-        this.map = new maps.Map(node, mapConfig)
+            mapTypeId: "roadmap" // optional main map layer. Terrain, satellite, hybrid or roadmap--if unspecified, defaults to roadmap.
+          }
+        );
+        this.map = new maps.Map(node, mapConfig);
         var infowindow = new google.maps.InfoWindow();
-        for(var place in places){
+        for (var place in places) {
           (() => {
-            var internalPlaceObj = places[place]
-            var latLng = { lat: internalPlaceObj.lat, lng: internalPlaceObj.lng }
-            var placeName = internalPlaceObj.name
-            var placeAddress = internalPlaceObj.address
+            var internalPlaceObj = places[place];
+            var latLng = {
+              lat: internalPlaceObj.lat,
+              lng: internalPlaceObj.lng
+            };
+            var placeName = internalPlaceObj.name;
+            var placeAddress = internalPlaceObj.address;
             var marker = new google.maps.Marker({
               map: this.map,
               position: latLng,
-              icon: ('https://www.google.com/mapfiles/marker_green.png')
+              icon: "https://www.google.com/mapfiles/marker_green.png"
             });
             //marker.id = placeName
             //addedMarkersArr.push(marker)
-            google.maps.event.addListener(marker, 'click', function () {
-              infowindow.setContent('<div><strong>' +
-                  placeName + '</strong><br>Address:' + placeAddress+ '</div ');
+            google.maps.event.addListener(marker, "click", function() {
+              infowindow.setContent(
+                "<div><strong>" +
+                  placeName +
+                  "</strong><br>Address:" +
+                  placeAddress +
+                  "</div "
+              );
               infowindow.open(this.map, this);
             });
-          })()
-
+          })();
         }
-
-
-
-
-
-
-  })
-}
-
-  componentWillReceiveProps() {
+      });
   }
 
-
-  updateUserView() {
-
+  componentWillReceiveProps(props) {
+    this.listen(props);
   }
 
+  componentWillUnmount() {
+    this.unsubscribe && this.unsubscribe();
+  }
 
+  listen({ followerUserId }) {
+    const followingMapId = this.props.match.params.id;
+    this.unsubscribe = db
+      .collection("favoritedMaps")
+      .where("userId", "==", followerUserId)
+      .where("mapId", "==", followingMapId)
+      .onSnapshot(querySnapshot => {
+        if (!querySnapshot.empty) {
+          return this.setState({
+            favoritedMapRef: querySnapshot.docs[0].ref,
+            mapFavorited: true
+          });
+        }
+        this.setState({
+          favoritedMapRef: null,
+          mapFavorited: false
+        });
+      });
+  }
+
+  handleFavorite = event => {
+    const followingMapId = this.props.match.params.id;
+    event.preventDefault();
+    const { followerUserId } = this.props;
+    db.collection("favoritedMaps").add({
+      userId: followerUserId,
+      mapId: followingMapId
+    });
+  };
+
+  handleUnfavorite = event => {
+    event.preventDefault();
+    return this.state.favoritedMapRef.delete();
+  };
 
   render() {
+    const { mapFavorited } = this.state || {};
+
     const style = {
-      width: '100vw',
-      height: '100vh'
+      width: "100vw",
+      height: "100vh"
     };
 
     return (
-      <div ref="createdMap" style={style}>
-        Loading map...
+      <div>
+        <div className="google-map-buttons text-align-center">
+          { mapFavorited
+          ? <Button variant="raised" color="primary" onClick={this.handleUnfavorite}>
+              Unfavorite
+            </Button>
+          : <Button variant="raised" color="primary" onClick={this.handleFavorite}>
+              Favorite
+            </Button>
+          }
+        </div>
+        <div ref="createdMap" style={style}>
+          Loading map...
+        </div>
       </div>
     );
   }
