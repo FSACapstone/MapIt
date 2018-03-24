@@ -9,6 +9,7 @@ import firebase, { auth } from '~/fire';
 import NavBar from './Navbar';
 import NewMap from "./NewMap";
 import CircularLoad from './CircularProgress';
+import CreatedMap from './components/CreatedMap'
 
 const db = firebase.firestore();
 
@@ -152,6 +153,12 @@ class App extends Component {
                 path="/newmap/:id"
                 render={() => <NewMap google={this.props.google} />}
               />
+              <Route
+                exact
+                path="/map/:id"
+                render={() => <CreatedMap google={this.props.google}  />}
+              />
+
             </Switch>
             </div>
             </div>
