@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Follow from "./Follow";
 import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
-import { withRouter } from "react-router-dom";
+import { withRouter,Link } from "react-router-dom";
 import firebase from "~/fire";
 import Count from './Count'
 
@@ -88,7 +88,8 @@ class SingleUser extends Component {
           <h4>Maps created:</h4>
           {
             Object.keys(createdMaps).length && Object.keys(createdMaps).map( mapId => {
-              return <p key={mapId}>{createdMaps[mapId].title}</p>;
+              console.log(mapId)
+              return <Link to ={`/map/${mapId}`} key = {mapId}><p>{createdMaps[mapId].title}</p></Link>;
             })
           }
         </div>
