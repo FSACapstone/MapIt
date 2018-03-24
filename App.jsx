@@ -8,14 +8,10 @@ import { GoogleApiWrapper } from "google-maps-react";
 import firebase, { auth } from "~/fire";
 import NavBar from "./Navbar";
 import NewMap from "./NewMap";
-<<<<<<< HEAD
 import CircularLoad from "./CircularProgress";
 import FollowingUsers from "./FollowingUsers";
 import FollowersUsers from "./FollowersUsers";
-=======
-import CircularLoad from './CircularProgress';
 import CreatedMap from './components/CreatedMap'
->>>>>>> a01f415253e2e04747723e1f019129174b9eaa7b
 
 const db = firebase.firestore();
 
