@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
 import Typography from "material-ui/Typography";
@@ -51,26 +51,25 @@ class Sidebar extends Component {
       <div id="sidebar">
         <div className="sidebar-margin">
           <div>
-            <img src={user.photoURL} />
+            <Link to={`/user/${user.uid}`}><img src={user.photoURL} /></Link>
           </div>
-       
-        <div>
-          <Typography color="inherit" className={classes.typography}>{user.displayName}</Typography>
-          <div className="sidebar-flex-info">
-            <div className="sidebar-flex-inner">
-            <Typography color="inherit" className={classes.typography}>Following</Typography>
-            <Typography color="inherit" className={classes.typography}><Count of={this.following}/>
-            </Typography>
+            <div>
+              <Typography color="inherit" className={classes.typography}>{user.displayName}</Typography>
+            <div className="sidebar-flex-info">
+              <div className="sidebar-flex-inner">
+              <Typography color="inherit" className={classes.typography}>Following</Typography>
+              <Typography color="inherit" className={classes.typography}><Count of={this.following}/>
+              </Typography>
+              </div>
+              <div className="sidebar-flex-inner">
+              <Typography color="inherit" className={classes.typography}>Followers</Typography>
+              <Typography color="inherit" className={classes.typography}><Count of={this.followers} /></Typography>
+              </div>
+              <div className="sidebar-flex-inner">
+              <Typography color="inherit" className={classes.typography}>Maps</Typography>
+              <Typography color="inherit" className={classes.typography}>0</Typography>
+              </div>
             </div>
-            <div className="sidebar-flex-inner">
-            <Typography color="inherit" className={classes.typography}>Followers</Typography>
-            <Typography color="inherit" className={classes.typography}><Count of={this.followers} /></Typography>
-            </div>
-            <div className="sidebar-flex-inner">
-            <Typography color="inherit" className={classes.typography}>Maps</Typography>
-            <Typography color="inherit" className={classes.typography}>0</Typography>
-            </div>
-          </div>
           </div>
         </div>
       </div>

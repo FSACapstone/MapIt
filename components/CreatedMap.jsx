@@ -128,7 +128,7 @@ class CreatedMap extends Component {
             </Button>
           }
         </div>
-        <div ref="createdMap" style={style}>
+        <div ref="createdMap" className="google-map">
           Loading map...
         </div>
       </div>

@@ -23,6 +23,7 @@ class GoogleMap extends Component {
 
     this.state = {
       openNewForm: false,
+      centerMap: false,
       title: '',
       tags: '',
       center: {}
@@ -91,6 +92,8 @@ class GoogleMap extends Component {
       }
     });
 
+    this.setState({centerMap: true})
+
   }
 
   componentDidMount() {
@@ -143,7 +146,7 @@ class GoogleMap extends Component {
 
   render() {
     const { classes } = this.props;
-    const { openNewForm } = this.state;
+    const { openNewForm, centerMap } = this.state;
 
     const style = { 
       width: '100vw',
@@ -152,20 +155,27 @@ class GoogleMap extends Component {
 
     return (
       <div>
-        <div className="google-map-buttons text-align-center">
+       
+          { (!openNewForm) && 
+            <div className="google-map-buttons text-align-center">
             <input id='center-point' className='controls google-map-input' type='text' placeholder='Search Locations' />
           <Button variant="raised" color="primary" className={classes.button} onClick={this.onSearchClick}>Center Map</Button>
-          <Button variant="raised" color="primary" onClick={this.onCreateClick}>Create New Map</Button>
-          <div className="google-map-buttons-2">
-          { (openNewForm) &&
-            <form onSubmit={this.onSubmitMapInfo} onChange = {this.onChange}>
-              <input name="title" placeholder="New Map Name"  required  />
-              <input name="tags" placeholder="Enter Hashtags" required />
-              <Button variant="raised" color="primary" className={classes.button} type="submit" >Submit</Button>
-            </form>
+          { (centerMap) &&
+            <Button variant="raised" color="primary" onClick={this.onCreateClick}>Create New Map</Button>
           }
           </div>
-        </div>
+          }
+       
+        { (openNewForm) &&
+          <div className="google-map-buttons-2 text-align-center">
+          <form onSubmit={this.onSubmitMapInfo} onChange = {this.onChange}>
+            <input name="title" className="google-map-input google-input-margin" placeholder="New Map Name" required />
+            <input name="tags" className="google-map-input google-input-margin" placeholder="Enter Hashtags" required />
+            <Button variant="raised" color="primary" className={classes.button} type="submit" >Submit</Button>
+          </form>  
+            <Button variant="raised" color="primary" className={classes.button} type="text" onClick={this.onCreateClick}>Back</Button>
+          </div>
+        }
         <div ref="map" className="google-map">
           Loading map...
         </div>
@@ -186,3 +196,4 @@ const styles = theme => ({
 });
 
 export default (withStyles(styles))(withRouter(GoogleMap));
+

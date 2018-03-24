@@ -15,7 +15,7 @@ class SingleUser extends Component {
       numFollowers: 0,
       numFollowing: 0,
       user: {},
-      relationshipDocId: "",
+      relationshipDocId: '',
       relationshipExists: false,
       createdMaps: {}
     };

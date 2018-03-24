@@ -130,20 +130,6 @@ class App extends Component {
             <Switch>
               <Route
                 exact
-                path="/"
-                render={() => (
-                  <GoogleMap
-                    google={{
-                      ...this.props.google,
-                      loc: { lat: 20, lng: -70 },
-                      user: user
-                    }}
-                  />
-                )}
-              />
-              )} />
-              <Route
-                exact
                 path="/:user"
                 render={() => <Sidebar user={user} documentId={documentId} />}
               />
@@ -169,6 +155,19 @@ class App extends Component {
                   />
                 )}
               />
+              <Route
+                path="/"
+                render={() => (
+                  <GoogleMap
+                    google={{
+                      ...this.props.google,
+                      loc: { lat: 20, lng: -70 },
+                      user: user
+                    }}
+                  />
+                )}
+              />
+              )} />
             </Switch>
           </div>
         </div>
