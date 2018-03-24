@@ -9,7 +9,6 @@ import firebase, { auth } from "~/fire";
 import NavBar from "./Navbar";
 import NewMap from "./NewMap";
 import CircularLoad from "./CircularProgress";
-import FollowingUsers from "./FollowingUsers";
 import FollowersUsers from "./FollowersUsers";
 import CreatedMap from './components/CreatedMap'
 
@@ -174,9 +173,13 @@ class App extends Component {
               <Route
                 exact
                 path="/map/:id"
-                render={() => <CreatedMap google={this.props.google}  />}
+                render={() => (
+                  <CreatedMap
+                    google={this.props.google}
+                    followerUserId={this.state.user.uid}
+                  />
+                )}
               />
-
             </Switch>
           </div>
         </div>
