@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import firebase from '~/fire';
 import { withRouter } from "react-router-dom";
 import ResultList from './ResultList'
+import GoogleMapButton from './GoogleMapButton';
 
 const db = firebase.firestore();
 
@@ -20,7 +21,7 @@ class NewMap extends Component {
     super(props)
     this.state = {
       results: [],
-      places: {}
+      places: {},
     }
     this.onClick = this.onClick.bind(this)
     this.clearSearch = this.clearSearch.bind(this)
@@ -129,7 +130,7 @@ class NewMap extends Component {
                 google.maps.event.addListener(marker, 'click', function () {
                   infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
                     'Place ID: ' + place.place_id + '<br>' +
-                    place.formatted_address + '<button id="addPlaceButton">Add Place</button></div ');
+                    place.formatted_address + '<div class="text-align-center"><button id="addPlaceButton">Add Place</button></div></div> ');
                   infowindow.open(holder.map, this);
                   const getButton = document.getElementById('addPlaceButton');
                   getButton.addEventListener('click', () => { holder.addPlace(marker, place, infowindow) })
@@ -199,7 +200,7 @@ class NewMap extends Component {
               addedMarkersArr.push(marker)
               google.maps.event.addListener(marker, 'click', function () {
                 infowindow.setContent('<div><strong>Work in Progress</strong><br>' +
-                  'Place:' + placeInfo.name + 'Address' + placeInfo.address+ '<br><button id="removePlaceButton">Remove Place</div ');
+                  'Place:' + placeInfo.name + 'Address' + placeInfo.address + '<br><div class="text-align-center"><button id="removePlaceButton">Remove Place</div></div> ');
                 infowindow.open(isthis.map, this);
                 const getButton = document.getElementById('removePlaceButton');
                 getButton.addEventListener('click', () => { isthis.removePlace(marker) })
@@ -212,19 +213,30 @@ class NewMap extends Component {
 
   render() {
     const style = {
-      width: '90vw',
-      height: '75vh'
+      width: '100vw',
+      height: '100vh'
     };
+
     return (
       <div>
-        <div ref="newmap" style={style}>
+        <div className="google-map-buttons text-align-center">
+          <form onSubmit={this.onClick}>
+            <input ref="center" id="center" className="google-map-input google-input-margin" type="text" placeholder="Search For A Place" name="search" />
+            {
+
+            }
+            <GoogleMapButton type={`submit`} text={`Add to map`} />
+            {
+
+            <GoogleMapButton onClick={this.clearSearch} text={`Clear Search`} />
+            }
+          </form>
+          
+        </div>
+        <div ref="newmap" className="google-map">
           Loading map...
         </div>
-        <form onSubmit={this.onClick}>
-          <input ref='center' id='center' className='controls' type='text' placeholder='search for place' name='search' />
-          <button type='submit' />
-        </form>
-        <button onClick={this.clearSearch}>Clear Search </button>
+        
       </div>
     )
   }
