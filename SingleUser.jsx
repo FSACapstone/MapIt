@@ -68,45 +68,34 @@ class SingleUser extends Component {
     return db.collection("relationships").where("follower", "==", userId);
   }
 
-  // Get the maps this user has favorited:
-  // get favoritedMaps() {
-  //   const userId = this.props.match.params.uid;
-  //   return db.collection("favoritedMaps").where("userId", "==", userId);
-  // }
+  get mapsCreated() {
+    const userId = this.props.match.params.uid;
+    return db.collection("maps").where("uid", "==", userId);
+  }
 
   render() {
-    const { user, numFollowing, numFollowers, loading } = this.state;
-    const { createdMaps } = this.state;
+    const { user, numFollowing, numFollowers, loading, createdMaps } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
-    console.log(signedInUser.uid, userId);
-    // return !user ? (
-    //   <div>Loading...</div>
-    // ) : (
-      if(signedInUser.uid === userId) console.log('true');
-      return (
+
+    return (
       <div className="text-align-center">
         <img src={user.photoURL} className="margin-top-5" />
         <h1>{user.displayName}</h1>
-        <h2>{user.email}</h2>
         {
           signedInUser.uid === userId
           ? <div />
           : <Follow followerId={signedInUser.uid} followingId={userId} />
         }
-        <NavLink to={`/following/${userId}`}>
-          <h2>
-            Following: <Count of={this.following} />
-          </h2>
-        </NavLink> 
         <NavLink to={`/followers/${userId}`}>
-          <h2>
-            Followers: <Count of={this.followers} />
-          </h2>
+          <h2>Followers: <Count of={this.followers} /></h2>
         </NavLink>
-       
+        <NavLink to={`/following/${userId}`}>
+          <h2>Following: <Count of={this.following} /></h2>
+        </NavLink>
+
         <div className="text-align-center">
-          <h2>Maps Created (favorited)</h2>
+          <h2>Maps Created: <Count of={this.mapsCreated} /></h2>
           {
             Object.keys(createdMaps).length && Object.keys(createdMaps).map( mapId => {
               return (
@@ -120,7 +109,7 @@ class SingleUser extends Component {
           }
         </div>
       </div>
-    );
+  );
   }
 }
 
