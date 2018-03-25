@@ -75,3 +75,64 @@
     at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:92:26)
 [error] 
 [error] Error: Server Error. getaddrinfo ENOTFOUND admin.firebase.com admin.firebase.com:443
+[debug] [2018-03-25T19:21:44.662Z] ----------------------------------------------------------------------
+[debug] [2018-03-25T19:21:44.667Z] Command:       /usr/local/Cellar/node/8.9.1/bin/node /Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt/node_modules/.bin/firebase serve --only functions,hosting
+[debug] [2018-03-25T19:21:44.667Z] CLI Version:   3.17.6
+[debug] [2018-03-25T19:21:44.667Z] Platform:      darwin
+[debug] [2018-03-25T19:21:44.667Z] Node Version:  v8.9.1
+[debug] [2018-03-25T19:21:44.668Z] Time:          Sun Mar 25 2018 15:21:44 GMT-0400 (EDT)
+[debug] [2018-03-25T19:21:44.668Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-25T19:21:44.701Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-25T19:21:44.702Z] > authorizing via signed-in user
+[debug] [2018-03-25T19:21:44.706Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-03-25T19:21:44.706Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/_mD3J5zccVDF-IwMv991FHVtCn064DFwX1YTRxTTz5U',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Sun Mar 25 2018 15:21:44 GMT-0400 (EDT)
+[debug] [2018-03-25T19:21:45.012Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-25T19:21:45.058Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/map-it-fsa  
+  
+ Sun Mar 25 2018 15:21:45 GMT-0400 (EDT)
+[debug] [2018-03-25T19:21:45.456Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-25T19:21:45.457Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/map-it-fsa/tokens  
+  
+ Sun Mar 25 2018 15:21:45 GMT-0400 (EDT)
+[debug] [2018-03-25T19:21:45.825Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-25T19:21:45.826Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/map-it-fsa  
+  
+ Sun Mar 25 2018 15:21:45 GMT-0400 (EDT)
+[debug] [2018-03-25T19:21:46.120Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-03-25T19:21:48.414Z] Fetching environment
+[debug] [2018-03-25T19:21:48.424Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469:getServerAppConfig  
+  
+ Sun Mar 25 2018 15:21:48 GMT-0400 (EDT)
+[debug] [2018-03-25T19:21:48.425Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469/clients/_:getWebAppConfig  
+  
+ Sun Mar 25 2018 15:21:48 GMT-0400 (EDT)
+[debug] [2018-03-25T19:21:48.906Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-25T19:21:48.907Z] Starting @google-cloud/functions-emulator
+[debug] [2018-03-25T19:21:48.954Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[debug] [2018-03-25T19:21:53.056Z] Parsing function triggers
+[info] ✔  functions: helloWorld: http://localhost:5001/map-it-fsa/us-central1/helloWorld
+[info] Shutting down...
+[debug] [2018-03-25T19:27:01.265Z] Error: write EPIPE
+    at _errnoException (util.js:1024:11)
+    at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2018-03-25T19:27:01.267Z] Error: write EPIPE
+    at _errnoException (util.js:1024:11)
+    at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
+[error] 
+[error] Error: An unexpected error has occurred.

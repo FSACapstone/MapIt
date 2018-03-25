@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Follow from "./Follow";
 import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
-import { withRouter,Link } from "react-router-dom";
+import { withRouter, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import firebase from "~/fire";
 import Count from './Count';
 import CircularLoad from "./CircularProgress";
@@ -87,16 +88,28 @@ class SingleUser extends Component {
       <div className="text-align-center">
       <CircularLoad color={`secondary`} size={100} />
       </div>
-    ) : (
+    ) : 
+      (
       <div className="text-align-center">
         <img src={user.photoURL} className="margin-top-5" />
         <h1>{user.displayName}</h1>
-        <Follow followerId={signedInUser.uid} followingId={userId} />
-        <div>
-          <h2>Following: <Count of={this.following} /></h2>
-          <h2>Followers: <Count of={this.followers} /></h2>
-        </div>
-
+        <h2>{user.email}</h2>
+        {
+          signedInUser.uid === userId
+          ? <div />
+          : <Follow followerId={signedInUser.uid} followingId={userId} />
+        }
+        <NavLink to={`/following/${userId}`}>
+          <h2>
+            Following: <Count of={this.following} />
+          </h2>
+        </NavLink> 
+        <NavLink to={`/followers/${userId}`}>
+          <h2>
+            Followers: <Count of={this.followers} />
+          </h2>
+        </NavLink>
+       
         <div className="text-align-center">
           <h2>Maps Created (favorited)</h2>
           {

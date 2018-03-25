@@ -9,7 +9,8 @@ import firebase, { auth } from "~/fire";
 import NavBar from "./Navbar";
 import NewMap from "./NewMap";
 import CircularLoad from "./CircularProgress";
-import CreatedMap from "./components/CreatedMap";
+import FollowersUsers from "./FollowersUsers";
+import CreatedMap from './components/CreatedMap'
 
 const db = firebase.firestore();
 
@@ -128,6 +129,30 @@ class App extends Component {
           <div className="col-1" />
           <div className="col-2">
             <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => (
+                  <GoogleMap
+                    google={{
+                      ...this.props.google,
+                      loc: { lat: 20, lng: -70 },
+                      user: user
+                    }}
+                  />
+                )}
+              />
+              )} />
+              <Route
+                exact
+                path="/following/:userId"
+                render={() => <FollowingUsers />}
+              />
+              <Route
+                exact
+                path="/followers/:userId"
+                render={() => <FollowersUsers />}
+              />
               <Route
                 exact
                 path="/:user"
