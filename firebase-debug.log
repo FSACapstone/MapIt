@@ -1,0 +1,77 @@
+[debug] [2018-03-24T23:03:11.402Z] ----------------------------------------------------------------------
+[debug] [2018-03-24T23:03:11.409Z] Command:       /usr/local/Cellar/node/8.9.1/bin/node /Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt/node_modules/.bin/firebase serve --only functions,hosting
+[debug] [2018-03-24T23:03:11.410Z] CLI Version:   3.17.6
+[debug] [2018-03-24T23:03:11.410Z] Platform:      darwin
+[debug] [2018-03-24T23:03:11.410Z] Node Version:  v8.9.1
+[debug] [2018-03-24T23:03:11.410Z] Time:          Sat Mar 24 2018 19:03:11 GMT-0400 (EDT)
+[debug] [2018-03-24T23:03:11.411Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-24T23:03:11.432Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-24T23:03:11.433Z] > authorizing via signed-in user
+[debug] [2018-03-24T23:03:11.437Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/map-it-fsa  
+  
+ Sat Mar 24 2018 19:03:11 GMT-0400 (EDT)
+[debug] [2018-03-24T23:03:11.918Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-24T23:03:11.920Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/map-it-fsa/tokens  
+  
+ Sat Mar 24 2018 19:03:11 GMT-0400 (EDT)
+[debug] [2018-03-24T23:03:12.432Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-24T23:03:12.434Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/map-it-fsa  
+  
+ Sat Mar 24 2018 19:03:12 GMT-0400 (EDT)
+[debug] [2018-03-24T23:03:12.705Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-03-24T23:03:14.945Z] Fetching environment
+[debug] [2018-03-24T23:03:14.948Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469:getServerAppConfig  
+  
+ Sat Mar 24 2018 19:03:14 GMT-0400 (EDT)
+[debug] [2018-03-24T23:03:14.949Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469/clients/_:getWebAppConfig  
+  
+ Sat Mar 24 2018 19:03:14 GMT-0400 (EDT)
+[debug] [2018-03-24T23:03:15.403Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-24T23:03:15.404Z] Starting @google-cloud/functions-emulator
+[debug] [2018-03-24T23:03:15.439Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[debug] [2018-03-24T23:03:19.646Z] Parsing function triggers
+[info] ✔  functions: helloWorld: http://localhost:5001/map-it-fsa/us-central1/helloWorld
+[debug] [2018-03-24T23:32:21.561Z] ----------------------------------------------------------------------
+[debug] [2018-03-24T23:32:21.570Z] Command:       /usr/local/Cellar/node/8.9.1/bin/node /Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt/node_modules/.bin/firebase serve --only functions,hosting
+[debug] [2018-03-24T23:32:21.570Z] CLI Version:   3.17.6
+[debug] [2018-03-24T23:32:21.570Z] Platform:      darwin
+[debug] [2018-03-24T23:32:21.570Z] Node Version:  v8.9.1
+[debug] [2018-03-24T23:32:21.572Z] Time:          Sat Mar 24 2018 19:32:21 GMT-0400 (EDT)
+[debug] [2018-03-24T23:32:21.572Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-24T23:32:21.603Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-24T23:32:21.604Z] > authorizing via signed-in user
+[debug] [2018-03-24T23:32:21.608Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/map-it-fsa  
+  
+ Sat Mar 24 2018 19:32:21 GMT-0400 (EDT)
+[debug] [2018-03-24T23:32:21.804Z] Error: getaddrinfo ENOTFOUND admin.firebase.com admin.firebase.com:443
+    at errnoException (dns.js:50:10)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:92:26)
+[error] 
+[error] Error: Server Error. getaddrinfo ENOTFOUND admin.firebase.com admin.firebase.com:443
+[debug] [2018-03-24T23:33:52.808Z] ----------------------------------------------------------------------
+[debug] [2018-03-24T23:33:52.833Z] Command:       /usr/local/Cellar/node/8.9.1/bin/node /Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt/node_modules/.bin/firebase serve --only functions,hosting
+[debug] [2018-03-24T23:33:52.833Z] CLI Version:   3.17.6
+[debug] [2018-03-24T23:33:52.833Z] Platform:      darwin
+[debug] [2018-03-24T23:33:52.833Z] Node Version:  v8.9.1
+[debug] [2018-03-24T23:33:52.900Z] Time:          Sat Mar 24 2018 19:33:52 GMT-0400 (EDT)
+[debug] [2018-03-24T23:33:52.900Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-24T23:33:52.940Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-24T23:33:52.941Z] > authorizing via signed-in user
+[debug] [2018-03-24T23:33:52.949Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/map-it-fsa  
+  
+ Sat Mar 24 2018 19:33:52 GMT-0400 (EDT)
+[debug] [2018-03-24T23:33:53.226Z] Error: getaddrinfo ENOTFOUND admin.firebase.com admin.firebase.com:443
+    at errnoException (dns.js:50:10)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:92:26)
+[error] 
+[error] Error: Server Error. getaddrinfo ENOTFOUND admin.firebase.com admin.firebase.com:443
