@@ -50,9 +50,8 @@ class FollowingUsers extends Component {
 
   render() {
     const { following } = this.state;
-    console.log(this.state);
     const newArr = Object.keys(following);
-    console.log(newArr);
+
     return (
       <div className="text-align-center">
         {Object.keys(following).length &&
