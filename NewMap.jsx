@@ -8,11 +8,11 @@ const db = firebase.firestore();
 
 var searchMarkersArray = [];
 var addedMarkersArr = [];
-
 function clearOverlays(arr) {
   for (var i = 0; i < arr.length; i++) {
     arr[i].setMap(null);
-  }
+
+}
   arr.length = 0;
 }
 class NewMap extends Component {
@@ -20,7 +20,7 @@ class NewMap extends Component {
     super(props)
     this.state = {
       results: [],
-      places: {}
+      places: {},
     }
     this.onClick = this.onClick.bind(this)
     this.clearSearch = this.clearSearch.bind(this)
@@ -89,8 +89,9 @@ class NewMap extends Component {
 
   onClick = (event) => {
     event.preventDefault()
+    var placeArr = []
     if (searchMarkersArray.length) {
-      clearOverlays()
+      clearOverlays(searchMarkersArray)
     }
 
     const { google } = this.props
@@ -100,7 +101,7 @@ class NewMap extends Component {
 
     var request = {
       location: center,
-      radius: '1000',
+      bounds: this.map.getBounds(),
       name: event.target.search.value
     }
     var infowindow = new google.maps.InfoWindow();
@@ -126,6 +127,8 @@ class NewMap extends Component {
                   position: place.geometry.location
                 });
                 searchMarkersArray.push(marker)
+                placeArr.push(place)
+                console.log(placeArr)
                 google.maps.event.addListener(marker, 'click', function () {
                   infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
                     'Place ID: ' + place.place_id + '<br>' +
@@ -141,8 +144,10 @@ class NewMap extends Component {
       }
       else { console.log('no results') }
     }
-    service.nearbySearch(request, callback);
-  }
+
+
+    service.nearbySearch(request, callback)
+}
 
   componentDidMount() {
     db.collection('maps').doc(this.props.match.params.id).set({
@@ -169,15 +174,17 @@ class NewMap extends Component {
         this.map = new maps.Map(node, mapConfig)
         var isthis = this
         const service1 = new this.props.google.maps.places.PlacesService(this.map);
-        const defaultBounds = new google.maps.LatLngBounds(
-          new google.maps.LatLng(-33.8902, 151.1759),
-          new google.maps.LatLng(-33.8474, 151.2631)
-        );
+        let options = {
+          bounds: this.map.getBounds(),
+        }
         const input = document.getElementById('center'); // use a ref instead
-        const options = {
-          bounds: defaultBounds,
-        };
-        const autocomplete = new google.maps.places.Autocomplete(input, options);
+
+        const autocomplete = new google.maps.places.Autocomplete(input, options)
+
+        google.maps.event.addListener(this.map, 'idle', function() {
+          console.log(isthis.map.getBounds())
+          autocomplete.setBounds(isthis.map.getBounds())
+       });
         var checkedMap = db.collection('maps').doc(this.props.match.params.id).onSnapshot(function (doc) {
           var infowindow = new google.maps.InfoWindow();
 
