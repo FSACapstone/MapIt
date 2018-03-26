@@ -39,8 +39,7 @@ class GoogleMap extends Component {
     if (e.target.name === "title") {
       title = e.target.value;
     } else if (e.target.name === "tags") {
-      tags = e.target.value.split(" ").map(tag => tag.replace(/^#/, ""));
-      console.log("TAGS -->", tags);
+      tags = e.target.value.split(" ").map(tag => tag.toLowerCase().replace(/^#/, ""));
     }
   };
 

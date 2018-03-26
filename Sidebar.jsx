@@ -6,6 +6,7 @@ import Typography from "material-ui/Typography";
 import Divider from "material-ui/Divider";
 import firebase from "~/fire";
 import Count from "./Count";
+import SearchMaps from "./components/maps/SearchMaps";
 
 const db = firebase.firestore();
 
@@ -16,9 +17,7 @@ class Sidebar extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-
-  }
+  componentDidMount() {}
 
   handleSubmit(event) {
     event.preventDefault();
@@ -37,7 +36,6 @@ class Sidebar extends Component {
       })
       .catch(err => console.error(err));
   }
-
 
   get followers() {
     const { user } = this.props;
@@ -60,24 +58,40 @@ class Sidebar extends Component {
     return (
       <div id="sidebar">
         <div className="sidebar-margin">
+          <SearchMaps />
           <div>
-            <Link to={`/user/${user.uid}`}><img src={user.photoURL} /></Link>
+            <Link to={`/user/${user.uid}`}>
+              <img src={user.photoURL} />
+            </Link>
           </div>
-            <div>
-              <Typography color="inherit" className={classes.typography}>{user.displayName}</Typography>
+          <div>
+            <Typography color="inherit" className={classes.typography}>
+              {user.displayName}
+            </Typography>
             <div className="sidebar-flex-info">
               <div className="sidebar-flex-inner">
-              <Typography color="inherit" className={classes.typography}>Following</Typography>
-              <Typography color="inherit" className={classes.typography}><Count of={this.following} />
-              </Typography>
+                <Typography color="inherit" className={classes.typography}>
+                  Following
+                </Typography>
+                <Typography color="inherit" className={classes.typography}>
+                  <Count of={this.following} />
+                </Typography>
               </div>
               <div className="sidebar-flex-inner">
-              <Typography color="inherit" className={classes.typography}>Followers</Typography>
-              <Typography color="inherit" className={classes.typography}><Count of={this.followers} /></Typography>
+                <Typography color="inherit" className={classes.typography}>
+                  Followers
+                </Typography>
+                <Typography color="inherit" className={classes.typography}>
+                  <Count of={this.followers} />
+                </Typography>
               </div>
               <div className="sidebar-flex-inner">
-              <Typography color="inherit" className={classes.typography}>Maps</Typography>
-              <Typography color="inherit" className={classes.typography}><Count of={this.mapsCreated} /></Typography>
+                <Typography color="inherit" className={classes.typography}>
+                  Maps
+                </Typography>
+                <Typography color="inherit" className={classes.typography}>
+                  <Count of={this.mapsCreated} />
+                </Typography>
               </div>
             </div>
           </div>
@@ -89,13 +103,13 @@ class Sidebar extends Component {
 
 const styles = {
   typography: {
-    margin: '0.2rem',
-    'font-size': '1rem'
+    margin: "0.2rem",
+    "font-size": "1rem"
   }
 };
 
 Sidebar.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(withRouter(Sidebar));
