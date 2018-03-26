@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import firebase from '~/fire';
 import { withRouter } from "react-router-dom";
-import ResultList from './ResultList'
-import GoogleMapButton from './GoogleMapButton';
+//import ResultList from './ResultList'
 
 const db = firebase.firestore();
 
 var searchMarkersArray = [];
 var addedMarkersArr = [];
-
 function clearOverlays(arr) {
   for (var i = 0; i < arr.length; i++) {
     arr[i].setMap(null);
+
   }
   arr.length = 0;
 }
@@ -42,7 +41,6 @@ class NewMap extends Component {
     marker.id = place.place_id
     addedMarkersArr.push(marker)
     marker.setMap(null)
-    console.log(place);
     obj[place.place_id] = {
       lat: place.geometry.location.lat(),
       lng: place.geometry.location.lng(),
@@ -90,8 +88,9 @@ class NewMap extends Component {
 
   onClick = (event) => {
     event.preventDefault()
+    var placeArr = []
     if (searchMarkersArray.length) {
-      clearOverlays()
+      clearOverlays(searchMarkersArray)
     }
 
     const { google } = this.props
@@ -101,7 +100,7 @@ class NewMap extends Component {
 
     var request = {
       location: center,
-      radius: '1000',
+      bounds: this.map.getBounds(),
       name: event.target.search.value
     }
     var infowindow = new google.maps.InfoWindow();
@@ -127,10 +126,11 @@ class NewMap extends Component {
                   position: place.geometry.location
                 });
                 searchMarkersArray.push(marker)
+                placeArr.push(place)
                 google.maps.event.addListener(marker, 'click', function () {
                   infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
                     'Place ID: ' + place.place_id + '<br>' +
-                    place.formatted_address + '<div class="text-align-center"><button id="addPlaceButton">Add Place</button></div></div> ');
+                    place.formatted_address + '<button id="addPlaceButton">Add Place</button></div ');
                   infowindow.open(holder.map, this);
                   const getButton = document.getElementById('addPlaceButton');
                   getButton.addEventListener('click', () => { holder.addPlace(marker, place, infowindow) })
@@ -142,7 +142,9 @@ class NewMap extends Component {
       }
       else { console.log('no results') }
     }
-    service.nearbySearch(request, callback);
+
+
+    service.nearbySearch(request, callback)
   }
 
   componentDidMount() {
@@ -170,15 +172,16 @@ class NewMap extends Component {
         this.map = new maps.Map(node, mapConfig)
         var isthis = this
         const service1 = new this.props.google.maps.places.PlacesService(this.map);
-        const defaultBounds = new google.maps.LatLngBounds(
-          new google.maps.LatLng(-33.8902, 151.1759),
-          new google.maps.LatLng(-33.8474, 151.2631)
-        );
+        let options = {
+          bounds: this.map.getBounds(),
+        }
         const input = document.getElementById('center'); // use a ref instead
-        const options = {
-          bounds: defaultBounds,
-        };
-        const autocomplete = new google.maps.places.Autocomplete(input, options);
+
+        const autocomplete = new google.maps.places.Autocomplete(input, options)
+
+        google.maps.event.addListener(this.map, 'idle', function () {
+          autocomplete.setBounds(isthis.map.getBounds())
+        });
         var checkedMap = db.collection('maps').doc(this.props.match.params.id).onSnapshot(function (doc) {
           var infowindow = new google.maps.InfoWindow();
 
@@ -190,7 +193,7 @@ class NewMap extends Component {
             (() => {
               var latLng = { lat: arr[keysArr[i]].lat, lng: arr[keysArr[i]].lng }
               var placeName = keysArr[i]
-              var placeInfo=arr[placeName];
+              var placeInfo = arr[placeName];
               var marker = new google.maps.Marker({
                 map: isthis.map,
                 position: latLng,
@@ -200,7 +203,7 @@ class NewMap extends Component {
               addedMarkersArr.push(marker)
               google.maps.event.addListener(marker, 'click', function () {
                 infowindow.setContent('<div><strong>Work in Progress</strong><br>' +
-                  'Place:' + placeInfo.name + 'Address' + placeInfo.address + '<br><div class="text-align-center"><button id="removePlaceButton">Remove Place</div></div> ');
+                  'Place:' + placeInfo.name + 'Address' + placeInfo.address + '<br><button id="removePlaceButton">Remove Place</div ');
                 infowindow.open(isthis.map, this);
                 const getButton = document.getElementById('removePlaceButton');
                 getButton.addEventListener('click', () => { isthis.removePlace(marker) })
@@ -213,30 +216,19 @@ class NewMap extends Component {
 
   render() {
     const style = {
-      width: '100vw',
-      height: '100vh'
+      width: '90vw',
+      height: '75vh'
     };
-
     return (
       <div>
-        <div className="google-map-buttons text-align-center">
-          <form onSubmit={this.onClick}>
-            <input ref="center" id="center" className="google-map-input google-input-margin" type="text" placeholder="Search For A Place" name="search" />
-            {
-
-            }
-            <GoogleMapButton type={`submit`} text={`Add to map`} />
-            {
-
-            <GoogleMapButton onClick={this.clearSearch} text={`Clear Search`} />
-            }
-          </form>
-          
-        </div>
-        <div ref="newmap" className="google-map">
+        <div ref="newmap" style={style}>
           Loading map...
         </div>
-        
+        <form onSubmit={this.onClick}>
+          <input ref='center' id='center' className='controls' type='text' placeholder='search for place' name='search' />
+          <button type='submit' />
+        </form>
+        <button onClick={this.clearSearch}>Clear Search </button>
       </div>
     )
   }

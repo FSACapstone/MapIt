@@ -37,27 +37,28 @@ class GoogleMap extends Component {
 
   onChange = (e) => {
     e.preventDefault()
-    if (e.target.name === 'title'){
-      title = e.target.value}
-    else if (e.target.name === 'tags'){
+    if (e.target.name === 'title') {
+      title = e.target.value
+    }
+    else if (e.target.name === 'tags') {
       tags = e.target.value
-    }  
+    }
   }
 
   onCreateClick(e) {
     e.preventDefault()
-    this.setState({openNewForm: !this.state.openNewForm})
+    this.setState({ openNewForm: !this.state.openNewForm })
   }
 
   mapInput(event) {
     event.preventDefault();
-  }  
+  }
 
   createNewMap() {
     let center = {
       lat: this.map.getCenter().lat(),
       lng: this.map.getCenter().lng()
-    };   
+    };
 
     db.collection('maps').add({
       center: this.state.center,
@@ -81,10 +82,10 @@ class GoogleMap extends Component {
     geocode({ address: input.value }, function (results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
         const center = {
-        lat: results[0].geometry.location.lat(),
-        lng: results[0].geometry.location.lng()
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
         }
-        holder.setState({center});
+        holder.setState({ center });
         holder.map.setCenter(center);
         holder.map.setZoom(15);
       } else {
@@ -107,14 +108,14 @@ class GoogleMap extends Component {
   }
 
   loadMap() {
-    if (this.props && this.props.google) { 
+    if (this.props && this.props.google) {
       const { google } = this.props;
       const maps = google.maps;
       const mapRef = this.refs.map;
       const node = ReactDOM.findDOMNode(mapRef);
       let defaultCenter;
       let zoom;
- 
+
       if (this.state.center.lat) {
         defaultCenter = this.state.center;
         zoom = 15;
@@ -138,7 +139,7 @@ class GoogleMap extends Component {
       const input = document.getElementById('center-point'); // use a ref instead
       const options = {
         bounds: defaultBounds,
-       // types: ['establishment']
+        // types: ['establishment']
       };
       const autocomplete = new google.maps.places.Autocomplete(input, options);
     }
@@ -148,15 +149,15 @@ class GoogleMap extends Component {
     const { classes } = this.props;
     const { openNewForm, centerMap } = this.state;
 
-    const style = { 
+    const style = {
       width: '100vw',
       height: '100vh'
     };
 
     return (
       <div>
-       
-          { (!openNewForm) && 
+
+          { (!openNewForm) &&
             <div className="google-map-buttons text-align-center">
             <input id='center-point' className='controls google-map-input' type='text' placeholder='Search Locations' />
           <Button variant="raised" color="primary" className={classes.button} onClick={this.onSearchClick}>Center Map</Button>
@@ -165,14 +166,14 @@ class GoogleMap extends Component {
           }
           </div>
           }
-       
+
         { (openNewForm) &&
           <div className="google-map-buttons-2 text-align-center">
           <form onSubmit={this.onSubmitMapInfo} onChange = {this.onChange}>
             <input name="title" className="google-map-input google-input-margin" placeholder="New Map Name" required />
             <input name="tags" className="google-map-input google-input-margin" placeholder="Enter Hashtags" required />
             <Button variant="raised" color="primary" className={classes.button} type="submit" >Submit</Button>
-          </form>  
+          </form>
             <Button variant="raised" color="primary" className={classes.button} type="text" onClick={this.onCreateClick}>Back</Button>
           </div>
         }
