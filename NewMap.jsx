@@ -12,7 +12,7 @@ function clearOverlays(arr) {
   for (var i = 0; i < arr.length; i++) {
     arr[i].setMap(null);
 
-}
+  }
   arr.length = 0;
 }
 class NewMap extends Component {
@@ -147,7 +147,7 @@ class NewMap extends Component {
 
 
     service.nearbySearch(request, callback)
-}
+  }
 
   componentDidMount() {
     db.collection('maps').doc(this.props.match.params.id).set({
@@ -181,10 +181,10 @@ class NewMap extends Component {
 
         const autocomplete = new google.maps.places.Autocomplete(input, options)
 
-        google.maps.event.addListener(this.map, 'idle', function() {
+        google.maps.event.addListener(this.map, 'idle', function () {
           console.log(isthis.map.getBounds())
           autocomplete.setBounds(isthis.map.getBounds())
-       });
+        });
         var checkedMap = db.collection('maps').doc(this.props.match.params.id).onSnapshot(function (doc) {
           var infowindow = new google.maps.InfoWindow();
 
@@ -196,7 +196,7 @@ class NewMap extends Component {
             (() => {
               var latLng = { lat: arr[keysArr[i]].lat, lng: arr[keysArr[i]].lng }
               var placeName = keysArr[i]
-              var placeInfo=arr[placeName];
+              var placeInfo = arr[placeName];
               var marker = new google.maps.Marker({
                 map: isthis.map,
                 position: latLng,
@@ -206,7 +206,7 @@ class NewMap extends Component {
               addedMarkersArr.push(marker)
               google.maps.event.addListener(marker, 'click', function () {
                 infowindow.setContent('<div><strong>Work in Progress</strong><br>' +
-                  'Place:' + placeInfo.name + 'Address' + placeInfo.address+ '<br><button id="removePlaceButton">Remove Place</div ');
+                  'Place:' + placeInfo.name + 'Address' + placeInfo.address + '<br><button id="removePlaceButton">Remove Place</div ');
                 infowindow.open(isthis.map, this);
                 const getButton = document.getElementById('removePlaceButton');
                 getButton.addEventListener('click', () => { isthis.removePlace(marker) })
