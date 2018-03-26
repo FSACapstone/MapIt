@@ -17,9 +17,16 @@ const db = firebase.firestore();
 
 const { Provider, Consumer } = createReactContext(null)
 
+export const MapConsumer = Consumer
+
 export const Marker = props =>
   <Consumer>{
       map => map && <RenderMarker map={map} {...props} />
+  }</Consumer>
+
+export const Info = props =>
+  <Consumer>{
+      map => map && <RenderInfoWindow map={map} {...props} />
   }</Consumer>
 
 class RenderMarker extends Component {
@@ -36,17 +43,50 @@ class RenderMarker extends Component {
   }
 }
 
-class GoogleMap extends Component {
+class RenderInfoWindow extends Component {
+  node = document.createElement('div')
+
   componentDidMount() {
-    this.loadMap(this.props);
+    this.win = new google.maps.InfoWindow({
+      content: this.node,
+      ...this.props,
+    })
+    this.win.addListener('close', console.log)
   }
 
   componentWillReceiveProps(props) {
-    this.loadMap(props);
+    if (props.position !== this.props.position)
+      this.win.setPosition(props.position)
   }
 
-  loadMap({ google, onClick }) {
+  componentWillUnmount() {
+    this.win.close()
+  }
+
+  render() {
+    return ReactDOM.createPortal(this.props.children, this.node)
+  }
+}
+
+class GoogleMap extends React.PureComponent {
+  componentDidMount() {
+    this.setup(this.props);
+  }
+
+  componentWillReceiveProps(props) {
+    this.setup(props);
+  }
+
+  setup({ google, onClick }) {
     if (!google) return;
+
+    const map = this.initMap(google)
+
+    onClick && map.addListener('click', onClick)
+  }
+
+  initMap(google) {
+    if (this.map) return this.map
 
     const maps = google.maps;
     const node = this.refs.map;
@@ -55,11 +95,13 @@ class GoogleMap extends Component {
       {
       center: this.props.defaultCenter,
       zoom: this.props.defaultZoom,
-      mapTypeId: "roadmap"
+      mapTypeId: this.props.defaultType || "roadmap"
     });
 
-    onClick && map.addListener('click', onClick)
+    this.map = map
     this.setState({map})
+
+    return map
   }
 
   render() {

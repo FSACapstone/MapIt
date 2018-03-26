@@ -4,7 +4,13 @@
     <link rel="stylesheet" href="/main.css">
   </head>
   <body>
-    <div id="main" />
-    <script async defer src="/bundle.js"></script>    
+    <div id="main"></div>
+    <script>
+      window.__googleHasLoaded__ = new Promise(resolve =>
+        window.__initGoogleMap__ = resolve)
+    </script>
+    <script async defer src="/bundle.js"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBNO9SHxnyzMG6J1FCDYcle7DjXMjg6jBU&callback=__initGoogleMap__"></script>
   </body>
 </html>

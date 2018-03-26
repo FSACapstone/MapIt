@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
-// import GoogleMap from "./GoogleMap";
 import Map from './components/maps/Map';
 import Login from "./Login";
 import Sidebar from "./Sidebar";
