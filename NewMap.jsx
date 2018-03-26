@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import firebase from '~/fire';
 import { withRouter } from "react-router-dom";
-//import ResultList from './ResultList'
+import GoogleMapButton from './GoogleMapButton';
 
 const db = firebase.firestore();
 
@@ -216,19 +216,25 @@ class NewMap extends Component {
 
   render() {
     const style = {
-      width: '90vw',
-      height: '75vh'
+      width: '100vw',
+      height: '100vh'
     };
+ 
     return (
       <div>
-        <div ref="newmap" style={style}>
+        <div className="google-map-buttons text-align-center">
+          <form onSubmit={this.onClick}>
+            <input ref="center" id="center" className="google-map-input google-input-margin" type="text" placeholder="Search For A Place" name="search" />
+            <GoogleMapButton type={`submit`} text={`Add to map`} />
+            {
+            <GoogleMapButton onClick={this.clearSearch} text={`Clear Search`} />
+            }
+          </form>
+        </div>
+        <div ref="newmap" className="google-map">
           Loading map...
         </div>
-        <form onSubmit={this.onClick}>
-          <input ref='center' id='center' className='controls' type='text' placeholder='search for place' name='search' />
-          <button type='submit' />
-        </form>
-        <button onClick={this.clearSearch}>Clear Search </button>
+        
       </div>
     )
   }
