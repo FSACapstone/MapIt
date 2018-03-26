@@ -45,8 +45,12 @@ class GoogleMap extends Component {
   };
 
   onCreateClick(e) {
-    e.preventDefault();
-    this.setState({ openNewForm: !this.state.openNewForm });
+    e.preventDefault()
+    this.setState({center:{
+      lat: this.map.getCenter().lat(),
+      lng: this.map.getCenter().lng()
+    }})
+    this.setState({ openNewForm: !this.state.openNewForm })
   }
 
   mapInput(event) {
@@ -54,10 +58,15 @@ class GoogleMap extends Component {
   }
 
   createNewMap() {
-    let center = {
+    // let center = {
+    //   lat: this.map.getCenter().lat(),
+    //   lng: this.map.getCenter().lng()
+    // };
+
+    this.setState({center:{
       lat: this.map.getCenter().lat(),
       lng: this.map.getCenter().lng()
-    };
+    }})
 
     db
       .collection("maps")
