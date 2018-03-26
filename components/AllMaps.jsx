@@ -44,8 +44,16 @@ class AllMaps extends Component {
     deleteMap(mapId) {
         const { signedInUser } = this.props;
         db.collection("maps").doc(mapId).delete()
-        .then(() => this.getAllUserMaps())
-        // this.props.history.push(`/allmaps/${signedInUser.uid}`)
+        .then(() => {
+            db.collection("favoritedMaps").where("mapId", "==", mapId)
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                    db.collection("favoritedMaps").doc(doc.id).delete()
+                })
+            })
+            .then(() => this.getAllUserMaps())
+        })
     }
 
     get mapsCreated() {
