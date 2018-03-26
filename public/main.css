@@ -131,7 +131,7 @@ a:visited {
 
 .login-wrapper {
   display: flex;
-  flex-direction: column;
+  max-width: 100%;
   width: 100vw;
   height: 100vh;
   justify-content: center;
@@ -195,3 +195,6 @@ a:visited {
   flex-direction: column;
   align-items: flex-center;
 }
+
+/* Single User */
+

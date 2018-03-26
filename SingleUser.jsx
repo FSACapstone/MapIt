@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import Follow from "./Follow";
 import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
-import { withRouter, NavLink } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import firebase from "~/fire";
 import Count from "./Count";
 import CircularLoad from "./CircularProgress";
@@ -87,11 +86,9 @@ class SingleUser extends Component {
     } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
-
+       
     return loading ? (
-      <div className="text-align-center">
         <CircularLoad color={`secondary`} size={100} />
-      </div>
     ) : (
       <div className="text-align-center">
         <img src={user.photoURL} className="margin-top-5" />
@@ -101,16 +98,16 @@ class SingleUser extends Component {
         ) : (
           <Follow followerId={signedInUser.uid} followingId={userId} />
         )}
-        <NavLink to={`/followers/${userId}`}>
+        <Link to={`/followers/${userId}`}>
           <h2>
             Followers: <Count of={this.followers} />
           </h2>
-        </NavLink>
-        <NavLink to={`/following/${userId}`}>
+        </Link>
+        <Link to={`/following/${userId}`}>
           <h2>
             Following: <Count of={this.following} />
           </h2>
-        </NavLink>
+        </Link>
 
         <div className="text-align-center">
           <h2>
