@@ -177,7 +177,7 @@ class GoogleMap extends Component {
             <Button variant="raised" color="primary" className={classes.button} type="text" onClick={this.onCreateClick}>Back</Button>
           </div>
         }
-        <div ref="map" className="google-map">
+        <div ref="map" className="google-map margin-subtract-70">
           Loading map...
         </div>
       </div>

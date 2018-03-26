@@ -86,48 +86,72 @@ class SingleUser extends Component {
     } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
-       
-    return loading ? (
-        <CircularLoad color={`secondary`} size={100} />
-    ) : (
-      <div className="text-align-center">
-        <img src={user.photoURL} className="margin-top-5" />
-        <h1>{user.displayName}</h1>
-        {signedInUser.uid === userId ? (
-          <div />
-        ) : (
-          <Follow followerId={signedInUser.uid} followingId={userId} />
-        )}
-        <Link to={`/followers/${userId}`}>
-          <h2>
-            Followers: <Count of={this.followers} />
-          </h2>
-        </Link>
-        <Link to={`/following/${userId}`}>
-          <h2>
-            Following: <Count of={this.following} />
-          </h2>
-        </Link>
 
-        <div className="text-align-center">
-          <h2>
-            Maps Created: <Count of={this.mapsCreated} />
-          </h2>
+    return loading ? (
+      <CircularLoad color={`secondary`} size={100} />
+    ) : (
+      <div className="single-user-flex">
+        <div className="map-container">
+          <div className="map-flex-outer">
           {Object.keys(createdMaps).length &&
             Object.keys(createdMaps).map(mapId => {
               return (
-                <Link to={`/map/${mapId}`} key={mapId}>
-                  <p>
-                    {createdMaps[mapId].title} (<Count
-                      of={db
-                        .collection("favoritedMaps")
-                        .where("mapId", "==", mapId)}
-                    />)
-                  </p>
-                </Link>
+                    <div className="map-flex">
+                      <div className="map-flex-inner map-flex-color">
+                      <Link to={`/map/${mapId}`} key={mapId}>
+                        <p>
+                          {createdMaps[mapId].title} (<Count
+                            of={db
+                              .collection("favoritedMaps")
+                              .where("mapId", "==", mapId)}
+                          /> Pins)
+                        </p>
+                      </Link>
+                      </div>
+                    </div>
               );
             })}
+            </div>
         </div>
+        {signedInUser.uid === userId ? (
+          <div />
+        ) :
+        <div className="single-user-info-flex map-container">
+          <div className="text-align-center">
+            <img src={user.photoURL} />
+            <h1>{user.displayName}</h1>
+            <div className="follow-flex">
+              <div className="follow-flex-inner">
+                <Link to={`/followers/${userId}`}>
+                  <p>
+                    Followers
+                  </p>
+                  <p>
+                    <Count of={this.followers} />
+                  </p>
+                </Link>
+              </div>
+              <div className="follow-flex-inner">
+                <Link to={`/following/${userId}`}>
+                  <p>
+                    Following
+                  </p>
+                  <p>
+                    <Count of={this.following} />
+                  </p>
+                </Link>
+              </div>
+              <div className="follow-flex-inner">
+                <Link to={`/`}><p>Maps </p> 
+                <p><Count of={this.mapsCreated} /></p>
+                </Link>
+              </div>
+            </div>           
+              <Follow followerId={signedInUser.uid} followingId={userId} />           
+          </div>
+        
+        </div>
+      }
       </div>
     );
   }

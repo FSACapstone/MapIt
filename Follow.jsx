@@ -54,8 +54,8 @@ class Follow extends Component {
   render() {
     const { relationshipExists } = this.state || {};
     return relationshipExists
-        ? <button onClick={this.handleUnfollow}>Unfollow</button>
-        : <button onClick={this.handleFollow}>Follow</button>;
+        ? <button className="follow-button" onClick={this.handleUnfollow}>Unfollow</button>
+        : <button className="follow-button" onClick={this.handleFollow}>Follow</button>;
   }
 }
 

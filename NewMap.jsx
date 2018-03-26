@@ -231,7 +231,7 @@ class NewMap extends Component {
             }
           </form>
         </div>
-        <div ref="newmap" className="google-map">
+        <div ref="newmap" className="google-map margin-subtract-70">
           Loading map...
         </div>
         
