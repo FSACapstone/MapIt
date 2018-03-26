@@ -67,18 +67,24 @@ class Sidebar extends Component {
             <div>
               <Typography color="inherit" className={classes.typography}>{user.displayName}</Typography>
             <div className="sidebar-flex-info">
-              <div className="sidebar-flex-inner">
+            <div className="sidebar-flex-inner">
+            <Link to={`/following/${user.uid}`}>
               <Typography color="inherit" className={classes.typography}>Following</Typography>
               <Typography color="inherit" className={classes.typography}><Count of={this.following} />
               </Typography>
+            </Link>
               </div>
               <div className="sidebar-flex-inner">
+            <Link to={`/followers/${user.uid}`}>
               <Typography color="inherit" className={classes.typography}>Followers</Typography>
               <Typography color="inherit" className={classes.typography}><Count of={this.followers} /></Typography>
+            </Link>
               </div>
               <div className="sidebar-flex-inner">
+            <Link to={`/allmaps/${user.uid}`}>
               <Typography color="inherit" className={classes.typography}>Maps</Typography>
               <Typography color="inherit" className={classes.typography}><Count of={this.mapsCreated} /></Typography>
+            </Link>
               </div>
             </div>
           </div>

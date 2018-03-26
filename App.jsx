@@ -12,6 +12,7 @@ import CircularLoad from "./CircularProgress";
 import FollowersUsers from "./FollowersUsers";
 import FollowingUsers from "./FollowingUsers"
 import CreatedMap from './components/CreatedMap'
+import AllMaps from './components/AllMaps'
 
 const db = firebase.firestore();
 
@@ -170,6 +171,10 @@ class App extends Component {
                 exact
                 path="/newmap/:id"
                 render={() => <NewMap google={this.props.google} />}
+              />
+              <Route 
+                exact path="/allmaps/:uid"
+                render={() => <AllMaps signedInUser={user} />}
               />
               <Route
                 exact
