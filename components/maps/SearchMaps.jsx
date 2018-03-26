@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import firebase, { auth } from "~/fire";
 import { withRouter } from "react-router-dom";
-// import { QuerySnapshot } from "@google-cloud/firestore";
 
 const db = firebase.firestore();
 
 class SearchMaps extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      mapResults: []
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -15,7 +17,11 @@ class SearchMaps extends Component {
   handleSubmit(event) {
     event.preventDefault();
     let tag = event.target.tag.value.toLowerCase();
+    this.fetchMapResults(tag);
+  }
 
+  fetchMapResults(tag) {
+    const searchResults = [];
     db
       .collection("tags")
       .doc(tag)
@@ -23,13 +29,14 @@ class SearchMaps extends Component {
       .then(querySnapshot => {
         if (querySnapshot.exists) {
           Object.keys(querySnapshot.data()).forEach(map => {
-            console.log('map -->', map);
+            searchResults.push(map);
           });
-        } else {
-          console.log('Tag not found');
         }
-          // this.props.history.push(`/user/${data.uid}`);
-        // });
+      })
+      .then( () => {
+        this.setState({
+          mapResults: searchResults
+        });
       })
       .catch(err => console.error(err));
   }

@@ -28,18 +28,17 @@ class SearchBar extends Component {
   }
 
   render() {
-    
-
     return (
-          <form onSubmit={this.handleSubmit}>
-            <input className='google-map-input' name="displayName" type='text' placeholder='Search Users' />
-          </form>
-          
-    
+      <form onSubmit={this.handleSubmit}>
+        <input
+          className="google-map-input"
+          name="displayName"
+          type="text"
+          placeholder="Search Users"
+        />
+      </form>
     );
   }
 }
 
 export default withRouter(SearchBar);
-
-// <input type="text" name="displayName" />
