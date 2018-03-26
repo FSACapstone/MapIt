@@ -11,11 +11,11 @@ const styles = theme => ({
 });
 
 function CircularLoad(props) {
-  const { classes } = props;
+  const { classes, size, color } = props;
   return (
     <div className="login-wrapper text-align-center">
 
-      <CircularProgress className={classes.progress} color="secondary" size={200} />
+      <CircularProgress className={classes.progress} color={color} size={size} />
     
     </div>
   );

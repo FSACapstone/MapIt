@@ -4,7 +4,8 @@ import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
 import { withRouter, NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import firebase from "~/fire";
-import Count from './Count'
+import Count from "./Count";
+import CircularLoad from "./CircularProgress";
 
 const db = firebase.firestore();
 
@@ -16,7 +17,7 @@ class SingleUser extends Component {
       numFollowers: 0,
       numFollowing: 0,
       user: {},
-      relationshipDocId: '',
+      relationshipDocId: "",
       relationshipExists: false,
       createdMaps: {}
     };
@@ -27,6 +28,7 @@ class SingleUser extends Component {
   }
 
   componentWillReceiveProps(props) {
+    this.setState({ loading: true });
     this.updateUserView(props);
   }
 
@@ -43,19 +45,21 @@ class SingleUser extends Component {
           })
         );
       });
+
     db
       .collection("maps")
       .where("uid", "==", userId)
       .get()
       .then(querySnapshot => {
         const mapObj = {};
-        querySnapshot.forEach( map => {
+        querySnapshot.forEach(map => {
           mapObj[map.id] = map.data();
         });
         this.setState({
           createdMaps: mapObj
         });
-      });
+      })
+      .then(() => this.setState({ loading: false }));
   }
 
   get followers() {
@@ -74,42 +78,61 @@ class SingleUser extends Component {
   }
 
   render() {
-    const { user, numFollowing, numFollowers, loading, createdMaps } = this.state;
+    const {
+      user,
+      numFollowing,
+      numFollowers,
+      loading,
+      createdMaps
+    } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
 
-    return (
+    return loading ? (
+      <div className="text-align-center">
+        <CircularLoad color={`secondary`} size={100} />
+      </div>
+    ) : (
       <div className="text-align-center">
         <img src={user.photoURL} className="margin-top-5" />
         <h1>{user.displayName}</h1>
-        {
-          signedInUser.uid === userId
-          ? <div />
-          : <Follow followerId={signedInUser.uid} followingId={userId} />
-        }
+        {signedInUser.uid === userId ? (
+          <div />
+        ) : (
+          <Follow followerId={signedInUser.uid} followingId={userId} />
+        )}
         <NavLink to={`/followers/${userId}`}>
-          <h2>Followers: <Count of={this.followers} /></h2>
+          <h2>
+            Followers: <Count of={this.followers} />
+          </h2>
         </NavLink>
         <NavLink to={`/following/${userId}`}>
-          <h2>Following: <Count of={this.following} /></h2>
+          <h2>
+            Following: <Count of={this.following} />
+          </h2>
         </NavLink>
 
         <div className="text-align-center">
-          <h2>Maps Created: <Count of={this.mapsCreated} /></h2>
-          {
-            Object.keys(createdMaps).length && Object.keys(createdMaps).map( mapId => {
+          <h2>
+            Maps Created: <Count of={this.mapsCreated} />
+          </h2>
+          {Object.keys(createdMaps).length &&
+            Object.keys(createdMaps).map(mapId => {
               return (
-                <Link to ={`/map/${mapId}`} key = {mapId}>
+                <Link to={`/map/${mapId}`} key={mapId}>
                   <p>
-                    {createdMaps[mapId].title} (<Count of={db.collection("favoritedMaps").where("mapId", "==", mapId)} />)
+                    {createdMaps[mapId].title} (<Count
+                      of={db
+                        .collection("favoritedMaps")
+                        .where("mapId", "==", mapId)}
+                    />)
                   </p>
                 </Link>
               );
-            })
-          }
+            })}
         </div>
       </div>
-  );
+    );
   }
 }
 
