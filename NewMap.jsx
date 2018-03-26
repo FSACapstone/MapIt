@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import firebase from '~/fire';
 import { withRouter } from "react-router-dom";
-import ResultList from './ResultList'
+//import ResultList from './ResultList'
 
 const db = firebase.firestore();
 

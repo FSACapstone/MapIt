@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import Follow from "./Follow";
 import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
-import { withRouter,Link } from "react-router-dom";
+import { withRouter, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import firebase from "~/fire";
-import Count from './Count'
+import Count from './Count';
+import CircularLoad from "./CircularProgress";
 
 const db = firebase.firestore();
 
@@ -15,17 +17,18 @@ class SingleUser extends Component {
       numFollowers: 0,
       numFollowing: 0,
       user: {},
-      relationshipDocId: "",
+      relationshipDocId: '',
       relationshipExists: false,
       createdMaps: {}
     };
   }
 
-  componentDidMount() {
+  componentDidMount() {  
     this.updateUserView(this.props);
   }
 
   componentWillReceiveProps(props) {
+    this.setState({loading: true});
     this.updateUserView(props);
   }
 
@@ -41,7 +44,8 @@ class SingleUser extends Component {
             user: user.data()
           })
         );
-      });
+      })
+    
     db
       .collection("maps")
       .where("uid", "==", userId)
@@ -54,18 +58,25 @@ class SingleUser extends Component {
         this.setState({
           createdMaps: mapObj
         });
-      });
+      })
+      .then(() => this.setState({ loading: false}));
   }
 
   get followers() {
     const userId = this.props.match.params.uid;
-    return db.collection("relationships").where("following", "==", userId)
+    return db.collection("relationships").where("following", "==", userId);
   }
 
   get following() {
     const userId = this.props.match.params.uid;
-    return db.collection("relationships").where("follower", "==", userId)
+    return db.collection("relationships").where("follower", "==", userId);
   }
+
+  // Get the maps this user has favorited:
+  // get favoritedMaps() {
+  //   const userId = this.props.match.params.uid;
+  //   return db.collection("favoritedMaps").where("userId", "==", userId);
+  // }
 
   render() {
     const { user, numFollowing, numFollowers, loading } = this.state;
@@ -73,23 +84,43 @@ class SingleUser extends Component {
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
 
-    return !user ? (
-      <div>Loading...</div>
-    ) : (
+    return (loading) ? (
+      <div className="text-align-center">
+      <CircularLoad color={`secondary`} size={100} />
+      </div>
+    ) : 
+      (
       <div className="text-align-center">
         <img src={user.photoURL} className="margin-top-5" />
         <h1>{user.displayName}</h1>
         <h2>{user.email}</h2>
-        <h2>Following: <Count of={this.following} /></h2>
-        <h2>Followers: <Count of={this.followers} /></h2>
-        <Follow followerId={signedInUser.uid} followingId={userId} />
+        {
+          signedInUser.uid === userId
+          ? <div />
+          : <Follow followerId={signedInUser.uid} followingId={userId} />
+        }
+        <NavLink to={`/following/${userId}`}>
+          <h2>
+            Following: <Count of={this.following} />
+          </h2>
+        </NavLink> 
+        <NavLink to={`/followers/${userId}`}>
+          <h2>
+            Followers: <Count of={this.followers} />
+          </h2>
+        </NavLink>
+       
         <div className="text-align-center">
-          <h3>UID: {userId}</h3>
-          <h4>Maps created:</h4>
+          <h2>Maps Created (favorited)</h2>
           {
             Object.keys(createdMaps).length && Object.keys(createdMaps).map( mapId => {
-              console.log(mapId)
-              return <Link to ={`/map/${mapId}`} key = {mapId}><p>{createdMaps[mapId].title}</p></Link>;
+              return (
+                <Link to ={`/map/${mapId}`} key = {mapId}>
+                  <p>
+                    {createdMaps[mapId].title} (<Count of={db.collection("favoritedMaps").where("mapId", "==", mapId)} />)
+                  </p>
+                </Link>
+              );
             })
           }
         </div>
