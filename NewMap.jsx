@@ -41,7 +41,6 @@ class NewMap extends Component {
     marker.id = place.place_id
     addedMarkersArr.push(marker)
     marker.setMap(null)
-    console.log(place);
     obj[place.place_id] = {
       lat: place.geometry.location.lat(),
       lng: place.geometry.location.lng(),
@@ -128,7 +127,6 @@ class NewMap extends Component {
                 });
                 searchMarkersArray.push(marker)
                 placeArr.push(place)
-                console.log(placeArr)
                 google.maps.event.addListener(marker, 'click', function () {
                   infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
                     'Place ID: ' + place.place_id + '<br>' +
@@ -182,7 +180,6 @@ class NewMap extends Component {
         const autocomplete = new google.maps.places.Autocomplete(input, options)
 
         google.maps.event.addListener(this.map, 'idle', function () {
-          console.log(isthis.map.getBounds())
           autocomplete.setBounds(isthis.map.getBounds())
         });
         var checkedMap = db.collection('maps').doc(this.props.match.params.id).onSnapshot(function (doc) {
