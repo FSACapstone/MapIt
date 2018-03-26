@@ -11,7 +11,6 @@ import NewMap from "./NewMap";
 import CircularLoad from "./CircularProgress";
 import FollowingUsers from "./FollowingUsers"
 import FollowersUsers from "./FollowersUsers";
-import FollowingUsers from "./FollowingUsers"
 import CreatedMap from './components/CreatedMap'
 import AllMaps from './components/AllMaps'
 
