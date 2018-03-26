@@ -4,7 +4,8 @@ import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
 import { withRouter, NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import firebase from "~/fire";
-import Count from './Count'
+import Count from './Count';
+import CircularLoad from "./CircularProgress";
 
 const db = firebase.firestore();
 
@@ -22,11 +23,12 @@ class SingleUser extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount() {  
     this.updateUserView(this.props);
   }
 
   componentWillReceiveProps(props) {
+    this.setState({loading: true});
     this.updateUserView(props);
   }
 
@@ -42,7 +44,8 @@ class SingleUser extends Component {
             user: user.data()
           })
         );
-      });
+      })
+    
     db
       .collection("maps")
       .where("uid", "==", userId)
@@ -55,7 +58,8 @@ class SingleUser extends Component {
         this.setState({
           createdMaps: mapObj
         });
-      });
+      })
+      .then(() => this.setState({ loading: false}));
   }
 
   get followers() {
@@ -79,12 +83,13 @@ class SingleUser extends Component {
     const { createdMaps } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
-    console.log(signedInUser.uid, userId);
-    // return !user ? (
-    //   <div>Loading...</div>
-    // ) : (
-      if(signedInUser.uid === userId) console.log('true');
-      return (
+
+    return (loading) ? (
+      <div className="text-align-center">
+      <CircularLoad color={`secondary`} size={100} />
+      </div>
+    ) : 
+      (
       <div className="text-align-center">
         <img src={user.photoURL} className="margin-top-5" />
         <h1>{user.displayName}</h1>
