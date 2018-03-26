@@ -1,66 +1,27 @@
 import React, { Component } from "react";
-// import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
 import { withRouter, NavLink, Link } from "react-router-dom";
 import firebase from "~/fire";
 import Count from "../Count";
 
 const db = firebase.firestore();
 
-class AllMaps extends Component {
+class SearchMapResults extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      createdMaps: {}
+      mapResults: []
     };
-    this.deleteMap = this.deleteMap.bind(this);
+
   }
 
   componentDidMount() {
     this.getAllUserMaps();
   }
 
-  getAllUserMaps() {
-    const { signedInUser } = this.props;
-    console.log(signedInUser.uid);
-    db
-      .collection("maps")
-      .where("uid", "==", signedInUser.uid)
-      .get()
-      .then(querySnapshot => {
-        const mapObj = {};
-        querySnapshot.forEach(map => {
-          mapObj[map.id] = map.data();
-        });
-        this.setState({
-          createdMaps: mapObj
-        });
-      })
-      .then(() => console.log(this.state));
-  }
-
-  deleteMap(mapId) {
-    const { signedInUser } = this.props;
-    db
-      .collection("maps")
-      .doc(mapId)
-      .delete()
-      .then(() => {
-        db
-          .collection("favoritedMaps")
-          .where("mapId", "==", mapId)
-          .get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-              db
-                .collection("favoritedMaps")
-                .doc(doc.id)
-                .delete();
-            });
-          })
-          .then(() => this.getAllUserMaps());
-      });
-  }
+  // get maps() {
+  //   const { mapResults } = this.props;
+  // }
 
   get mapsCreated() {
     const { signedInUser } = this.props;
@@ -105,4 +66,4 @@ class AllMaps extends Component {
   }
 }
 
-export default withRouter(AllMaps);
+export default withRouter(SearchMapResults);

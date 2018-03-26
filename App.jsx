@@ -1,22 +1,24 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
-import GoogleMap from "./GoogleMap";
+// import GoogleMap from "./GoogleMap";
+import Map from './components/maps/Map';
 import Login from "./Login";
 import Sidebar from "./Sidebar";
 import SingleUser from "./SingleUser";
-import { GoogleApiWrapper } from "google-maps-react";
 import firebase, { auth } from "~/fire";
 import NavBar from "./Navbar";
 import NewMap from "./NewMap";
 import CircularLoad from "./CircularProgress";
-import FollowingUsers from "./FollowingUsers"
+import FollowingUsers from "./FollowingUsers";
 import FollowersUsers from "./FollowersUsers";
-import CreatedMap from './components/CreatedMap'
-import AllMaps from './components/AllMaps'
+import CreatedMap from "./components/CreatedMap";
+import AllMaps from "./components/AllMaps";
+import MapView from "./components/MapView"
 
 const db = firebase.firestore();
+const maps = db.collection('maps')
 
-class App extends Component {
+export default class App extends Component {
   constructor() {
     super();
     this.state = {
@@ -114,7 +116,8 @@ class App extends Component {
 
   render() {
     const { user, documentId, numFollowers, numFollowing } = this.state;
-    if (this.state.loading === true) return <CircularLoad size={200} color={`secondary`} />;
+    if (this.state.loading === true)
+      return <CircularLoad size={200} color={`secondary`} />;
     if (!user) return <Login user={user} />;
     return (
       <div>
@@ -132,19 +135,15 @@ class App extends Component {
           <div className="col-2">
             <Switch>
               <Route
-                exact
-                path="/"
+                exact path="/"
                 render={() => (
-                  <GoogleMap
-                    google={{
-                      ...this.props.google,
-                      loc: { lat: 20, lng: -70 },
-                      user: user
-                    }}
+                  <Map
+                    google={this.props.google}
+                    defaultCenter={{lat: 20, lng: -70}}
+                    defaultZoom={10}
                   />
                 )}
               />
-              )} />
               <Route
                 exact
                 path="/following/:userId"
@@ -172,31 +171,18 @@ class App extends Component {
                 path="/newmap/:id"
                 render={() => <NewMap google={this.props.google} />}
               />
-              <Route 
-                exact path="/allmaps/:uid"
+              <Route
+                exact
+                path="/allmaps/:uid"
                 render={() => <AllMaps signedInUser={user} />}
               />
               <Route
                 exact
                 path="/map/:id"
-                render={() => (
-                  <CreatedMap
-                    google={this.props.google}
-                    followerUserId={this.state.user.uid}
-                  />
-                )}
-              />
-              <Route
-                path="/"
-                render={() => (
-                  <GoogleMap
-                    google={{
-                      ...this.props.google,
-                      loc: { lat: 20, lng: -70 },
-                      user: user
-                    }}
-                  />
-                )}
+                component={
+                  ({match: {params: {id}}}) =>
+                    <MapView of={maps.doc(id)} />
+                }
               />
               )} />
             </Switch>
@@ -206,7 +192,3 @@ class App extends Component {
     );
   }
 }
-
-export default GoogleApiWrapper({
-  apiKey: "AIzaSyBNO9SHxnyzMG6J1FCDYcle7DjXMjg6jBU"
-})(App);
