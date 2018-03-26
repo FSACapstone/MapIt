@@ -69,29 +69,24 @@ class Sidebar extends Component {
               {user.displayName}
             </Typography>
             <div className="sidebar-flex-info">
-              <div className="sidebar-flex-inner">
-                <Typography color="inherit" className={classes.typography}>
-                  Following
-                </Typography>
-                <Typography color="inherit" className={classes.typography}>
-                  <Count of={this.following} />
-                </Typography>
+            <div className="sidebar-flex-inner">
+            <Link to={`/following/${user.uid}`}>
+              <Typography color="inherit" className={classes.typography}>Following</Typography>
+              <Typography color="inherit" className={classes.typography}><Count of={this.following} />
+              </Typography>
+            </Link>
               </div>
               <div className="sidebar-flex-inner">
-                <Typography color="inherit" className={classes.typography}>
-                  Followers
-                </Typography>
-                <Typography color="inherit" className={classes.typography}>
-                  <Count of={this.followers} />
-                </Typography>
+            <Link to={`/followers/${user.uid}`}>
+              <Typography color="inherit" className={classes.typography}>Followers</Typography>
+              <Typography color="inherit" className={classes.typography}><Count of={this.followers} /></Typography>
+            </Link>
               </div>
               <div className="sidebar-flex-inner">
-                <Typography color="inherit" className={classes.typography}>
-                  Maps
-                </Typography>
-                <Typography color="inherit" className={classes.typography}>
-                  <Count of={this.mapsCreated} />
-                </Typography>
+            <Link to={`/allmaps/${user.uid}`}>
+              <Typography color="inherit" className={classes.typography}>Maps</Typography>
+              <Typography color="inherit" className={classes.typography}><Count of={this.mapsCreated} /></Typography>
+            </Link>
               </div>
             </div>
           </div>
