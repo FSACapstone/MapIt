@@ -1,6 +1,5 @@
 {
   "projects": {
-    "mapit": "map-it-fsa",
-    "default": "map-it-fsa"
+    "mapit": "map-it-fsa"
   }
 }
