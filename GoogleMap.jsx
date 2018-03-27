@@ -39,7 +39,8 @@ class GoogleMap extends Component {
     if (e.target.name === "title") {
       title = e.target.value;
     } else if (e.target.name === "tags") {
-      tags = e.target.value.split(" ").map(tag => tag.toLowerCase().replace(/^#/, ""));
+      tags = e.target.value.split(" ").filter(x => x).map(tag => tag.toLowerCase().replace(/^#/, ""));
+      console.log('tags -->', tags)
     }
   };
 
@@ -57,11 +58,6 @@ class GoogleMap extends Component {
   }
 
   createNewMap() {
-    // let center = {
-    //   lat: this.map.getCenter().lat(),
-    //   lng: this.map.getCenter().lng()
-    // };
-
     this.setState({center:{
       lat: this.map.getCenter().lat(),
       lng: this.map.getCenter().lng()
@@ -73,7 +69,8 @@ class GoogleMap extends Component {
         center: this.state.center,
         uid: this.props.google.user.uid,
         places: {},
-        title: title
+        title: title,
+        tags: {...tags.map(tag => ( { [tag]: true } ))}
       })
       .then(map => {
         let mapId = map.id;
@@ -145,6 +142,9 @@ class GoogleMap extends Component {
         }
       );
       this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
+
+      this.map.addListener('click', this.mapWasClicked)
+
       const service = new google.maps.places.PlacesService(this.map);
       const defaultBounds = new google.maps.LatLngBounds(
         new google.maps.LatLng(-33.8902, 151.1759),
@@ -157,6 +157,10 @@ class GoogleMap extends Component {
       };
       const autocomplete = new google.maps.places.Autocomplete(input, options);
     }
+  }
+
+  mapWasClicked = (event) => {
+    console.log('EVENT!!!! 🏳️‍🌈 -->', event.latLng);
   }
 
   render() {

@@ -1,3 +1,4 @@
+
 [debug] [2018-03-26T14:51:27.519Z] ----------------------------------------------------------------------
 [debug] [2018-03-26T14:51:27.523Z] Command:       /usr/local/Cellar/node/8.9.1/bin/node /Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt/node_modules/.bin/firebase serve --only functions,hosting
 [debug] [2018-03-26T14:51:27.523Z] CLI Version:   3.17.6
@@ -213,3 +214,46 @@
     at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
 [error] 
 [error] Error: An unexpected error has occurred.
+=======
+[debug] [2018-03-26T22:06:02.846Z] ----------------------------------------------------------------------
+[debug] [2018-03-26T22:06:02.848Z] Command:       /usr/local/bin/node /Users/nlaureano/Fullstack/senior-phase/MapIt/node_modules/.bin/firebase serve --only functions,hosting
+[debug] [2018-03-26T22:06:02.849Z] CLI Version:   3.17.6
+[debug] [2018-03-26T22:06:02.849Z] Platform:      darwin
+[debug] [2018-03-26T22:06:02.849Z] Node Version:  v9.2.1
+[debug] [2018-03-26T22:06:02.849Z] Time:          Mon Mar 26 2018 18:06:02 GMT-0400 (EDT)
+[debug] [2018-03-26T22:06:02.849Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-26T22:06:02.859Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-26T22:06:02.859Z] > authorizing via signed-in user
+[debug] [2018-03-26T22:06:02.860Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/map-it-fsa  
+  
+ Mon Mar 26 2018 18:06:02 GMT-0400 (EDT)
+[debug] [2018-03-26T22:06:03.238Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-26T22:06:03.239Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/map-it-fsa/tokens  
+  
+ Mon Mar 26 2018 18:06:03 GMT-0400 (EDT)
+[debug] [2018-03-26T22:06:03.559Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-26T22:06:03.560Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/map-it-fsa  
+  
+ Mon Mar 26 2018 18:06:03 GMT-0400 (EDT)
+[debug] [2018-03-26T22:06:03.939Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/nlaureano/Fullstack/senior-phase/MapIt'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-03-26T22:06:04.617Z] Fetching environment
+[debug] [2018-03-26T22:06:04.618Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469:getServerAppConfig  
+  
+ Mon Mar 26 2018 18:06:04 GMT-0400 (EDT)
+[debug] [2018-03-26T22:06:04.619Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469/clients/_:getWebAppConfig  
+  
+ Mon Mar 26 2018 18:06:04 GMT-0400 (EDT)
+[debug] [2018-03-26T22:06:04.933Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-26T22:06:04.933Z] Starting @google-cloud/functions-emulator
+[debug] [2018-03-26T22:06:04.951Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[debug] [2018-03-26T22:06:06.494Z] Parsing function triggers
+[info] ✔  functions: helloWorld: http://localhost:5001/map-it-fsa/us-central1/helloWorld
+
