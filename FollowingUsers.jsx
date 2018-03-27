@@ -12,7 +12,9 @@ class FollowingUsers extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      following: []
+      loading: true,
+      following: [],
+      userPage: {}
     };
 
     this.findFollowing = this.findFollowing.bind(this);
@@ -28,6 +30,13 @@ class FollowingUsers extends Component {
 
   findFollowing() {
     const user = this.props.match.params.userId;
+
+    db.collection("users")
+    .where("uid", "==", user)
+    .get()
+    .then(querySnapshot => querySnapshot.forEach(doc => this.setState({userPage: doc.data()})));
+
+
     db
       .collection("relationships")
       .where("follower", "==", user)
@@ -49,11 +58,14 @@ class FollowingUsers extends Component {
   }
 
   render() {
-    const { following } = this.state;
+    const { following, userPage } = this.state;
     const newArr = Object.keys(following);
 
     return (
-      <div className="text-align-center">
+      <div>
+      <h1>{userPage.displayName} Following</h1>
+      <h1>Following</h1>
+      <div className="following-page-flex">
         {Object.keys(following).length &&
           Object.keys(following).map(followingId => {
             return (
@@ -65,10 +77,10 @@ class FollowingUsers extends Component {
                   />
                 </Link>
                 <h1>{following[followingId].displayName}</h1>
-                <h2>{following[followingId].email}</h2>
               </div>
             );
           })}
+          </div>
       </div>
     );
   }

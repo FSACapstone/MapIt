@@ -12,7 +12,8 @@ class FollowersUsers extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      followers: []
+      followers: [],
+      userPage: {}
     };
 
     this.findFollowers = this.findFollowers.bind(this);
@@ -20,14 +21,18 @@ class FollowersUsers extends Component {
 
   componentDidMount() {
     this.findFollowers();
+    
   }
 
-  //   componentWillUnmount() {
-  //     this.unsubscribe()
-  //   }
 
   findFollowers() {
     const user = this.props.match.params.userId;
+
+    db.collection("users")
+    .where("uid", "==", user)
+    .get()
+    .then(querySnapshot => querySnapshot.forEach(doc => this.setState({userPage: doc.data()})));
+
     db
       .collection("relationships")
       .where("following", "==", user)
@@ -49,11 +54,14 @@ class FollowersUsers extends Component {
   }
 
   render() {
-    const { followers } = this.state;
+    const { followers, userPage } = this.state;
     console.log(this.state);
 
     return (
-        <div className="text-align-center">
+
+        <div className="following-page-flex">
+        <h1>{userPage.displayName}</h1> 
+        <h1>Followers</h1>
           { Object.keys(followers).length ?
             Object.keys(followers).map(followerId => {
               return (
@@ -64,8 +72,7 @@ class FollowersUsers extends Component {
                       className="margin-top-5"
                     />
                   </Link>
-                  <h1>{followers[followerId].displayName}</h1>
-                  <h2>{followers[followerId].email}</h2>
+                  <h1 className="text-align-center">{followers[followerId].displayName}</h1>
                 </div>
               );
             })
