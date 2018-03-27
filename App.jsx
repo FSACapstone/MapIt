@@ -138,7 +138,7 @@ export default class App extends Component {
                 render={() => (
                   <Map
                     google={this.props.google}
-                    defaultCenter={{lat: 20, lng: -70}}
+                    defaultCenter={{lat: 40.7050758, lng: -74.0113437}}
                     defaultZoom={10}
                   />
                 )}

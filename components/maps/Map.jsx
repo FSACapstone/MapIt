@@ -107,9 +107,10 @@ class GoogleMap extends React.PureComponent {
   render() {
     const {map=null} = this.state || {}
     return <Provider value={map}>{
-      <div ref="map" className="google-map">{
-        this.props.children
-      }</div>
+      <React.Fragment>
+        <div ref="map" className="google-map" />
+        {this.props.children}
+      </React.Fragment>
     }</Provider>
   }
 }
