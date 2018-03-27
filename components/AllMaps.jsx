@@ -2,7 +2,7 @@ import React, { Component } from "react";
 // import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
 import { withRouter, NavLink, Link } from "react-router-dom";
 import firebase from "~/fire";
-import Count from "../Count";
+import Count from "../fromTop/Count";
 
 const db = firebase.firestore();
 

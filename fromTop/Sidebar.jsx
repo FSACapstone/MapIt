@@ -6,7 +6,7 @@ import Typography from "material-ui/Typography";
 import Divider from "material-ui/Divider";
 import firebase from "~/fire";
 import Count from "./Count";
-import SearchMaps from "./components/maps/SearchMaps";
+import SearchMaps from "../components/maps/SearchMaps";
 
 const db = firebase.firestore();
 

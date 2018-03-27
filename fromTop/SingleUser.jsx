@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Follow from "./Follow";
-import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
+import UsersCreatedMaps from "../components/users/UsersCreatedMaps";
 import { withRouter, Link } from "react-router-dom";
 import firebase from "~/fire";
 import Count from "./Count";
@@ -86,7 +86,7 @@ class SingleUser extends Component {
     } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
-       
+
     return loading ? (
         <CircularLoad color={`secondary`} size={100} />
     ) : (

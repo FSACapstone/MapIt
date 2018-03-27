@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Follow from "./Follow";
-import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
+import UsersCreatedMaps from "../components/users/UsersCreatedMaps";
 import { withRouter } from "react-router-dom";
 import firebase from "~/fire";
 import Count from "./Count";
