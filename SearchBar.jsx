@@ -3,12 +3,14 @@ import { withRouter, Link } from "react-router-dom";
 import firebase from "~/fire";
 const db = firebase.firestore();
 import { InstantSearch, Hits, SearchBox } from "react-instantsearch/dom";
-import { connectAutoComplete } from 'react-instantsearch/connectors'
 import Input from "material-ui/Input/Input";
+import { withRouter } from 'react-router-dom'
+import firebase from '~/fire'
+const db = firebase.firestore()
 
 class SearchBar extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       searchInput: ''
@@ -19,20 +21,20 @@ class SearchBar extends Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
-    const displayName = event.target.displayName.value;
+    event.preventDefault()
+    const displayName = event.target.displayName.value
 
     db
-      .collection("users")
-      .where("displayName", "==", displayName)
+      .collection('users')
+      .where('displayName', '==', displayName)
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          let data = doc.data();
-          this.props.history.push(`/user/${data.uid}`);
-        });
+          let data = doc.data()
+          this.props.history.push(`/user/${data.uid}`)
+        })
       })
-      .catch(err => console.error(err));
+      .catch(err => console.error(err))
   }
 
   Product({ hit }) {
@@ -77,7 +79,10 @@ class SearchBar extends Component {
   }
 }
 
-export default withRouter(SearchBar);
+export default withRouter(SearchBar)
 
+<<<<<<< HEAD
 // <input className='google-map-input' name="displayName" type='text' placeholder='Search Users' />
+=======
+>>>>>>> f1d236f0cd98b0a58887a808533e7fee08689414
 // <input type="text" name="displayName" />

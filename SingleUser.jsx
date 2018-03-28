@@ -85,7 +85,7 @@ class SingleUser extends Component {
     } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
- 
+    if (!user.uid) return <CircularLoad size={200} color={`secondary`} />
     return (
       <div className="single-user-flex">
       <div className="">
@@ -105,53 +105,48 @@ class SingleUser extends Component {
               }
               </div>
             </div>
-          <div className="follow-flex">
-            <div className="">
-              <Link to={`/followers/${userId}`}>
-                <p>
-                  Followers
-                </p>
-                <p>
-                  <Count of={this.followers} />
-                </p>
-              </Link>
+            <div className="follow-flex animated fadeIn">
+              <div>
+                <Link to={`/followers/${userId}`}>
+                  <p>Followers</p>
+                  <p className="text-bold"><Count of={this.followers} /></p>
+                </Link>
+              </div>
+              <div>
+                <Link to={`/following/${userId}`}>
+                  <p>Following</p>
+                  <p className="text-bold"><Count of={this.following} /></p>
+                </Link>
+              </div>
+              <div>
+                <Link to="/"><p>Maps </p>
+                  <p className="text-bold"><Count of={this.mapsCreated} /></p>
+                </Link>
+              </div>
             </div>
-            <div className="">
-              <Link to={`/following/${userId}`}>
-                <p>
-                  Following
-                </p>
-                <p>
-                  <Count of={this.following} />
-                </p>
-              </Link>
-            </div>
-            <div className="">
-              <Link to={`/`}><p>Maps </p>
-              <p><Count of={this.mapsCreated} /></p>
-              </Link>
-            </div>
-            </div>
-          </div>          
-                      
-        </div>
-      
+          </div>        
+       </div>
       </div>
-      
+      <div>
+              <h2>Maps</h2>
+              <h2>Favorite Maps</h2>
+              <h2>Layered Maps</h2>
+      </div>
           <div className="map-flex-outer text-align-center">
           {Object.keys(createdMaps).length &&
             Object.keys(createdMaps).map(mapId => {
               return (
                     <div className="map-flex-inner" key={mapId}>
-                      
+                    <img src="/img/pin.png" className="animated bounceInDown" />
                       <Link to={`/map/${mapId}`}>
-                        <p>
-                          {createdMaps[mapId].title} (<Count
-                            of={db
-                              .collection("favoritedMaps")
-                              .where("mapId", "==", mapId)}
-                          /> Pins)
-                        </p>
+                        <h2>
+                          {createdMaps[mapId].title} 
+                        </h2>
+                        <h3><Count
+                          of={db
+                            .collection("favoritedMaps")
+                            .where("mapId", "==", mapId)}
+                        /> Likes</h3>
                       </Link>
                     
                     </div>

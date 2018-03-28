@@ -5,73 +5,82 @@ import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
 import { withRouter } from "react-router-dom";
 import firebase from "~/fire";
 import Count from "./Count";
+import CircularLoad from "./CircularProgress";
 
-const db = firebase.firestore();
+const db = firebase.firestore()
 
 class FollowingUsers extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      following: []
+      following: [],
+      userPage: {},
+      loading: true
     };
 
-    this.findFollowing = this.findFollowing.bind(this);
+    this.findFollowing = this.findFollowing.bind(this)
   }
 
   componentDidMount() {
-    this.findFollowing();
+    this.findFollowing()
   }
-
-  //   componentWillUnmount() {
-  //     this.unsubscribe()
-  //   }
 
   findFollowing() {
     const user = this.props.match.params.userId;
+
+    db.collection("users")
+    .where("uid", "==", user)
+    .get()
+    .then(querySnapshot => querySnapshot.forEach(doc => this.setState({userPage: doc.data()})));
+
     db
-      .collection("relationships")
-      .where("follower", "==", user)
+      .collection('relationships')
+      .where('follower', '==', user)
       .get()
       .then(querySnapshot => {
-        let followingUser = {};
+        let followingUser = {}
         querySnapshot.forEach(doc => {
-          let followingId = doc.data().following;
+          let followingId = doc.data().following
           db
-            .collection("users")
+            .collection('users')
             .doc(followingId)
             .get()
             .then(following => {
-              followingUser[followingId] = following.data();
+              followingUser[followingId] = following.data()
             })
             .then(() => this.setState({ following: followingUser }));
         });
-      });
+      })
+      .then(() => this.setState({loading: false}));
   }
 
-  render() {
-    const { following } = this.state;
-    const newArr = Object.keys(following);
-
-    return (
-      <div className="text-align-center">
-        {Object.keys(following).length &&
-          Object.keys(following).map(followingId => {
-            return (
-              <div key={followingId}>
-                <Link to={`/user/${followingId}`}>
-                  <img
-                    src={following[followingId].photoURL}
-                    className="margin-top-5"
-                  />
-                </Link>
-                <h1>{following[followingId].displayName}</h1>
-                <h2>{following[followingId].email}</h2>
-              </div>
-            );
-          })}
-      </div>
-    );
-  }
+    render() {
+      const { following, userPage } = this.state;
+      if (this.state.loading === true) return <CircularLoad size={200} color={`secondary`} />;
+      return (
+        <div className="text-align-center">
+        <h1>{userPage.displayName}</h1>
+        <h2>Following</h2>
+        <div className="following-page-flex">
+          {Object.keys(following).length &&
+            Object.keys(following).map(followingId => {
+              return (
+                <div key={followingId}>
+                  <Link to={`/user/${followingId}`}>
+                    <img
+                      src={following[followingId].photoURL}
+                      className="margin-top-5"
+                    />
+                  </Link>
+                  <h1>{following[followingId].displayName}</h1>
+                </div>
+              );
+            })}
+            </div>
+        </div>
+      );
+    }
 }
 
 export default withRouter(FollowingUsers);
+

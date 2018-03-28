@@ -13,7 +13,8 @@
     "build-lib": "webpack --config lib/webpack.config.js",
     "build-lib-prod": "npm run build-lib -- -p",
     "build-prod": "npm run build-lib-prod && npm run build",
-    "deploy": "npm run build-prod && npx firebase deploy"
+    "deploy": "npm run build-prod && npx firebase deploy",
+    "format": "prettier --write '**/*.{js,jsx}'"
   },
   "keywords": [],
   "author": "Ashi Krishnan <hi@ashi.io>",
@@ -25,6 +26,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "firebase-tools": "^3.17.6",
+    "prettier": "^1.11.1",
     "react-hot-loader": "^3.1.2",
     "strip-ansi": "^4.0.0",
     "through2": "^2.0.3",
@@ -33,7 +35,11 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
+<<<<<<< HEAD
     "algoliasearch": "^3.26.0",
+=======
+    "animate.css": "^3.6.1",
+>>>>>>> f1d236f0cd98b0a58887a808533e7fee08689414
     "chokidar": "^1.7.0",
     "firebase": "^4.11.0",
     "firebase-admin": "^5.11.0",
