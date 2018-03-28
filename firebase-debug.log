@@ -1,0 +1,52 @@
+[debug] [2018-03-28T15:07:16.084Z] ----------------------------------------------------------------------
+[debug] [2018-03-28T15:07:16.094Z] Command:       /usr/local/Cellar/node/8.9.1/bin/node /Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt/node_modules/.bin/firebase serve --only functions,hosting
+[debug] [2018-03-28T15:07:16.094Z] CLI Version:   3.17.6
+[debug] [2018-03-28T15:07:16.094Z] Platform:      darwin
+[debug] [2018-03-28T15:07:16.095Z] Node Version:  v8.9.1
+[debug] [2018-03-28T15:07:16.095Z] Time:          Wed Mar 28 2018 11:07:16 GMT-0400 (EDT)
+[debug] [2018-03-28T15:07:16.095Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-28T15:07:16.115Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-28T15:07:16.115Z] > authorizing via signed-in user
+[debug] [2018-03-28T15:07:16.118Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/map-it-fsa  
+  
+ Wed Mar 28 2018 11:07:16 GMT-0400 (EDT)
+[debug] [2018-03-28T15:07:16.594Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-28T15:07:16.595Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/map-it-fsa/tokens  
+  
+ Wed Mar 28 2018 11:07:16 GMT-0400 (EDT)
+[debug] [2018-03-28T15:07:17.266Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-28T15:07:17.267Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/map-it-fsa  
+  
+ Wed Mar 28 2018 11:07:17 GMT-0400 (EDT)
+[debug] [2018-03-28T15:07:17.622Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-03-28T15:07:19.739Z] Fetching environment
+[debug] [2018-03-28T15:07:19.742Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469:getServerAppConfig  
+  
+ Wed Mar 28 2018 11:07:19 GMT-0400 (EDT)
+[debug] [2018-03-28T15:07:19.743Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469/clients/_:getWebAppConfig  
+  
+ Wed Mar 28 2018 11:07:19 GMT-0400 (EDT)
+[debug] [2018-03-28T15:07:20.137Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-28T15:07:20.138Z] Starting @google-cloud/functions-emulator
+[debug] [2018-03-28T15:07:20.161Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[debug] [2018-03-28T15:07:23.735Z] Parsing function triggers
+[info] ✔  functions: helloWorld: http://localhost:5001/map-it-fsa/us-central1/helloWorld
+[info] Shutting down...
+[debug] [2018-03-28T15:11:22.574Z] Error: write EPIPE
+    at _errnoException (util.js:1024:11)
+    at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2018-03-28T15:11:22.575Z] Error: write EPIPE
+    at _errnoException (util.js:1024:11)
+    at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
+[error] 
+[error] Error: An unexpected error has occurred.
