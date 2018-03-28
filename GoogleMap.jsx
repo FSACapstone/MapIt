@@ -236,7 +236,7 @@ class GoogleMap extends Component {
         <div ref="map" className="google-map margin-subtract-70">
           Loading map...
         </div>
-      </div> 
+      </div>
     );
   }
 }
