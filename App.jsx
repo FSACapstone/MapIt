@@ -15,6 +15,8 @@ import CreatedMap from './components/CreatedMap'
 import AllMaps from './components/AllMaps'
 import Drawer from 'material-ui/Drawer'
 import FavoritedMaps from './components/FavoritedMaps'
+import LayeredMapsList from './components/maps/LayeredMaps'
+import LayeredMap from './components/maps/LayeredMap'
 
 const db = firebase.firestore()
 
@@ -167,6 +169,11 @@ class App extends Component {
                 path="/favorite-maps"
                 render={() => <FavoritedMaps user={user} google={{ ...this.props.google }} />}
               />
+              <Route
+                exact
+                path="/layered-maps"
+                render={() => <LayeredMapsList user={user} />}
+              />
               <Route exact path="/followers/:userId" render={() => <FollowersUsers />} />
               <Route
                 exact
@@ -182,6 +189,11 @@ class App extends Component {
                 exact
                 path="/newmap/:id"
                 render={() => <NewMap google={this.props.google} />}
+              />
+              <Route
+                exact
+                path="/layered-maps/:id"
+                render={() => <LayeredMap google={this.props.google} />}
               />
               <Route exact path="/allmaps/:uid" render={() => <AllMaps signedInUser={user} />} />
               <Route
