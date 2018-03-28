@@ -35,7 +35,7 @@ class SearchBar extends Component {
   }
 
   Product({ hit }) {
-    return ( 
+    return (
       <Link to={`/user/${hit.uid}`}>
         <div>{hit.displayName}</div>
       </Link>
@@ -57,14 +57,14 @@ class SearchBar extends Component {
 
         <SearchBox
           onChange={(event) => this.listen(event)}
-          className="google-map-input"
+          className="search-users-input"
           name="name"
           type="text"
           placeholder="Search Users"
         />
         {
           searchInput !== '' ?
-          <div className="absoluteP">
+          <div className="search-users-output">
             <Link to="">
               <Hits hitComponent={this.Product} />
             </Link>
