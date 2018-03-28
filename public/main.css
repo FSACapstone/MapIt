@@ -361,6 +361,9 @@ a:visited {
   /* max-width: 50%; */
  }
 
+ .absoluteP {
+   position: absolute;
+ }
  .favorited-map-button {
    position: absolute;
    z-index: 5000000000;

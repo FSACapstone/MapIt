@@ -13,7 +13,15 @@ import FollowingUsers from './FollowingUsers'
 import FollowersUsers from './FollowersUsers'
 import CreatedMap from './components/CreatedMap'
 import AllMaps from './components/AllMaps'
-import Drawer from 'material-ui/Drawer'
+import Drawer from 'material-ui/Drawer'  
+import algoliasearch from 'algoliasearch'
+
+const algolia = algoliasearch(
+  '2N7N3I0FJ2', 'd163ceea9b530ca67676dc76cac7ee53'
+);
+
+const index = algolia.initIndex('mapstack');
+index.setSettings({ hitsPerPage: 3});
 import FavoritedMaps from './components/FavoritedMaps'
 import Tags from './Tags'
 
@@ -60,6 +68,23 @@ class App extends Component {
   handleToggle = () => this.setState({ open: !this.state.open })
 
   componentDidMount() {
+    db
+      .collection('users')
+      .onSnapshot(querySnapshot => {
+        let usersArr = []
+        querySnapshot.forEach(doc => {
+          const key = doc.id;
+          const data = doc.data();
+          data.objectID = key;
+
+          usersArr.push(data)
+        })
+        console.log(usersArr)
+        index.saveObjects(usersArr)
+        .then(() => console.log('users saved to algolia'))
+      })
+      
+
     auth.onAuthStateChanged(user => {
       if (user) {
         this.setState({ user })
