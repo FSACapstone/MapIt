@@ -1,153 +1,159 @@
-import React, { Component } from 'react'
-import Follow from './Follow'
-import UsersCreatedMaps from './components/users/UsersCreatedMaps'
-import { withRouter, Link } from 'react-router-dom'
-import firebase from '~/fire'
-import Count from './Count'
-import CircularLoad from './CircularProgress'
+import React, { Component } from "react";
+import Follow from "./Follow";
+import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
+import { withRouter, Link } from "react-router-dom";
+import firebase from "~/fire";
+import Count from "./Count";
+import CircularLoad from "./CircularProgress";
 
-const db = firebase.firestore()
+const db = firebase.firestore();
 
 class SingleUser extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       numFollowers: 0,
       numFollowing: 0,
       user: {},
-      relationshipDocId: '',
+      relationshipDocId: "",
       relationshipExists: false,
-      createdMaps: {},
-    }
+      createdMaps: {}
+    };
   }
 
   componentDidMount() {
-    this.updateUserView(this.props)
+    this.updateUserView(this.props);
   }
 
   componentWillReceiveProps(props) {
-    this.updateUserView(props)
+    this.updateUserView(props);
   }
 
   updateUserView(props) {
-    const userId = props.match.params.uid
+    const userId = props.match.params.uid;
     db
-      .collection('users')
-      .where('uid', '==', userId)
+      .collection("users")
+      .where("uid", "==", userId)
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(user =>
           this.setState({
-            user: user.data(),
+            user: user.data()
           })
-        )
-      })
+        );
+      });
 
     db
-      .collection('maps')
-      .where('uid', '==', userId)
+      .collection("maps")
+      .where("uid", "==", userId)
       .get()
       .then(querySnapshot => {
-        const mapObj = {}
+        const mapObj = {};
         querySnapshot.forEach(map => {
-          mapObj[map.id] = map.data()
-        })
+          mapObj[map.id] = map.data();
+        });
         this.setState({
-          createdMaps: mapObj,
-        })
+          createdMaps: mapObj
+        });
       })
-      .then(() => this.setState({ loading: false }))
+      .then(() => this.setState({ loading: false }));
   }
 
   get followers() {
-    const userId = this.props.match.params.uid
-    return db.collection('relationships').where('following', '==', userId)
+    const userId = this.props.match.params.uid;
+    return db.collection("relationships").where("following", "==", userId);
   }
 
   get following() {
-    const userId = this.props.match.params.uid
-    return db.collection('relationships').where('follower', '==', userId)
+    const userId = this.props.match.params.uid;
+    return db.collection("relationships").where("follower", "==", userId);
   }
 
   get mapsCreated() {
-    const userId = this.props.match.params.uid
-    return db.collection('maps').where('uid', '==', userId)
+    const userId = this.props.match.params.uid;
+    return db.collection("maps").where("uid", "==", userId);
   }
 
   render() {
-    const { user, numFollowing, numFollowers, loading, createdMaps } = this.state
-    const signedInUser = this.props.signedInUser
-    const userId = this.props.match.params.uid
-
+    const {
+      user,
+      numFollowing,
+      numFollowers,
+      loading,
+      createdMaps
+    } = this.state;
+    const signedInUser = this.props.signedInUser;
+    const userId = this.props.match.params.uid;
+    if (!user.uid) return <CircularLoad size={200} color={`secondary`} />
     return (
       <div className="single-user-flex">
-        <div className="">
-          <div className="single-user-info-flex">
-            <div className="single-user-pic-flex">
-              <img src={user.photoURL} />
-            </div>
-            <div className="single-user-info-secondary-flex">
-              <div className="single-user-info-inner-flex">
-                <div>
-                  <h1>{user.displayName}</h1>
-                </div>
-                <div>
-                  {signedInUser.uid !== user.uid ? (
-                    <Follow followerId={signedInUser.uid} followingId={userId} />
-                  ) : (
-                    <div />
-                  )}
-                </div>
-              </div>
-              <div className="follow-flex">
-                <div className="">
-                  <Link to={`/followers/${userId}`}>
-                    <p>Followers</p>
-                    <p>
-                      <Count of={this.followers} />
-                    </p>
-                  </Link>
-                </div>
-                <div className="">
-                  <Link to={`/following/${userId}`}>
-                    <p>Following</p>
-                    <p>
-                      <Count of={this.following} />
-                    </p>
-                  </Link>
-                </div>
-                <div className="">
-                  <Link to={`/`}>
-                    <p>Maps </p>
-                    <p>
-                      <Count of={this.mapsCreated} />
-                    </p>
-                  </Link>
-                </div>
-              </div>
-            </div>
+      <div className="">
+        <div className="single-user-info-flex">
+          <div className="single-user-pic-flex">
+            <img src={user.photoURL} />
           </div>
-        </div>
-
-        <div className="map-flex-outer text-align-center">
+          <div className="single-user-info-secondary-flex">
+            <div className="single-user-info-inner-flex">
+              <div>
+              <h1>{user.displayName}</h1>
+              </div>
+              <div>
+              { (signedInUser.uid !== user.uid) ? 
+              <Follow followerId={signedInUser.uid} followingId={userId} />
+              : <div />
+              }
+              </div>
+            </div>
+            <div className="follow-flex animated fadeIn">
+              <div>
+                <Link to={`/followers/${userId}`}>
+                  <p>Followers</p>
+                  <p className="text-bold"><Count of={this.followers} /></p>
+                </Link>
+              </div>
+              <div>
+                <Link to={`/following/${userId}`}>
+                  <p>Following</p>
+                  <p className="text-bold"><Count of={this.following} /></p>
+                </Link>
+              </div>
+              <div>
+                <Link to="/"><p>Maps </p>
+                  <p className="text-bold"><Count of={this.mapsCreated} /></p>
+                </Link>
+              </div>
+            </div>
+          </div>        
+       </div>
+      </div>
+      <div>
+              <h2>Maps</h2>
+              <h2>Favorite Maps</h2>
+              <h2>Layered Maps</h2>
+      </div>
+          <div className="map-flex-outer text-align-center">
           {Object.keys(createdMaps).length &&
             Object.keys(createdMaps).map(mapId => {
               return (
-                <div className="map-flex-inner" key={mapId}>
-                  <Link to={`/map/${mapId}`}>
-                    <p>
-                      {createdMaps[mapId].title} (<Count
-                        of={db.collection('favoritedMaps').where('mapId', '==', mapId)}
-                      />{' '}
-                      Pins)
-                    </p>
-                  </Link>
-                </div>
-              )
+                    <div className="map-flex-inner" key={mapId}>
+                    <img src="/img/pin.png" className="animated bounceInDown" />
+                      <Link to={`/map/${mapId}`}>
+                        <h2>
+                          {createdMaps[mapId].title} 
+                        </h2>
+                        <h3><Count
+                          of={db
+                            .collection("favoritedMaps")
+                            .where("mapId", "==", mapId)}
+                        /> Likes</h3>
+                      </Link>
+                    
+                    </div>
+              );
             })}
-        </div>
+            </div>
       </div>
     )
   }
 }
-export default withRouter(SingleUser)
+export default withRouter(SingleUser);
