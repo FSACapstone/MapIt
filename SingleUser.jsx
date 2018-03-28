@@ -5,6 +5,7 @@ import { withRouter, Link } from "react-router-dom";
 import firebase from "~/fire";
 import Count from "./Count";
 import CircularLoad from "./CircularProgress";
+import Button from 'material-ui/Button'
 
 const db = firebase.firestore();
 
@@ -23,6 +24,7 @@ class SingleUser extends Component {
 
   componentDidMount() {
     this.updateUserView(this.props);
+    this.getAllUserMaps(this.props)
   }
 
   componentWillReceiveProps(props) {
@@ -44,20 +46,62 @@ class SingleUser extends Component {
         );
       });
 
+    // db
+    //   .collection("maps")
+    //   .where("uid", "==", userId)
+    //   .get()
+    //   .then(querySnapshot => {
+    //     const mapObj = {};
+    //     querySnapshot.forEach(map => {
+    //       mapObj[map.id] = map.data();
+    //     });
+    //     this.setState({
+    //       createdMaps: mapObj
+    //     });
+    //   })
+    //   .then(() => this.setState({ loading: false }));
+  }
+
+  getAllUserMaps() {
+    const { signedInUser } = this.props
+    console.log(signedInUser.uid)
     db
-      .collection("maps")
-      .where("uid", "==", userId)
+      .collection('maps')
+      .where('uid', '==', signedInUser.uid)
       .get()
       .then(querySnapshot => {
-        const mapObj = {};
+        const mapObj = {}
         querySnapshot.forEach(map => {
-          mapObj[map.id] = map.data();
-        });
+          mapObj[map.id] = map.data()
+        })
         this.setState({
-          createdMaps: mapObj
-        });
+          createdMaps: mapObj,
+        })
       })
-      .then(() => this.setState({ loading: false }));
+      .then(() => console.log(this.state))
+  }
+
+  deleteMap(mapId) {
+    const { signedInUser } = this.props
+    db
+      .collection('maps')
+      .doc(mapId)
+      .delete()
+      .then(() => {
+        db
+          .collection('favoritedMaps')
+          .where('mapId', '==', mapId)
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              db
+                .collection('favoritedMaps')
+                .doc(doc.id)
+                .delete()
+            })
+          })
+          .then(() => this.getAllUserMaps())
+      })
   }
 
   get followers() {
@@ -85,6 +129,7 @@ class SingleUser extends Component {
     } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
+
     if (!user.uid) return <CircularLoad size={200} color={`secondary`} />
     return (
       <div className="single-user-flex">
@@ -135,18 +180,27 @@ class SingleUser extends Component {
             Object.keys(createdMaps).map(mapId => {
               return (
                     <div className="map-flex-inner" key={mapId}>
-                    <img src="/img/pin.png" className="animated bounceInDown" />
-                      <Link to={`/map/${mapId}`}>
-                        <h2>
-                          {createdMaps[mapId].title}
-                        </h2>
-                        <h3><Count
-                          of={db
-                            .collection("favoritedMaps")
-                            .where("mapId", "==", mapId)}
-                        /> Likes</h3>
-                      </Link>
-
+                    <Link to={`/map/${mapId}`}>
+                      <img src="/img/pin.png" className="animated bounceInDown" />
+                          <h2>
+                            {createdMaps[mapId].title}
+                          </h2>
+                          <h3><Count
+                            of={db
+                              .collection("favoritedMaps")
+                              .where("mapId", "==", mapId)}
+                          /> Likes</h3>
+                        </Link>
+                        {
+                          (signedInUser.uid === user.uid) ?
+                          <div>
+                          <Link to={`/newmap/${mapId}`}>
+                            <Button color="primary">Edit</Button>
+                          </Link>
+                          <Button color="secondary" onClick={() => this.deleteMap(mapId)}>Delete</Button>
+                          </div>
+                          : null
+                        }
                     </div>
               );
             })

@@ -13,15 +13,13 @@ import FollowingUsers from './FollowingUsers'
 import FollowersUsers from './FollowersUsers'
 import CreatedMap from './components/CreatedMap'
 import AllMaps from './components/AllMaps'
-import Drawer from 'material-ui/Drawer'  
+import Drawer from 'material-ui/Drawer'
 import algoliasearch from 'algoliasearch'
 
-const algolia = algoliasearch(
-  '2N7N3I0FJ2', 'd163ceea9b530ca67676dc76cac7ee53'
-);
+const algolia = algoliasearch('2N7N3I0FJ2', 'd163ceea9b530ca67676dc76cac7ee53')
 
-const index = algolia.initIndex('mapstack');
-index.setSettings({ hitsPerPage: 3});
+const index = algolia.initIndex('mapstack')
+index.setSettings({ hitsPerPage: 3 })
 import FavoritedMaps from './components/FavoritedMaps'
 import LayeredMapsList from './components/maps/LayeredMaps'
 import LayeredMap from './components/maps/LayeredMap'
@@ -70,22 +68,18 @@ class App extends Component {
   handleToggle = () => this.setState({ open: !this.state.open })
 
   componentDidMount() {
-    db
-      .collection('users')
-      .onSnapshot(querySnapshot => {
-        let usersArr = []
-        querySnapshot.forEach(doc => {
-          const key = doc.id;
-          const data = doc.data();
-          data.objectID = key;
+    db.collection('users').onSnapshot(querySnapshot => {
+      let usersArr = []
+      querySnapshot.forEach(doc => {
+        const key = doc.id
+        const data = doc.data()
+        data.objectID = key
 
-          usersArr.push(data)
-        })
-        console.log(usersArr)
-        index.saveObjects(usersArr)
-        .then(() => console.log('users saved to algolia'))
+        usersArr.push(data)
       })
-      
+      console.log(usersArr)
+      index.saveObjects(usersArr).then(() => console.log('users saved to algolia'))
+    })
 
     auth.onAuthStateChanged(user => {
       if (user) {
@@ -196,11 +190,7 @@ class App extends Component {
                 path="/favorite-maps"
                 render={() => <FavoritedMaps user={user} google={{ ...this.props.google }} />}
               />
-              <Route
-                exact
-                path="/layered-maps"
-                render={() => <LayeredMapsList user={user} />}
-              />
+              <Route exact path="/layered-maps" render={() => <LayeredMapsList user={user} />} />
               <Route exact path="/followers/:userId" render={() => <FollowersUsers />} />
               <Route
                 exact
@@ -215,7 +205,7 @@ class App extends Component {
               <Route
                 exact
                 path="/newmap/:id"
-                render={() => <NewMap google={this.props.google} />}
+                render={() => <NewMap google={this.props.google} signedInUser={user} />}
               />
               <Route
                 exact

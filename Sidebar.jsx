@@ -75,7 +75,7 @@ class Sidebar extends Component {
               <Link to={`/followers/${user.uid}`}>
                 <Typography color="inherit" className={classes.typography}>Followers: <Count of={this.followers} /></Typography>
               </Link>
-              <Link to={`/allmaps/${user.uid}`}>
+              <Link to={`/user/${user.uid}`}>
                 <Typography color="inherit" className={classes.typography}>Maps: <Count of={this.mapsCreated} /></Typography>
               </Link>
               <Link to={`/favorite-maps`}>
