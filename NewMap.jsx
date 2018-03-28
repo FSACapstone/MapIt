@@ -3,15 +3,12 @@ import ReactDOM from 'react-dom';
 import firebase from '~/fire';
 import { withRouter } from "react-router-dom";
 import GoogleMapButton from './GoogleMapButton';
-
 const db = firebase.firestore();
-
 var searchMarkersArray = [];
 var addedMarkersArr = [];
 function clearOverlays(arr) {
   for (var i = 0; i < arr.length; i++) {
     arr[i].setMap(null);
-
   }
   arr.length = 0;
 }
@@ -25,16 +22,13 @@ class NewMap extends Component {
     this.onClick = this.onClick.bind(this)
     this.clearSearch = this.clearSearch.bind(this)
   }
-
   clearSearch() {
     this.setState({ results: [] })
     clearOverlays(searchMarkersArray)
     var search = this.refs.center
     search.value = ''
   }
-
   addPlace = (marker, place, infowindow) => {
-
     //marker.setIcon('https://www.google.com/mapfiles/marker_green.png')
     infowindow.close()
     var obj = {}
@@ -62,7 +56,6 @@ class NewMap extends Component {
         console.log('Error getting document', err);
       });
   }
-
   removePlace = (marker) => {
     marker.setMap(null)
     var thisHolder = this
@@ -85,19 +78,16 @@ class NewMap extends Component {
     }
     )
   }
-
   onClick = (event) => {
     event.preventDefault()
     var placeArr = []
     if (searchMarkersArray.length) {
       clearOverlays(searchMarkersArray)
     }
-
     const { google } = this.props
     const center = new this.props.google.maps.LatLng(this.map.getCenter().lat(), this.map.getCenter().lng())
     const service = new this.props.google.maps.places.PlacesService(this.map);
     const holder = this
-
     var request = {
       location: center,
       bounds: this.map.getBounds(),
@@ -142,28 +132,22 @@ class NewMap extends Component {
       }
       else { console.log('no results') }
     }
-
-
     service.nearbySearch(request, callback)
   }
-
   componentDidMount() {
     db.collection('maps').doc(this.props.match.params.id).set({
       mid: this.props.match.params.id
     }, { merge: true })
-
     db
       .collection('maps')
       .doc(this.props.match.params.id)
       .get()
       .then((map) => {
-
         const { google } = this.props; // sets props equal to google
         const maps = google.maps; // sets maps to google maps props
         const mapRef = this.refs.newmap; // looks for HTML div ref 'map'. Returned in render below.
         const node = ReactDOM.findDOMNode(mapRef); // finds the 'map' div in the React DOM, names it node
         const mapConfig = Object.assign({},
-
           {
             center: map.data().center, // sets center of google map to NYC.
             zoom: 15, // sets zoom. Lower numbers are zoomed further out.
@@ -176,15 +160,12 @@ class NewMap extends Component {
           bounds: this.map.getBounds(),
         }
         const input = document.getElementById('center'); // use a ref instead
-
         const autocomplete = new google.maps.places.Autocomplete(input, options)
-
         google.maps.event.addListener(this.map, 'idle', function () {
           autocomplete.setBounds(isthis.map.getBounds())
         });
         var checkedMap = db.collection('maps').doc(this.props.match.params.id).onSnapshot(function (doc) {
           var infowindow = new google.maps.InfoWindow();
-
           const arr = doc.data().places
           isthis.setState({ places: arr })
           const keysArr = Object.keys(arr)
@@ -213,7 +194,6 @@ class NewMap extends Component {
         })
       })
   }
-
   render() {
     const style = {
       width: '100vw',
@@ -239,6 +219,4 @@ class NewMap extends Component {
     )
   }
 }
-
 export default withRouter(NewMap);
-

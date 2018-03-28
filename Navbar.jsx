@@ -71,7 +71,7 @@ class MenuAppBar extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, toggleDrawer } = this.props;
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
     const user = this.props.user;
@@ -82,9 +82,7 @@ class MenuAppBar extends React.Component {
        {(user) &&
         <AppBar position="static">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <Link to="/"><Home className="off-white"></Home></Link>
-            </IconButton>
+          <IconButton className={classes.menuButton} onClick={toggleDrawer} color="inherit" aria-label="Menu"><MenuIcon></MenuIcon></IconButton>
             <Typography variant="title" color="inherit" className={classes.flex}>
               <Link to={`/`} className="mapstack">MapStack</Link>
             </Typography>
