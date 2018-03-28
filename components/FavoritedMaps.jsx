@@ -15,7 +15,8 @@ class FavoritedMaps extends Component {
       checkedMaps: [],
       loading: true,
       center: {},
-      createMap: false
+      createMap: false,
+      layerMap: false,
     }
   }
 
@@ -73,7 +74,7 @@ class FavoritedMaps extends Component {
     this.state.checkedMaps.map(map => {
       var places = map.places
       for (var place in places) {
-        ;(() => {
+        (() => {
           var internalPlaceObj = places[place]
           var latLng = {
             lat: internalPlaceObj.lat,
@@ -87,8 +88,6 @@ class FavoritedMaps extends Component {
             position: latLng,
             icon: 'https://www.google.com/mapfiles/marker_green.png',
           })
-          //marker.id = placeName
-          //addedMarkersArr.push(marker)
           google.maps.event.addListener(marker, 'click', function() {
             infowindow.setContent(
               '<div><strong>' +
@@ -104,6 +103,7 @@ class FavoritedMaps extends Component {
         })()
       }
     })
+    this.setState({layerMap: true})
   }
 
   onCheckClick = (event, checked) => {
@@ -157,71 +157,61 @@ class FavoritedMaps extends Component {
         marginBottom: 16,
       },
     }
-
+ 
     const style = {
-      width: '80vw',
-      height: '80vh',
+      width: '100vw',
+      height: '100vh',
     }
-
+ 
     return (
       <div>
-        {this.state.checkedMaps.length ? (
-          <div>
-            <button onClick={this.onLayerClick} className="favorited-map-button">
-              Layer Map
-            </button>
-            <button className="layered-save-button" onClick={this.onSaveClick}>
-              {' '}
-              Save Layered Map{' '}
-            </button>
-          </div>
-        ) : (
-          <div />
-        )}
-        <div ref="newmap" className="google-map" style={style} />
+      <div ref="newmap" className="google-map-favorite" style={style} />
+      <div className="favorite-map-controls text-align-center">
+      <h2>Favorite Maps</h2>
         {this.state.maps.length ? (
           <div style={styles.block}>
-            {' '}
-            <button onClick = {this.onCreateClick} className = 'create-layered-map'> Create Layered Map </button>
             {this.state.maps.map(map => {
               return (
-
-
+ 
+ 
                 <p key={map.mid}>
                  { this.state.createMap ?
                    <Checkbox
                     className="margin-top-5"
                     value={map.mid}
                     onChange={this.onCheckClick}
+                    color="primary"
                     style={styles.checkbox}
                   />
                   : null }
                   <Link to = {`map/${map.mid}`} >{map.title} </Link>
                 </p>
-
+ 
               )
             })}
+            {this.state.checkedMaps.length ? (
+              <div>
+                <button className="favorite-map-controls-buttons" onClick={this.onLayerClick}>
+                  Layer Map
+                </button>
+                
+              </div>
+            ) : null }
+            { (!this.state.createMap) &&
+            <button className="favorite-map-controls-buttons" onClick = {this.onCreateClick}>Create A Layered Map</button>
+            }
+            { (this.state.layerMap && this.state.checkedMaps.length) &&
+            <button className="favorite-map-controls-buttons" onClick={this.onSaveClick}>
+            Save Layered Map
+          </button>
+            }
           </div>
-        ) : (
-          <div />
-        )}
+          
+        ) : null }
+        </div>
       </div>
     )
   }
-}
+ }
 
-export default withRouter(FavoritedMaps)
-
-// <div ref="newmap" className="google-map" style={style} />
-
-
-//this.state.checkedMaps.length
-//   ? this.state.checkedMaps.map(map => {
-//     return <div key={map.mid} className='margin-top-5'> {map.title} </div>
-//   })
-//   : <div></div>
-// }
-// {this.state.checkedMaps.length
-//   ? <button onClick={this.onLayerClick} className="favorited-map-button">Layer Map</button>
-//   : <div></div>
-// }
+ export default withRouter(FavoritedMaps)
