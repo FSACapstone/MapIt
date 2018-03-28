@@ -21,7 +21,7 @@ const algolia = algoliasearch(
 );
 
 const index = algolia.initIndex('mapstack');
-index.setSettings({ hitsPerPage: 3})
+index.setSettings({ hitsPerPage: 3});
 
 const db = firebase.firestore();
 

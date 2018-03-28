@@ -4,6 +4,7 @@ import firebase from "~/fire";
 const db = firebase.firestore();
 import { InstantSearch, Hits, SearchBox } from "react-instantsearch/dom";
 import { connectAutoComplete } from 'react-instantsearch/connectors'
+import Input from "material-ui/Input/Input";
 
 class SearchBar extends Component {
   constructor(props) {
