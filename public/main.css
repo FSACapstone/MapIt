@@ -357,5 +357,6 @@ a:visited {
  .following-page-flex img {
   width: 100px;
   border-radius: 100%;
+  border: 2px solid #333;
   /* max-width: 50%; */
  }
