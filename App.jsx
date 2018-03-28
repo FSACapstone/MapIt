@@ -23,6 +23,7 @@ const algolia = algoliasearch(
 const index = algolia.initIndex('mapstack');
 index.setSettings({ hitsPerPage: 3});
 import FavoritedMaps from './components/FavoritedMaps'
+import Tags from './Tags'
 
 const db = firebase.firestore()
 
@@ -153,6 +154,7 @@ class App extends Component {
     if (!user) return <Login user={user} />
     return (
       <div>
+        <Tags />
         <NavBar user={user} toggleDrawer={this.toggleDrawer('left', true)} />
         <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
           <div

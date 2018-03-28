@@ -43,8 +43,8 @@ const config = env => ({
 
 const entries = (env, entry) =>
   isHot(env)
-    ? ['react-hot-loader/patch', entry]
-    : entry
+    ? ['react-hot-loader/patch', 'babel-polyfill', entry]
+    : ['babel-polyfill', entry]
 
 const plugins = env => isHot(env) ? [
   new webpack.HotModuleReplacementPlugin,  // Enable HMR globally
@@ -55,7 +55,7 @@ const plugins = env => isHot(env) ? [
 
 function devServer(env) {
   if (isProd(env)) return
-  const {FIREBASE_SERVE_URL} = env  
+  const {FIREBASE_SERVE_URL} = env
   return {
     hot: true,
     proxy: FIREBASE_SERVE_URL && {
