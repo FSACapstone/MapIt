@@ -23,6 +23,8 @@ const algolia = algoliasearch(
 const index = algolia.initIndex('mapstack');
 index.setSettings({ hitsPerPage: 3});
 import FavoritedMaps from './components/FavoritedMaps'
+import LayeredMapsList from './components/maps/LayeredMaps'
+import LayeredMap from './components/maps/LayeredMap'
 import Tags from './Tags'
 
 const db = firebase.firestore()
@@ -194,6 +196,11 @@ class App extends Component {
                 path="/favorite-maps"
                 render={() => <FavoritedMaps user={user} google={{ ...this.props.google }} />}
               />
+              <Route
+                exact
+                path="/layered-maps"
+                render={() => <LayeredMapsList user={user} />}
+              />
               <Route exact path="/followers/:userId" render={() => <FollowersUsers />} />
               <Route
                 exact
@@ -209,6 +216,11 @@ class App extends Component {
                 exact
                 path="/newmap/:id"
                 render={() => <NewMap google={this.props.google} />}
+              />
+              <Route
+                exact
+                path="/layered-maps/:id"
+                render={() => <LayeredMap google={this.props.google} />}
               />
               <Route exact path="/allmaps/:uid" render={() => <AllMaps signedInUser={user} />} />
               <Route
