@@ -13,6 +13,7 @@ import FollowingUsers from "./FollowingUsers"
 import FollowersUsers from "./FollowersUsers";
 import CreatedMap from './components/CreatedMap'
 import AllMaps from './components/AllMaps'
+import Drawer from 'material-ui/Drawer'
 
 const db = firebase.firestore();
 
@@ -25,7 +26,8 @@ class App extends Component {
       users: [],
       documentId: "",
       numFollowers: 0,
-      numFollowing: 0
+      numFollowing: 0,
+      left: false 
     };
   }
 
@@ -112,21 +114,35 @@ class App extends Component {
     });
   }
 
+  toggleDrawer = (side, open) => () => {
+    console.log(this.state.left);
+    this.setState({
+      [side]: open,
+    });
+  };
+
   render() {
     const { user, documentId, numFollowers, numFollowing } = this.state;
     if (this.state.loading === true) return <CircularLoad size={200} color={`secondary`} />;
     if (!user) return <Login user={user} />;
     return (
       <div>
-        <NavBar user={user} />
-        <div className="position-fixed">
-          <Sidebar
-            user={user}
-            documentId={documentId}
-            numFollowers={numFollowers}
-            numFollowing={numFollowing}
-          />
-        </div>
+        <NavBar user={user} toggleDrawer={this.toggleDrawer('left', true)} />
+        <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
+          <div
+              tabIndex={0}
+              role="button"
+              onClick={this.toggleDrawer('left', false)}
+              onKeyDown={this.toggleDrawer('left', false)}
+            >
+            <Sidebar
+              user={user}
+              documentId={documentId}
+              numFollowers={numFollowers}
+              numFollowing={numFollowing}
+            />
+          </div>
+        </Drawer>
         <div className="wrapper">
           <div className="col-1" />
           <div className="col-2">

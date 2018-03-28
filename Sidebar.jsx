@@ -57,7 +57,7 @@ class Sidebar extends Component {
 
     return (
       <div id="sidebar">
-        <div className="sidebar-margin">
+        <div className="">
           <SearchMaps />
           <div>
             <Link to={`/user/${user.uid}`}>
