@@ -63,11 +63,11 @@ class SingleUser extends Component {
   }
 
   getAllUserMaps() {
-    const { signedInUser } = this.props
-    console.log(signedInUser.uid)
+    const userId = this.props.match.params.uid;
+
     db
       .collection('maps')
-      .where('uid', '==', signedInUser.uid)
+      .where('uid', '==', userId)
       .get()
       .then(querySnapshot => {
         const mapObj = {}
@@ -174,7 +174,9 @@ class SingleUser extends Component {
       </div>
 
           <div className="map-flex-outer text-align-center">
-          {Object.keys(createdMaps).length &&
+
+          
+          {Object.keys(createdMaps).length ?
             Object.keys(createdMaps).map(mapId => {
               return (
                     <div className="map-flex-inner" key={mapId}>
@@ -201,7 +203,9 @@ class SingleUser extends Component {
                         }
                     </div>
               );
-            })}
+            })
+          : <h1>No Maps</h1>
+          }
             </div>
       </div>
     )
