@@ -12,6 +12,7 @@ class CreatedMap extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props)
     this.listen(this.props);
     db
       .collection("maps")
@@ -63,6 +64,20 @@ class CreatedMap extends Component {
           })();
         }
       });
+
+      db
+        .collection("maps")
+        .where("uid", "==", followerUserId)
+        .onSnapshot(querySnapshot => {
+          let maps = []
+          querySnapshot.forEach(doc => {
+            maps.push(doc.data().mid)
+          })
+          if (maps.includes(mapId)) {
+            return this.setState({ ownMap: true })
+          }
+          this.setState({ ownMap: false })
+        })
   }
 
   componentWillReceiveProps(props) {
@@ -109,7 +124,7 @@ class CreatedMap extends Component {
   };
 
   render() {
-    const { mapFavorited } = this.state || {};
+    const { mapFavorited, ownMap } = this.state || {};
 
     const style = {
       width: "100vw",
