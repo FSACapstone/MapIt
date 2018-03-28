@@ -87,9 +87,6 @@ class SingleUser extends Component {
  
     return (
       <div className="single-user-flex">
-      {signedInUser.uid === userId ? (
-        <div />
-      ) :
       <div className="">
         <div className="single-user-info-flex">
           <div className="single-user-pic-flex">
@@ -101,7 +98,10 @@ class SingleUser extends Component {
               <h1>{user.displayName}</h1>
               </div>
               <div>
+              { (signedInUser.uid !== user.uid) ? 
               <Follow followerId={signedInUser.uid} followingId={userId} />
+              : <div />
+              }
               </div>
             </div>
           <div className="follow-flex">
@@ -136,15 +136,14 @@ class SingleUser extends Component {
         </div>
       
       </div>
-    }
       
           <div className="map-flex-outer text-align-center">
           {Object.keys(createdMaps).length &&
             Object.keys(createdMaps).map(mapId => {
               return (
-                    <div className="map-flex-inner">
+                    <div className="map-flex-inner" key={mapId}>
                       
-                      <Link to={`/map/${mapId}`} key={mapId}>
+                      <Link to={`/map/${mapId}`}>
                         <p>
                           {createdMaps[mapId].title} (<Count
                             of={db
@@ -159,8 +158,7 @@ class SingleUser extends Component {
             })}
             </div>
       </div>
-    );
+    )
   }
 }
-
 export default withRouter(SingleUser);
