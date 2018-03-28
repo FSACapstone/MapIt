@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import firebase from "~/fire";
 import Button from "material-ui/Button";
 
@@ -126,6 +126,7 @@ class CreatedMap extends Component {
 
   render() {
     const { mapFavorited, ownMap } = this.state || {};
+    const followingMapId = this.props.match.params.id;
 
     const style = {
       width: "100vw",
@@ -137,12 +138,14 @@ class CreatedMap extends Component {
         <div className="google-map-buttons text-align-center">
           {
             ownMap ?
-            <Button variant="raised" color="primary">
-              Edit
-            </Button>
+            <Link to={`/newmap/${followingMapId}`}>
+              <Button variant="raised" color="primary">
+                Edit
+              </Button>
+            </Link>
           :
-           mapFavorited
-          ? <Button variant="raised" color="primary" onClick={this.handleUnfavorite}>
+          mapFavorited ? 
+            <Button variant="raised" color="primary" onClick={this.handleUnfavorite}>
               Unfavorite
             </Button>
           : <Button variant="raised" color="primary" onClick={this.handleFavorite}>
