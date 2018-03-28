@@ -26,6 +26,7 @@ class GoogleMap extends Component {
       title: '',
       tags: '',
       center: {},
+      goClicked: true
     }
   }
 
@@ -111,7 +112,7 @@ class GoogleMap extends Component {
       }
     })
 
-    this.setState({ centerMap: true })
+    this.setState({ centerMap: true, goClicked: !this.state.goClicked })
   }
 
   componentDidMount() {
@@ -165,7 +166,7 @@ class GoogleMap extends Component {
 
   render() {
     const { classes } = this.props
-    const { openNewForm, centerMap } = this.state
+    const { openNewForm, centerMap, goClicked } = this.state
 
     const style = {
       width: '100vw',
@@ -182,13 +183,16 @@ class GoogleMap extends Component {
               type="text"
               placeholder="Search Locations"
             />
-            <Button
-              variant="raised"
-              color="primary"
-              className={classes.button}
-              onClick={this.onSearchClick}>
-              Center Map
-            </Button>
+            {
+              goClicked &&
+              <Button
+                variant="raised"
+                color="primary"
+                className={classes.button}
+                onClick={this.onSearchClick}>
+                GO
+              </Button>
+            }
             {centerMap && (
               <Button variant="raised" color="primary" onClick={this.onCreateClick}>
                 Create New Map

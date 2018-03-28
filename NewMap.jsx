@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import firebase from '~/fire'
 import GoogleMapButton from './GoogleMapButton'
 
@@ -250,7 +250,7 @@ class NewMap extends Component {
       width: '100vw',
       height: '100vh',
     }
-
+    let { signedInUser } = this.props
     return (
       <div>
         <div className="google-map-buttons text-align-center">
@@ -260,11 +260,14 @@ class NewMap extends Component {
               id="center"
               className="google-map-input google-input-margin"
               type="text"
-              placeholder="Search For A Place"
+              placeholder="Search for a place..."
               name="search"
             />
-            <GoogleMapButton type={`submit`} text={`Add to map`} />
+            <GoogleMapButton type={`submit`} text={`Drop Pin`} />
             {<GoogleMapButton onClick={this.clearSearch} text={`Clear Search`} />}
+            <Link to={`/user/${signedInUser.uid}`}>
+              <GoogleMapButton type={`submit`} text={`Save Map`} />
+            </Link>
           </form>
         </div>
         <div ref="newmap" className="google-map margin-subtract-70">
