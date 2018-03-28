@@ -1,37 +1,35 @@
-import React, { Component } from "react";
-import Follow from "./Follow";
-import { withRouter } from "react-router-dom";
-import firebase from "~/fire";
+import React, { Component } from 'react'
+import Follow from './Follow'
+import { withRouter } from 'react-router-dom'
+import firebase from '~/fire'
 
-const db = firebase.firestore();
+const db = firebase.firestore()
 
 export default class ResultList extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
-    this.state = {results: []}
+    this.state = { results: [] }
   }
-  componentWillReceiveProps(){
+  componentWillReceiveProps() {
     console.log(this.props.arr.arr, this.props.arr.length)
-        this.setState({results:this.props.arr})
-
-
+    this.setState({ results: this.props.arr })
   }
 
-  componentDidMount(){
+  componentDidMount() {
     console.log(this.props)
     //this.setState({results:this.props.arr})
   }
 
-  render(){
+  render() {
     //console.log(this.props.arr[0])
     console.log(this.state)
 
-    return(
-      this.state.results.length ? this.state.results.map((place)=>{
+    return this.state.results.length ? (
+      this.state.results.map(place => {
         return <div>{place.name}</div>
       })
-      :  <div>no results </div>
+    ) : (
+      <div>no results </div>
     )
   }
-
 }

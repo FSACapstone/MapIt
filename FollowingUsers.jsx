@@ -7,27 +7,23 @@ import firebase from "~/fire";
 import Count from "./Count";
 import CircularLoad from "./CircularProgress";
 
-const db = firebase.firestore();
+const db = firebase.firestore()
 
 class FollowingUsers extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       following: [],
       userPage: {},
       loading: true
     };
 
-    this.findFollowing = this.findFollowing.bind(this);
+    this.findFollowing = this.findFollowing.bind(this)
   }
 
   componentDidMount() {
-    this.findFollowing();
+    this.findFollowing()
   }
-
-  //   componentWillUnmount() {
-  //     this.unsubscribe()
-  //   }
 
   findFollowing() {
     const user = this.props.match.params.userId;
@@ -38,19 +34,19 @@ class FollowingUsers extends Component {
     .then(querySnapshot => querySnapshot.forEach(doc => this.setState({userPage: doc.data()})));
 
     db
-      .collection("relationships")
-      .where("follower", "==", user)
+      .collection('relationships')
+      .where('follower', '==', user)
       .get()
       .then(querySnapshot => {
-        let followingUser = {};
+        let followingUser = {}
         querySnapshot.forEach(doc => {
-          let followingId = doc.data().following;
+          let followingId = doc.data().following
           db
-            .collection("users")
+            .collection('users')
             .doc(followingId)
             .get()
             .then(following => {
-              followingUser[followingId] = following.data();
+              followingUser[followingId] = following.data()
             })
             .then(() => this.setState({ following: followingUser }));
         });
