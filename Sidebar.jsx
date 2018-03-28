@@ -67,16 +67,19 @@ class Sidebar extends Component {
             </Link>
           </div>
           <hr />
-          <div>           
-            <div className="sidebar-flex-info">           
+          <div>
+            <div className="sidebar-flex-info">
               <Link to={`/following/${user.uid}`}>
                 <Typography color="inherit" className={classes.typography}>Following: <Count of={this.following} /></Typography>
-              </Link>             
+              </Link>
               <Link to={`/followers/${user.uid}`}>
                 <Typography color="inherit" className={classes.typography}>Followers: <Count of={this.followers} /></Typography>
-              </Link>      
+              </Link>
               <Link to={`/allmaps/${user.uid}`}>
                 <Typography color="inherit" className={classes.typography}>Maps: <Count of={this.mapsCreated} /></Typography>
+              </Link>
+              <Link to={`/favorite-maps`}>
+                <Typography color="inherit" className={classes.typography}>Favorite Maps</Typography>
               </Link>
             </div>
           </div>

@@ -372,4 +372,11 @@ a:visited {
   right: 200px;
 }
 
+.create-layered-map {
+  position: absolute;
+  z-index: 5000000000;
+  right: 50px;
+
+}
+
 
