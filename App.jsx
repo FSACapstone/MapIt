@@ -22,7 +22,6 @@ const algolia = algoliasearch(
 
 const index = algolia.initIndex('mapstack');
 index.setSettings({ hitsPerPage: 3});
-import Drawer from 'material-ui/Drawer'
 import FavoritedMaps from './components/FavoritedMaps'
 
 const db = firebase.firestore()

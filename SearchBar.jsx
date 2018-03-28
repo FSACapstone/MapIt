@@ -3,10 +3,7 @@ import { withRouter, Link } from "react-router-dom";
 import firebase from "~/fire";
 const db = firebase.firestore();
 import { InstantSearch, Hits, SearchBox } from "react-instantsearch/dom";
-import Input from "material-ui/Input/Input";
-import { withRouter } from 'react-router-dom'
-import firebase from '~/fire'
-const db = firebase.firestore()
+// import Input from "material-ui/Input/Input";
 
 class SearchBar extends Component {
   constructor(props) {
@@ -81,8 +78,5 @@ class SearchBar extends Component {
 
 export default withRouter(SearchBar)
 
-<<<<<<< HEAD
 // <input className='google-map-input' name="displayName" type='text' placeholder='Search Users' />
-=======
->>>>>>> f1d236f0cd98b0a58887a808533e7fee08689414
 // <input type="text" name="displayName" />

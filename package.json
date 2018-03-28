@@ -35,11 +35,8 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
-<<<<<<< HEAD
     "algoliasearch": "^3.26.0",
-=======
     "animate.css": "^3.6.1",
->>>>>>> f1d236f0cd98b0a58887a808533e7fee08689414
     "chokidar": "^1.7.0",
     "firebase": "^4.11.0",
     "firebase-admin": "^5.11.0",
