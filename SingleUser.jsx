@@ -12,7 +12,6 @@ class SingleUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
       numFollowers: 0,
       numFollowing: 0,
       user: {},
@@ -27,7 +26,6 @@ class SingleUser extends Component {
   }
 
   componentWillReceiveProps(props) {
-    this.setState({ loading: true });
     this.updateUserView(props);
   }
 
@@ -86,19 +84,66 @@ class SingleUser extends Component {
     } = this.state;
     const signedInUser = this.props.signedInUser;
     const userId = this.props.match.params.uid;
-
-    return loading ? (
-      <CircularLoad color={`secondary`} size={100} />
-    ) : (
+ 
+    return (
       <div className="single-user-flex">
-        <div className="map-container">
-          <div className="map-flex-outer">
+      <div className="">
+        <div className="single-user-info-flex">
+          <div className="single-user-pic-flex">
+            <img src={user.photoURL} />
+          </div>
+          <div className="single-user-info-secondary-flex">
+            <div className="single-user-info-inner-flex">
+              <div>
+              <h1>{user.displayName}</h1>
+              </div>
+              <div>
+              { (signedInUser.uid !== user.uid) ? 
+              <Follow followerId={signedInUser.uid} followingId={userId} />
+              : <div />
+              }
+              </div>
+            </div>
+          <div className="follow-flex">
+            <div className="">
+              <Link to={`/followers/${userId}`}>
+                <p>
+                  Followers
+                </p>
+                <p>
+                  <Count of={this.followers} />
+                </p>
+              </Link>
+            </div>
+            <div className="">
+              <Link to={`/following/${userId}`}>
+                <p>
+                  Following
+                </p>
+                <p>
+                  <Count of={this.following} />
+                </p>
+              </Link>
+            </div>
+            <div className="">
+              <Link to={`/`}><p>Maps </p>
+              <p><Count of={this.mapsCreated} /></p>
+              </Link>
+            </div>
+            </div>
+          </div>          
+                      
+        </div>
+      
+      </div>
+      
+          <div className="map-flex-outer text-align-center">
           {Object.keys(createdMaps).length &&
             Object.keys(createdMaps).map(mapId => {
               return (
-                    <div className="map-flex">
-                      <div className="map-flex-inner map-flex-color">
-                      <Link to={`/map/${mapId}`} key={mapId}>
+                    <div className="map-flex-inner" key={mapId}>
+                      
+                      <Link to={`/map/${mapId}`}>
                         <p>
                           {createdMaps[mapId].title} (<Count
                             of={db
@@ -107,54 +152,13 @@ class SingleUser extends Component {
                           /> Pins)
                         </p>
                       </Link>
-                      </div>
+                    
                     </div>
               );
             })}
             </div>
-        </div>
-        {signedInUser.uid === userId ? (
-          <div />
-        ) :
-        <div className="single-user-info-flex map-container">
-          <div className="text-align-center">
-            <img src={user.photoURL} />
-            <h1>{user.displayName}</h1>
-            <div className="follow-flex">
-              <div className="follow-flex-inner">
-                <Link to={`/followers/${userId}`}>
-                  <p>
-                    Followers
-                  </p>
-                  <p>
-                    <Count of={this.followers} />
-                  </p>
-                </Link>
-              </div>
-              <div className="follow-flex-inner">
-                <Link to={`/following/${userId}`}>
-                  <p>
-                    Following
-                  </p>
-                  <p>
-                    <Count of={this.following} />
-                  </p>
-                </Link>
-              </div>
-              <div className="follow-flex-inner">
-                <Link to={`/`}><p>Maps </p> 
-                <p><Count of={this.mapsCreated} /></p>
-                </Link>
-              </div>
-            </div>           
-              <Follow followerId={signedInUser.uid} followingId={userId} />           
-          </div>
-        
-        </div>
-      }
       </div>
-    );
+    )
   }
 }
-
 export default withRouter(SingleUser);
