@@ -12,11 +12,12 @@ class CreatedMap extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
+    const { followerUserId } = this.props
+    const mapId = this.props.match.params.id
     this.listen(this.props);
     db
       .collection("maps")
-      .doc(this.props.match.params.id)
+      .doc(mapId)
       .get()
       .then(map => {
         const dbMapRef = map.data();
@@ -134,18 +135,18 @@ class CreatedMap extends Component {
     return (
       <div>
         <div className="google-map-buttons text-align-center">
-          { mapFavorited
+          {
+            ownMap ?
+            <Button variant="raised" color="primary">
+              Edit
+            </Button>
+          :
+           mapFavorited
           ? <Button variant="raised" color="primary" onClick={this.handleUnfavorite}>
               Unfavorite
             </Button>
           : <Button variant="raised" color="primary" onClick={this.handleFavorite}>
               Favorite
-            </Button>
-          }
-          {
-            ownMap &&
-            <Button variant="raised" color="primary">
-              Edit
             </Button>
           }
         </div>
