@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import Follow from './Follow'
-import UsersCreatedMaps from './components/users/UsersCreatedMaps'
-import { withRouter } from 'react-router-dom'
-import firebase from '~/fire'
-import Count from './Count'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import Follow from "./Follow";
+import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
+import { withRouter } from "react-router-dom";
+import firebase from "~/fire";
+import Count from "./Count";
+import CircularLoad from "./CircularProgress";
 
 const db = firebase.firestore()
 
@@ -13,7 +14,9 @@ class FollowersUsers extends Component {
     super(props)
     this.state = {
       followers: [],
-    }
+      userPage: {},
+      loading: true
+    };
 
     this.findFollowers = this.findFollowers.bind(this)
   }
@@ -23,7 +26,13 @@ class FollowersUsers extends Component {
   }
 
   findFollowers() {
-    const user = this.props.match.params.userId
+    const user = this.props.match.params.userId;
+
+    db.collection("users")
+    .where("uid", "==", user)
+    .get()
+    .then(querySnapshot => querySnapshot.forEach(doc => this.setState({userPage: doc.data()})));
+
     db
       .collection('relationships')
       .where('following', '==', user)
@@ -39,34 +48,37 @@ class FollowersUsers extends Component {
             .then(follower => {
               followerUser[followerId] = follower.data()
             })
-            .then(() => this.setState({ followers: followerUser }))
-        })
+            .then(() => this.setState({ followers: followerUser }));
+        });
       })
+      .then(() => this.setState({loading: false}));
   }
 
   render() {
-    const { followers } = this.state
-    console.log(this.state)
-
+    const { followers, userPage } = this.state;
+    if (this.state.loading === true) return <CircularLoad size={200} color={`secondary`} />;
     return (
       <div className="text-align-center">
-        {Object.keys(followers).length ? (
-          Object.keys(followers).map(followerId => {
+      <h1>{userPage.displayName}</h1>
+      <h2>Followers</h2>
+      <div className="following-page-flex">
+        {Object.keys(followers).length &&
+          Object.keys(followers).map(followersId => {
             return (
-              <div key={followerId}>
-                <Link to={`/user/${followers[followerId].uid}`}>
-                  <img src={followers[followerId].photoURL} className="margin-top-5" />
+              <div key={followersId}>
+                <Link to={`/user/${followersId}`}>
+                  <img
+                    src={followers[followersId].photoURL}
+                    className="margin-top-5"
+                  />
                 </Link>
-                <h1>{followers[followerId].displayName}</h1>
-                <h2>{followers[followerId].email}</h2>
+                <p>{followers[followersId].displayName}</p>
               </div>
-            )
-          })
-        ) : (
-          <div>No followers</div>
-        )}
+            );
+          })}
+          </div>
       </div>
-    )
+    );
   }
 }
 
