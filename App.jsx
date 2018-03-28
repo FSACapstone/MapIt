@@ -13,10 +13,19 @@ import FollowingUsers from './FollowingUsers'
 import FollowersUsers from './FollowersUsers'
 import CreatedMap from './components/CreatedMap'
 import AllMaps from './components/AllMaps'
-import Drawer from 'material-ui/Drawer'
+import Drawer from 'material-ui/Drawer'  
+import algoliasearch from 'algoliasearch'
+
+const algolia = algoliasearch(
+  '2N7N3I0FJ2', 'd163ceea9b530ca67676dc76cac7ee53'
+);
+
+const index = algolia.initIndex('mapstack');
+index.setSettings({ hitsPerPage: 3});
 import FavoritedMaps from './components/FavoritedMaps'
 import LayeredMapsList from './components/maps/LayeredMaps'
 import LayeredMap from './components/maps/LayeredMap'
+import Tags from './Tags'
 
 const db = firebase.firestore()
 
@@ -61,6 +70,23 @@ class App extends Component {
   handleToggle = () => this.setState({ open: !this.state.open })
 
   componentDidMount() {
+    db
+      .collection('users')
+      .onSnapshot(querySnapshot => {
+        let usersArr = []
+        querySnapshot.forEach(doc => {
+          const key = doc.id;
+          const data = doc.data();
+          data.objectID = key;
+
+          usersArr.push(data)
+        })
+        console.log(usersArr)
+        index.saveObjects(usersArr)
+        .then(() => console.log('users saved to algolia'))
+      })
+      
+
     auth.onAuthStateChanged(user => {
       if (user) {
         this.setState({ user })
@@ -130,6 +156,7 @@ class App extends Component {
     if (!user) return <Login user={user} />
     return (
       <div>
+        <Tags />
         <NavBar user={user} toggleDrawer={this.toggleDrawer('left', true)} />
         <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
           <div

@@ -2,7 +2,7 @@ body {
   /* overflow-x: hidden; */
   margin: 0;
   background-color: #fefefe;
-  font-family: Roboto; 
+  font-family: Roboto;
 }
 
 div {
@@ -117,6 +117,21 @@ a:visited {
   width: 250px;
 }
 
+/* Tags Input Field */
+.tags-map-input {
+  border-radius: 10px;
+  padding: 0.6rem;
+  border-style: none;
+  border: 1px solid #4253af;
+  outline: none;
+  width: 10rem;
+  transition: 0.5s all ease-in-out;
+}
+
+.tags-map-input:focus {
+  width: 250px;
+}
+
 /* New Map */
 .new-map-buttons {
   display: relative;
@@ -139,11 +154,7 @@ a:visited {
   margin: 6px;
 }
 
-
-
-
 /* Login */
-
 .login-wrapper {
   display: flex;
   max-width: 100%;
@@ -171,10 +182,36 @@ a:visited {
   align-items: center;
   height: 100vh;
 }
+
 /* Navbar */
+.search-users-input {
+  border-radius: 10px;
+  padding: 0.6rem;
+  border-style: none;
+  border: 1px solid #4253af;
+  outline: none;
+  width: 12rem;
+  top: 1px;
+  transition: 0.5s all ease-in-out;
+}
+
+.search-users-input:focus {
+  width: 250px;
+}
+
+.search-users-output {
+  position: absolute;
+  border-radius: 10px;
+  padding: 0.6rem;
+  border-style: none;
+  outline: none;
+  width: 10rem;
+  transition: 0.5s all ease-in-out;
+  background-color: #4253af;
+  color: white;
+}
 
 /* Sidebar */
-
 #sidebar {
   /* position: fixed; */
   text-align: center;
@@ -196,10 +233,8 @@ a:visited {
   border-radius: 100%;
   max-width: 40%;
   border: 2px solid #333;
- 
  }
- 
- 
+
  .sidebar-flex-info {
   display: flex;
   flex-direction: column;
@@ -213,7 +248,6 @@ a:visited {
  }
 
  /* Single User */
-
  .single-user-pic-flex {
   display: flex;
   flex-direction: column;
@@ -221,7 +255,6 @@ a:visited {
   max-width: 100%;
   text-align: center;
  }
-
 
  .single-user-flex {
   text-align: center;
@@ -252,7 +285,6 @@ a:visited {
   flex-direction: row;
   align-items: center;
  }
- 
 
  .follow-flex {
   display: flex;
@@ -273,8 +305,6 @@ a:visited {
  .map-container {
   /* border-right: 5px solid #4253af; */
  }
-
-
 
  .map-flex-outer {
   display: inline-grid;
@@ -299,7 +329,6 @@ a:visited {
   justify-content: center;
   margin: 5px;
   border: 1px solid #fff;
-
  }
 
  .map-flex-color {
@@ -308,7 +337,7 @@ a:visited {
   height: 25vh;
   /* max-height: 19vh; */
  }
- 
+
  .map-flex-inner img {
   max-width: 30%;
  }
@@ -329,7 +358,7 @@ a:visited {
    margin-top: 5px;
    font-weight: normal;
  }
- 
+
  .map-flex img {
   max-width: 13vw;
  }
@@ -376,7 +405,6 @@ a:visited {
   position: absolute;
   z-index: 5000000000;
   right: 50px;
-
 }
 
 

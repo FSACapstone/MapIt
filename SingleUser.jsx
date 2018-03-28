@@ -36,10 +36,11 @@ class SingleUser extends Component {
       .where("uid", "==", userId)
       .get()
       .then(querySnapshot => {
-        querySnapshot.forEach(user =>
+        querySnapshot.forEach(user => {
           this.setState({
             user: user.data()
           })
+        }
         );
       });
 

@@ -1,17 +1,20 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import firebase from '~/fire'
 import { withRouter } from 'react-router-dom'
+import firebase from '~/fire'
 import GoogleMapButton from './GoogleMapButton'
+
 const db = firebase.firestore()
-var searchMarkersArray = []
-var addedMarkersArr = []
+const searchMarkersArray = []
+const addedMarkersArr = []
+
 function clearOverlays(arr) {
-  for (var i = 0; i < arr.length; i++) {
+  for (let i = 0; i < arr.length; i++) {
     arr[i].setMap(null)
   }
   arr.length = 0
 }
+
 class NewMap extends Component {
   constructor(props) {
     super(props)
@@ -22,16 +25,18 @@ class NewMap extends Component {
     this.onClick = this.onClick.bind(this)
     this.clearSearch = this.clearSearch.bind(this)
   }
+
   clearSearch() {
     this.setState({ results: [] })
     clearOverlays(searchMarkersArray)
-    var search = this.refs.center
+    let search = this.refs.center
     search.value = ''
   }
+
   addPlace = (marker, place, infowindow) => {
     //marker.setIcon('https://www.google.com/mapfiles/marker_green.png')
     infowindow.close()
-    var obj = {}
+    const obj = {}
     marker.id = place.place_id
     addedMarkersArr.push(marker)
     marker.setMap(null)
@@ -41,8 +46,8 @@ class NewMap extends Component {
       name: place.name,
       address: place.formatted_address,
     }
-    var mapRef = db.collection('maps').doc(this.props.match.params.id)
-    var getDoc = mapRef
+    const mapRef = db.collection('maps').doc(this.props.match.params.id)
+    const getDoc = mapRef
       .set(
         {
           places: obj,
@@ -60,33 +65,35 @@ class NewMap extends Component {
         console.log('Error getting document', err)
       })
   }
+
   removePlace = marker => {
     marker.setMap(null)
-    var thisHolder = this
+    let thisHolder = this
     addedMarkersArr.map(addedMarker => {
       if (marker.id === addedMarker.id) {
         console.log('nothing')
       } else return addedMarker
     })
-    var ref = db
+    const ref = db
       .collection('maps')
       .where('mid', '==', this.props.match.params.id)
       .get()
       .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
-          var placeObj = doc.data().places
-          var holder = marker.id
+          let placeObj = doc.data().places
+          let holder = marker.id
           delete placeObj[holder]
-          var mapRef = db.collection('maps').doc(thisHolder.props.match.params.id)
-          var getDoc = mapRef.update({
+          const mapRef = db.collection('maps').doc(thisHolder.props.match.params.id)
+          const getDoc = mapRef.update({
             places: placeObj,
           })
         })
       })
   }
+
   onClick = event => {
     event.preventDefault()
-    var placeArr = []
+    const placeArr = []
     if (searchMarkersArray.length) {
       clearOverlays(searchMarkersArray)
     }
@@ -97,21 +104,19 @@ class NewMap extends Component {
     )
     const service = new this.props.google.maps.places.PlacesService(this.map)
     const holder = this
-    var request = {
+    const request = {
       location: center,
       bounds: this.map.getBounds(),
       name: event.target.search.value,
     }
-    var infowindow = new google.maps.InfoWindow()
+    const infowindow = new google.maps.InfoWindow()
     function callback(results, status) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
         holder.setState({ results: results })
-        for (var i = 0; i < results.length; i++) {
-          if (holder.state.places[results[i].place_id]) {
-            console.log('hello dan')
-          } else {
-            var place1 = results[i]
-            var center = {
+        for (let i = 0; i < results.length; i++) {
+          if (!holder.state.places[results[i].place_id]) {
+            let place1 = results[i]
+            const center = {
               lat: place1.geometry.location.lat(),
               lng: place1.geometry.location.lng(),
             }
@@ -121,7 +126,7 @@ class NewMap extends Component {
               },
               function(place, status) {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
-                  var marker = new google.maps.Marker({
+                  const marker = new google.maps.Marker({
                     map: holder.map,
                     position: place.geometry.location,
                   })
@@ -150,11 +155,12 @@ class NewMap extends Component {
           }
         }
       } else {
-        console.log('no results')
+        alert('Sorry! No results found.')
       }
     }
     service.nearbySearch(request, callback)
   }
+
   componentDidMount() {
     db
       .collection('maps')
@@ -183,7 +189,7 @@ class NewMap extends Component {
           }
         )
         this.map = new maps.Map(node, mapConfig)
-        var isthis = this
+        let isthis = this
         const service1 = new this.props.google.maps.places.PlacesService(this.map)
         let options = {
           bounds: this.map.getBounds(),
@@ -193,21 +199,21 @@ class NewMap extends Component {
         google.maps.event.addListener(this.map, 'idle', function() {
           autocomplete.setBounds(isthis.map.getBounds())
         })
-        var checkedMap = db
+        const checkedMap = db
           .collection('maps')
           .doc(this.props.match.params.id)
           .onSnapshot(function(doc) {
-            var infowindow = new google.maps.InfoWindow()
+            const infowindow = new google.maps.InfoWindow()
             const arr = doc.data().places
             isthis.setState({ places: arr })
             const keysArr = Object.keys(arr)
             clearOverlays(addedMarkersArr)
-            for (var i = 0; i < keysArr.length; i++) {
+            for (let i = 0; i < keysArr.length; i++) {
               ;(() => {
-                var latLng = { lat: arr[keysArr[i]].lat, lng: arr[keysArr[i]].lng }
-                var placeName = keysArr[i]
-                var placeInfo = arr[placeName]
-                var marker = new google.maps.Marker({
+                const latLng = { lat: arr[keysArr[i]].lat, lng: arr[keysArr[i]].lng }
+                let placeName = keysArr[i]
+                let placeInfo = arr[placeName]
+                const marker = new google.maps.Marker({
                   map: isthis.map,
                   position: latLng,
                   icon: 'https://www.google.com/mapfiles/marker_green.png',
@@ -234,6 +240,11 @@ class NewMap extends Component {
           })
       })
   }
+
+  get mapReference() {
+    return db.collection('maps').doc(this.props.match.params.id)
+  }
+
   render() {
     const style = {
       width: '100vw',
@@ -263,4 +274,5 @@ class NewMap extends Component {
     )
   }
 }
+
 export default withRouter(NewMap)
