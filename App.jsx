@@ -14,6 +14,7 @@ import FollowersUsers from "./FollowersUsers";
 import CreatedMap from './components/CreatedMap'
 import AllMaps from './components/AllMaps'
 import Drawer from 'material-ui/Drawer'
+import FavoritedMaps from './components/FavoritedMaps'
 
 const db = firebase.firestore();
 
@@ -27,7 +28,7 @@ class App extends Component {
       documentId: "",
       numFollowers: 0,
       numFollowing: 0,
-      left: false 
+      left: false
     };
   }
 
@@ -167,6 +168,11 @@ class App extends Component {
                 render={() => <FollowingUsers />}
               />
               <Route
+              exact
+              path="/favorite"
+              render={() => <FavoritedMaps user ={user} google = {{...this.props.google}}/>}
+            />
+              <Route
                 exact
                 path="/followers/:userId"
                 render={() => <FollowersUsers />}
@@ -188,7 +194,7 @@ class App extends Component {
                 path="/newmap/:id"
                 render={() => <NewMap google={this.props.google} />}
               />
-              <Route 
+              <Route
                 exact path="/allmaps/:uid"
                 render={() => <AllMaps signedInUser={user} />}
               />

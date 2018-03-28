@@ -2,7 +2,7 @@ body {
   /* overflow-x: hidden; */
   margin: 0;
   background-color: #4253af;
-  font-family: Roboto; 
+  font-family: Roboto;
 }
 
 div {
@@ -180,38 +180,38 @@ a:visited {
   color: #fefefe;
   background-color: #4253af;
  }
- 
+
  /* .sidebar-margin {
   margin-top: 5rem;
  } */
- 
+
  #sidebar img {
   display: inline-block;
   border-radius: 100%;
   max-width: 40%;
   border: 2px solid #fefefe;
- 
+
  }
- 
+
  .MuiTypography-root-71 {
   color: #fff !important;
  }
- 
+
  .sidebar-flex-info {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
  }
- 
+
  .sidebar-flex-inner {
   display: flex;
   flex-direction: column;
   align-items: flex-center;
  }
- 
+
  /* Single User */
- 
+
  .single-user-pic-flex {
   display: flex;
   flex-direction: column;
@@ -219,58 +219,58 @@ a:visited {
   max-width: 100%;
   text-align: center;
  }
- 
- 
+
+
  .single-user-flex {
   text-align: center;
  }
- 
+
  .single-user-info-flex {
   display: flex;
   flex-direction: row;
   justify-content: center;
  }
- 
+
  .single-user-info-secondary-flex {
   display: flex;
   flex-direction: column;
  }
- 
+
  .single-user-info-flex img {
   width: 16vw;
   border: 2px solid #fff;
   margin-top: 5px;
   border-radius: 100%;
  }
- 
+
  .single-user-info-inner-flex {
   display: flex;
   flex-direction: row;
   align-items: center;
  }
- 
+
  .follow-flex {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
  }
- 
+
  .follow-flex-inner {
   display: flex;
   flex-direction: row;
  }
- 
+
  .follow-flex-inner p {
   font-size: 1rem;
   color: #fff;
  }
- 
+
  .map-container {
   /* border-right: 5px solid #4253af; */
  }
- 
- 
- 
+
+
+
  .map-flex-outer {
   display: inline-grid;
   grid-template-columns: 300px 300px 300px;
@@ -280,7 +280,7 @@ a:visited {
   flex-wrap: wrap;
   justify-content: space-around; */
  }
- 
+
  .map-flex {
   display: flex;
   /* background-image: url('/img/world-map.jpg');
@@ -294,9 +294,9 @@ a:visited {
   justify-content: center;
   margin: 5px;
   border: 1px solid #fff;
- 
+
  }
- 
+
  .map-flex-color {
   /* max-width: 30vw; */
   width: 50vw;
@@ -304,11 +304,11 @@ a:visited {
   /* max-height: 19vh; */
   background-color: rgba(66, 83, 175, 0.1);
  }
- 
+
  .map-flex-inner {
   background-color: rgba(66, 83, 175, 0.1);
  }
- 
+
  .map-flex-inner p {
   margin: 0;
   padding: 0;
@@ -317,11 +317,11 @@ a:visited {
   /* font-size: 3rem;
   text-shadow: 1px 1px 1px #000; */
  }
- 
+
  .map-flex img {
   max-width: 13vw;
  }
- 
+
  .follow-button {
   background-color: #4CAF50; /* Green */
   border: none;
@@ -334,12 +334,25 @@ a:visited {
   border-radius: 5px;
   margin: 0px 11px;
  }
- 
+
  .following-page-flex {
   display: flex;
  }
- 
+
  .following-page-flex img {
   border-radius: 100%;
   /* max-width: 50%; */
  }
+
+ .favorited-map-button {
+   position: absolute;
+   z-index: 5000000000;
+ }
+
+ .layered-save-button {
+  position: absolute;
+  z-index: 5000000000;
+  right: 200px;
+}
+
+
