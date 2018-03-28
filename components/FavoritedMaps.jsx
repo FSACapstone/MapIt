@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import firebase from '~/fire'
 import Checkbox from 'material-ui/Checkbox'
 import ReactDOM from 'react-dom'
@@ -15,6 +15,7 @@ class FavoritedMaps extends Component {
       checkedMaps: [],
       loading: true,
       center: {},
+      createMap: false
     }
   }
 
@@ -31,6 +32,12 @@ class FavoritedMaps extends Component {
       places: places,
       uid: this.props.user.uid,
     })
+  }
+
+  onCreateClick = e => {
+    e.preventDefault()
+    this.setState({createMap:!this.state.createMap})
+
   }
 
   onLayerClick = e => {
@@ -140,6 +147,7 @@ class FavoritedMaps extends Component {
   }
 
   render() {
+    console.log(this.state)
     if (this.state.loading === true) return <CirclularProgress size={200} color={'secondary'} />
     const styles = {
       block: {
@@ -170,23 +178,27 @@ class FavoritedMaps extends Component {
         ) : (
           <div />
         )}
-
         <div ref="newmap" className="google-map" style={style} />
-
         {this.state.maps.length ? (
           <div style={styles.block}>
             {' '}
+            <button onClick = {this.onCreateClick} className = 'create-layered-map'> Create Layered Map </button>
             {this.state.maps.map(map => {
               return (
+
+
                 <p key={map.mid}>
-                  <Checkbox
+                 { this.state.createMap ?
+                   <Checkbox
                     className="margin-top-5"
                     value={map.mid}
                     onChange={this.onCheckClick}
                     style={styles.checkbox}
                   />
-                  {map.title}
+                  : null }
+                  <Link to = {`map/${map.mid}`} >{map.title} </Link>
                 </p>
+
               )
             })}
           </div>
@@ -199,6 +211,9 @@ class FavoritedMaps extends Component {
 }
 
 export default withRouter(FavoritedMaps)
+
+// <div ref="newmap" className="google-map" style={style} />
+
 
 //this.state.checkedMaps.length
 //   ? this.state.checkedMaps.map(map => {
