@@ -48,30 +48,32 @@ class FollowingUsers extends Component {
       });
   }
 
-  render() {
-    const { following } = this.state;
-    const newArr = Object.keys(following);
-
-    return (
-      <div className="text-align-center">
-        {Object.keys(following).length &&
-          Object.keys(following).map(followingId => {
-            return (
-              <div key={followingId}>
-                <Link to={`/user/${followingId}`}>
-                  <img
-                    src={following[followingId].photoURL}
-                    className="margin-top-5"
-                  />
-                </Link>
-                <h1>{following[followingId].displayName}</h1>
-                <h2>{following[followingId].email}</h2>
-              </div>
-            );
-          })}
-      </div>
-    );
-  }
+    render() {
+      const { following, userPage } = this.state;
+   
+      return (
+        <div>
+        <h1>{userPage.displayName} Following</h1>
+        <h1>Following</h1>
+        <div className="following-page-flex">
+          {Object.keys(following).length &&
+            Object.keys(following).map(followingId => {
+              return (
+                <div key={followingId}>
+                  <Link to={`/user/${followingId}`}>
+                    <img
+                      src={following[followingId].photoURL}
+                      className="margin-top-5"
+                    />
+                  </Link>
+                  <h1>{following[followingId].displayName}</h1>
+                </div>
+              );
+            })}
+            </div>
+        </div>
+      );
+    }
 }
 
 export default withRouter(FollowingUsers);
