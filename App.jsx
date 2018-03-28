@@ -1,35 +1,35 @@
-import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
-import GoogleMap from "./GoogleMap";
-import Login from "./Login";
-import Sidebar from "./Sidebar";
-import SingleUser from "./SingleUser";
-import { GoogleApiWrapper } from "google-maps-react";
-import firebase, { auth } from "~/fire";
-import NavBar from "./Navbar";
-import NewMap from "./NewMap";
-import CircularLoad from "./CircularProgress";
-import FollowingUsers from "./FollowingUsers"
-import FollowersUsers from "./FollowersUsers";
+import React, { Component } from 'react'
+import { Route, Switch } from 'react-router-dom'
+import GoogleMap from './GoogleMap'
+import Login from './Login'
+import Sidebar from './Sidebar'
+import SingleUser from './SingleUser'
+import { GoogleApiWrapper } from 'google-maps-react'
+import firebase, { auth } from '~/fire'
+import NavBar from './Navbar'
+import NewMap from './NewMap'
+import CircularLoad from './CircularProgress'
+import FollowingUsers from './FollowingUsers'
+import FollowersUsers from './FollowersUsers'
 import CreatedMap from './components/CreatedMap'
 import AllMaps from './components/AllMaps'
 import Drawer from 'material-ui/Drawer'
 import FavoritedMaps from './components/FavoritedMaps'
 
-const db = firebase.firestore();
+const db = firebase.firestore()
 
 class App extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
       loading: true,
       user: null,
       users: [],
-      documentId: "",
+      documentId: '',
       numFollowers: 0,
       numFollowing: 0,
-      left: false
-    };
+      left: false,
+    }
   }
 
   logOut = () => {
@@ -37,105 +37,104 @@ class App extends Component {
       .signOut()
       .then(() => {
         this.setState({
-          user: null
-        });
+          user: null,
+        })
       })
-      .catch(err => console.error(err));
-  };
+      .catch(err => console.error(err))
+  }
 
   logIn = () => {
-    const google = new firebase.auth.GoogleAuthProvider();
+    const google = new firebase.auth.GoogleAuthProvider()
     auth
       .signInWithRedirect(google)
       .then(result => {
-        const user = result.user;
+        const user = result.user
         this.setState({
-          user
-        });
+          user,
+        })
       })
-      .catch(err => console.error(err));
-  };
+      .catch(err => console.error(err))
+  }
 
-  handleToggle = () => this.setState({ open: !this.state.open });
+  handleToggle = () => this.setState({ open: !this.state.open })
 
   componentDidMount() {
     auth.onAuthStateChanged(user => {
       if (user) {
-        this.setState({ user });
+        this.setState({ user })
       } else {
-        this.setState({ loading: false });
-        return;
+        this.setState({ loading: false })
+        return
       }
       db
-        .collection("relationships")
-        .where("following", "==", user.uid)
+        .collection('relationships')
+        .where('following', '==', user.uid)
         .onSnapshot(querySnapshot => {
-          let relationships = [];
+          let relationships = []
           querySnapshot.forEach(doc => {
-            relationships.push(doc.data());
-          });
-          this.setState({ numFollowers: relationships.length });
-        });
+            relationships.push(doc.data())
+          })
+          this.setState({ numFollowers: relationships.length })
+        })
 
       db
-        .collection("relationships")
-        .where("follower", "==", user.uid)
+        .collection('relationships')
+        .where('follower', '==', user.uid)
         .onSnapshot(querySnapshot => {
-          let relationships = [];
+          let relationships = []
           querySnapshot.forEach(doc => {
-            relationships.push(doc.data());
-          });
-          this.setState({ numFollowing: relationships.length });
-        });
+            relationships.push(doc.data())
+          })
+          this.setState({ numFollowing: relationships.length })
+        })
 
       db
-        .collection("users")
-        .where("email", "==", user.email)
+        .collection('users')
+        .where('email', '==', user.email)
         .get()
         .then(querySnapshot => {
           if (querySnapshot.empty) {
             db
-              .collection("users")
+              .collection('users')
               .doc(this.state.user.uid)
               .set({
                 displayName: this.state.user.displayName,
                 email: this.state.user.email,
                 photoURL: this.state.user.photoURL,
-                uid: this.state.user.uid
+                uid: this.state.user.uid,
               })
               .then(user => {
-                console.log("user added", user);
-              });
+                console.log('user added', user)
+              })
           }
-          this.setState({ documentId: querySnapshot.docs[0].id });
+          this.setState({ documentId: querySnapshot.docs[0].id })
         })
         .then(() => {
-          this.setState({ loading: false });
-        });
-    });
+          this.setState({ loading: false })
+        })
+    })
   }
 
   toggleDrawer = (side, open) => () => {
-    console.log(this.state.left);
+    console.log(this.state.left)
     this.setState({
       [side]: open,
-    });
-  };
+    })
+  }
 
   render() {
-    const { user, documentId, numFollowers, numFollowing } = this.state;
-    if (this.state.loading === true) return <CircularLoad size={200} color={`secondary`} />;
-    if (!user) return <Login user={user} />;
+    const { user, documentId, numFollowers, numFollowing } = this.state
+    if (this.state.loading === true) return <CircularLoad size={200} color={`secondary`} />
+    if (!user) return <Login user={user} />
     return (
       <div>
         <NavBar user={user} toggleDrawer={this.toggleDrawer('left', true)} />
         <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
           <div
-              tabIndex={0}
-              role="button"
-              onClick={this.toggleDrawer('left', false)}
-              onKeyDown={this.toggleDrawer('left', false)}
-            >
+            tabIndex={0}
+            role="button"
+            onClick={this.toggleDrawer('left', false)}
+            onKeyDown={this.toggleDrawer('left', false)}>
             <Sidebar
               user={user}
               documentId={documentId}
@@ -156,27 +155,19 @@ class App extends Component {
                     google={{
                       ...this.props.google,
                       loc: { lat: 20, lng: -70 },
-                      user: user
+                      user: user,
                     }}
                   />
                 )}
               />
               )} />
+              <Route exact path="/following/:userId" render={() => <FollowingUsers />} />
               <Route
                 exact
-                path="/following/:userId"
-                render={() => <FollowingUsers />}
+                path="/favorite"
+                render={() => <FavoritedMaps user={user} google={{ ...this.props.google }} />}
               />
-              <Route
-              exact
-              path="/favorite"
-              render={() => <FavoritedMaps user ={user} google = {{...this.props.google}}/>}
-            />
-              <Route
-                exact
-                path="/followers/:userId"
-                render={() => <FollowersUsers />}
-              />
+              <Route exact path="/followers/:userId" render={() => <FollowersUsers />} />
               <Route
                 exact
                 path="/:user"
@@ -185,27 +176,19 @@ class App extends Component {
               <Route
                 exact
                 path="/user/:uid"
-                render={() => (
-                  <SingleUser documentId={documentId} signedInUser={user} />
-                )}
+                render={() => <SingleUser documentId={documentId} signedInUser={user} />}
               />
               <Route
                 exact
                 path="/newmap/:id"
                 render={() => <NewMap google={this.props.google} />}
               />
-              <Route
-                exact path="/allmaps/:uid"
-                render={() => <AllMaps signedInUser={user} />}
-              />
+              <Route exact path="/allmaps/:uid" render={() => <AllMaps signedInUser={user} />} />
               <Route
                 exact
                 path="/map/:id"
                 render={() => (
-                  <CreatedMap
-                    google={this.props.google}
-                    followerUserId={this.state.user.uid}
-                  />
+                  <CreatedMap google={this.props.google} followerUserId={this.state.user.uid} />
                 )}
               />
               <Route
@@ -215,7 +198,7 @@ class App extends Component {
                     google={{
                       ...this.props.google,
                       loc: { lat: 20, lng: -70 },
-                      user: user
+                      user: user,
                     }}
                   />
                 )}
@@ -225,10 +208,10 @@ class App extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyBNO9SHxnyzMG6J1FCDYcle7DjXMjg6jBU"
-})(App);
+  apiKey: 'AIzaSyBNO9SHxnyzMG6J1FCDYcle7DjXMjg6jBU',
+})(App)
