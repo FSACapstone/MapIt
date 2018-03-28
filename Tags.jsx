@@ -33,10 +33,11 @@ const TagInput = ({ from, style }) => (
         from={from}
         Render={({ tags }) => (
             <input
-                style={style}
-                defaultValue={tagsAsString(tags)}
-                onChange={setTags(from)}
-                placeholder="Enter tags..."
+              className="tags-map-input"
+              style={style}
+              defaultValue={tagsAsString(tags)}
+              onChange={setTags(from)}
+              placeholder="Enter tags..."
             />
         )}
     />
@@ -47,10 +48,10 @@ export default () =>
     <TagInput
       from={db.collection('maps').doc(id)}
       style={{
-          bottom: '9px',
-          left: '50px',
-          position: 'absolute',
-          zIndex: 500,
+        bottom: '30px',
+        left: '30px',
+        position: 'absolute',
+        zIndex: 500,
       }}
     />}
   />
