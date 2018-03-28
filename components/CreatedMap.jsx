@@ -127,6 +127,12 @@ class CreatedMap extends Component {
               Favorite
             </Button>
           }
+          {
+            ownMap &&
+            <Button variant="raised" color="primary">
+              Edit
+            </Button>
+          }
         </div>
         <div ref="createdMap" className="google-map">
           Loading map...
