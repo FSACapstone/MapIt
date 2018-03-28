@@ -104,7 +104,7 @@ class SingleUser extends Component {
               }
               </div>
             </div>
-            <div className="follow-flex">
+            <div className="follow-flex animated fadeIn">
               <div>
                 <Link to={`/followers/${userId}`}>
                   <p>Followers</p>
@@ -118,7 +118,7 @@ class SingleUser extends Component {
                 </Link>
               </div>
               <div>
-                <Link to={`/`}><p>Maps </p>
+                <Link to="/"><p>Maps </p>
                   <p className="text-bold"><Count of={this.mapsCreated} /></p>
                 </Link>
               </div>
@@ -126,13 +126,17 @@ class SingleUser extends Component {
           </div>        
        </div>
       </div>
-      
+      <div>
+              <h2>Maps</h2>
+              <h2>Favorite Maps</h2>
+              <h2>Layered Maps</h2>
+      </div>
           <div className="map-flex-outer text-align-center">
           {Object.keys(createdMaps).length &&
             Object.keys(createdMaps).map(mapId => {
               return (
                     <div className="map-flex-inner" key={mapId}>
-                    <img src="/img/pin.png" /> 
+                    <img src="/img/pin.png" className="animated bounceInDown" />
                       <Link to={`/map/${mapId}`}>
                         <h2>
                           {createdMaps[mapId].title} 

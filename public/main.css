@@ -1,13 +1,8 @@
 body {
   /* overflow-x: hidden; */
   margin: 0;
-<<<<<<< HEAD
   background-color: #fefefe;
   font-family: Roboto; 
-=======
-  background-color: #4253af;
-  font-family: Roboto;
->>>>>>> 682612088c851e6e3e305872a60cc06513865899
 }
 
 div {
@@ -200,22 +195,11 @@ a:visited {
   display: inline-block;
   border-radius: 100%;
   max-width: 40%;
-<<<<<<< HEAD
   border: 2px solid #333;
  
  }
  
  
-=======
-  border: 2px solid #fefefe;
-
- }
-
- .MuiTypography-root-71 {
-  color: #fff !important;
- }
-
->>>>>>> 682612088c851e6e3e305872a60cc06513865899
  .sidebar-flex-info {
   display: flex;
   flex-direction: column;
@@ -268,10 +252,7 @@ a:visited {
   flex-direction: row;
   align-items: center;
  }
-<<<<<<< HEAD
  
-=======
->>>>>>> 682612088c851e6e3e305872a60cc06513865899
 
  .follow-flex {
   display: flex;
@@ -327,15 +308,9 @@ a:visited {
   height: 25vh;
   /* max-height: 19vh; */
  }
-<<<<<<< HEAD
  
  .map-flex-inner img {
   max-width: 30%;
-=======
-
- .map-flex-inner {
-  background-color: rgba(66, 83, 175, 0.1);
->>>>>>> 682612088c851e6e3e305872a60cc06513865899
  }
 
  .map-flex-inner p {
@@ -346,7 +321,6 @@ a:visited {
   text-shadow: 1px 1px 1px #000; */
  }
 
-<<<<<<< HEAD
  .map-flex-inner h2{
    margin-bottom: 0;
  }
@@ -356,8 +330,6 @@ a:visited {
    font-weight: normal;
  }
  
-=======
->>>>>>> 682612088c851e6e3e305872a60cc06513865899
  .map-flex img {
   max-width: 13vw;
  }
