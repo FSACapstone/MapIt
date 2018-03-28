@@ -63,11 +63,11 @@ class SingleUser extends Component {
   }
 
   getAllUserMaps() {
-    const { signedInUser } = this.props
-    console.log(signedInUser.uid)
+    const userId = this.props.match.params.uid;
+
     db
       .collection('maps')
-      .where('uid', '==', signedInUser.uid)
+      .where('uid', '==', userId)
       .get()
       .then(querySnapshot => {
         const mapObj = {}
