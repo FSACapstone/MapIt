@@ -1,7 +1,9 @@
 body {
   /* overflow-x: hidden; */
   margin: 0;
-  background-color: #4253af; 
+  background-color: #4253af;
+  font-family: Roboto; 
+  color: #fff;
 }
 
 div {
@@ -48,6 +50,12 @@ a:visited {
   width: 78vw;
   background-color: #fefefe;
   margin-top: 70px;
+  /* background-color: #fff; */
+  /* height: 100vh; */
+}
+
+.margin-subtract-70 {
+  margin-top: -70px;
 }
 
 .margin-top-5 {
@@ -198,3 +206,119 @@ a:visited {
 
 /* Single User */
 
+.single-user-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  max-width: 100%;
+  text-align: center;
+}
+
+.maps-container {
+  max-width: 100%;
+  width: 60%;
+}
+
+.single-user-info-flex h1 {
+  font-size: 2rem;
+}
+
+.single-user-info-flex {
+  display: flex;
+  flex-direction: row;
+  width: 25%;
+  justify-content: center;
+}
+
+.single-user-info-flex img {
+  width: 16vw;
+  border: 1px solid #fff;
+  margin-top: 5px;
+}
+
+.follow-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.follow-flex-inner {
+  display: flex;
+  flex-direction: row;
+}
+
+.follow-flex-inner p {
+  font-size: 1rem;
+  color: #fff;
+}
+
+.map-container {
+  /* border-right: 5px solid #4253af; */
+}
+
+
+
+.map-flex-outer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.map-flex {
+  display: flex;
+  background-image: url('/img/world-map.jpg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  /* max-width: 30vw; */
+  width: 50vw;
+  height: 25vh;
+  /* max-height: 19vh; */
+  align-items: flex-end;
+  justify-content: center;
+  margin: 5px;
+  border: 1px solid #fff;
+ 
+}
+
+.map-flex-color {
+  /* max-width: 30vw; */
+  width: 50vw;
+  height: 25vh;
+  /* max-height: 19vh; */
+  background-color: rgba(66, 83, 175, 0.3);
+}
+
+.map-flex-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: rgba(66, 83, 175, 0.3); */
+  /* width: 100%; */
+}
+
+.map-flex-inner p {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-weight: bold;
+  font-size: 3rem;
+  text-shadow: 1px 1px 1px #000;
+}
+
+.map-flex img {
+  max-width: 13vw;
+}
+
+.follow-button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 5px;
+  margin: 5px 0;
+}

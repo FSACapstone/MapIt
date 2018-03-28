@@ -232,8 +232,8 @@ class GoogleMap extends Component {
               Back
             </Button>
           </div>
-        )}
-        <div ref="map" className="google-map">
+        }
+        <div ref="map" className="google-map margin-subtract-70">
           Loading map...
         </div>
       </div>
