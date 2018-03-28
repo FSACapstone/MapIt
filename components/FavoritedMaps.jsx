@@ -32,7 +32,15 @@ class FavoritedMaps extends Component {
     db.collection('layeredMaps').add({
       places: places,
       uid: this.props.user.uid,
+      center: this.state.center
+    }).then(map =>{
+      console.log(map.id)
+     let id =  map.id
+     db.collection('layeredMaps').doc(id).set({
+       mid: id
+     },{merge:true})
     })
+    this.props.history.push(`/layered-maps`)
   }
 
   onCreateClick = e => {

@@ -36,10 +36,11 @@ class SingleUser extends Component {
       .where("uid", "==", userId)
       .get()
       .then(querySnapshot => {
-        querySnapshot.forEach(user =>
+        querySnapshot.forEach(user => {
           this.setState({
             user: user.data()
           })
+        }
         );
       });
 
@@ -128,7 +129,9 @@ class SingleUser extends Component {
       </div>
 
           <div className="map-flex-outer text-align-center">
-          {Object.keys(createdMaps).length &&
+
+          
+          {Object.keys(createdMaps).length ?
             Object.keys(createdMaps).map(mapId => {
               return (
                     <div className="map-flex-inner" key={mapId}>
@@ -146,7 +149,9 @@ class SingleUser extends Component {
 
                     </div>
               );
-            })}
+            })
+          : <h1>No Maps</h1>
+          }
             </div>
       </div>
     )

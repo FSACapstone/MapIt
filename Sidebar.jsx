@@ -81,6 +81,9 @@ class Sidebar extends Component {
               <Link to={`/favorite-maps`}>
                 <Typography color="inherit" className={classes.typography}>Favorite Maps</Typography>
               </Link>
+              <Link to={`/layered-maps`}>
+                <Typography color="inherit" className={classes.typography}>Layered Maps</Typography>
+              </Link>
             </div>
           </div>
         </div>

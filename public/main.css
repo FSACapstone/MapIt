@@ -2,7 +2,7 @@ body {
   /* overflow-x: hidden; */
   margin: 0;
   background-color: #fefefe;
-  font-family: Roboto; 
+  font-family: Roboto;
 }
 
 div {
@@ -117,6 +117,28 @@ a:visited {
   width: 250px;
 }
 
+/* Tags Input Field */
+.tags-map-input, .ais-SearchBox-input {
+  border-radius: 10px;
+  padding: 0.6rem;
+  border-style: none;
+  border: 1px solid #4253af;
+  outline: none;
+  width: 10rem;
+  transition: 0.5s all ease-in-out;
+}
+
+.tags-map-input:focus {
+  width: 250px;
+}
+
+.ais-SearchBox-input:focus {
+  width: 200px;
+}
+
+.ais-SearchBox-submit, .ais-SearchBox-reset {
+  display: none;
+}
 
 /* New Map */
 .new-map-buttons {
@@ -140,11 +162,7 @@ a:visited {
   margin: 6px;
 }
 
-
-
-
 /* Login */
-
 .login-wrapper {
   display: flex;
   max-width: 100%;
@@ -172,10 +190,37 @@ a:visited {
   align-items: center;
   height: 100vh;
 }
+
 /* Navbar */
 
-/* Sidebar */
+.search-users-output {
+  position: absolute;
+  border-radius: 10px;
+  padding: 0;
+  border-style: none;
+  border: 2px solid #333;
+  outline: none;
+  width: 200px;
+  transition: 0.5s all ease-in-out;
+  background-color: #fff;
+  
+}
 
+ul li {
+  margin: 0;
+  padding: 0;
+}
+
+.ais-Hits-list {
+  padding: 0px 7px;
+}
+
+.ais-Hits-list li {
+  list-style: none;
+  color: #fefefe;
+}
+
+/* Sidebar */
 #sidebar {
   /* position: fixed; */
   text-align: center;
@@ -197,10 +242,8 @@ a:visited {
   border-radius: 100%;
   max-width: 40%;
   border: 2px solid #333;
- 
  }
- 
- 
+
  .sidebar-flex-info {
   display: flex;
   flex-direction: column;
@@ -214,7 +257,6 @@ a:visited {
  }
 
  /* Single User */
-
  .single-user-pic-flex {
   display: flex;
   flex-direction: column;
@@ -222,7 +264,6 @@ a:visited {
   max-width: 100%;
   text-align: center;
  }
-
 
  .single-user-flex {
   text-align: center;
@@ -253,7 +294,6 @@ a:visited {
   flex-direction: row;
   align-items: center;
  }
- 
 
  .follow-flex {
   display: flex;
@@ -274,8 +314,6 @@ a:visited {
  .map-container {
   /* border-right: 5px solid #4253af; */
  }
-
-
 
  .map-flex-outer {
   display: inline-grid;
@@ -300,7 +338,6 @@ a:visited {
   justify-content: center;
   margin: 5px;
   border: 1px solid #fff;
-
  }
 
  .map-flex-color {
@@ -309,7 +346,7 @@ a:visited {
   height: 25vh;
   /* max-height: 19vh; */
  }
- 
+
  .map-flex-inner img {
   max-width: 30%;
  }
@@ -330,7 +367,7 @@ a:visited {
    margin-top: 5px;
    font-weight: normal;
  }
- 
+
  .map-flex img {
   max-width: 13vw;
  }
@@ -365,7 +402,7 @@ a:visited {
  .favorite-map-controls {
   position: absolute;
   width: 20vw;
-  height: 60vh;
+  height: 50vh;
   background-color: #fefefe;
   border: 2px solid #333;
  }

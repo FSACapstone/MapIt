@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import { withRouter } from 'react-router-dom'
-import firebase from '~/fire'
-import Button from 'material-ui/Button'
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import { withRouter, Link } from "react-router-dom";
+import firebase from "~/fire";
+import Button from "material-ui/Button";
 
 const db = firebase.firestore()
 
@@ -12,10 +12,12 @@ class CreatedMap extends Component {
   }
 
   componentDidMount() {
-    this.listen(this.props)
+    const { followerUserId } = this.props
+    const mapId = this.props.match.params.id
+    this.listen(this.props);
     db
-      .collection('maps')
-      .doc(this.props.match.params.id)
+      .collection("maps")
+      .doc(mapId)
       .get()
       .then(map => {
         const dbMapRef = map.data()
@@ -58,7 +60,21 @@ class CreatedMap extends Component {
             })
           })()
         }
-      })
+      });
+
+      db
+        .collection("maps")
+        .where("uid", "==", followerUserId)
+        .onSnapshot(querySnapshot => {
+          let maps = []
+          querySnapshot.forEach(doc => {
+            maps.push(doc.data().mid)
+          })
+          if (maps.includes(mapId)) {
+            return this.setState({ ownMap: true })
+          }
+          this.setState({ ownMap: false })
+        })
   }
 
   componentWillReceiveProps(props) {
@@ -105,7 +121,8 @@ class CreatedMap extends Component {
   }
 
   render() {
-    const { mapFavorited } = this.state || {}
+    const { mapFavorited, ownMap } = this.state || {};
+    const followingMapId = this.props.match.params.id;
 
     const style = {
       width: '100vw',
@@ -115,11 +132,19 @@ class CreatedMap extends Component {
     return (
       <div>
         <div className="google-map-buttons text-align-center">
-          {mapFavorited ? (
+          {
+            ownMap ?
+            <Link to={`/newmap/${followingMapId}`}>
+              <Button variant="raised" color="primary">
+                Edit
+              </Button>
+            </Link>
+          :
+          mapFavorited ? 
             <Button variant="raised" color="primary" onClick={this.handleUnfavorite}>
               Unfavorite
             </Button>
-          ) : (
+          : (
             <Button variant="raised" color="primary" onClick={this.handleFavorite}>
               Favorite
             </Button>
