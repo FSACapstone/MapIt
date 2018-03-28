@@ -190,7 +190,7 @@ class App extends Component {
               <Route exact path="/following/:userId" render={() => <FollowingUsers />} />
               <Route
                 exact
-                path="/favorite"
+                path="/favorite-maps"
                 render={() => <FavoritedMaps user={user} google={{ ...this.props.google }} />}
               />
               <Route exact path="/followers/:userId" render={() => <FollowersUsers />} />

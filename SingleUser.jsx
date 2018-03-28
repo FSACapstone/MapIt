@@ -99,7 +99,7 @@ class SingleUser extends Component {
               <h1>{user.displayName}</h1>
               </div>
               <div>
-              { (signedInUser.uid !== user.uid) ? 
+              { (signedInUser.uid !== user.uid) ?
               <Follow followerId={signedInUser.uid} followingId={userId} />
               : <div />
               }
@@ -124,14 +124,10 @@ class SingleUser extends Component {
                 </Link>
               </div>
             </div>
-          </div>        
+          </div>
        </div>
       </div>
-      <div>
-              <h2>Maps</h2>
-              <h2>Favorite Maps</h2>
-              <h2>Layered Maps</h2>
-      </div>
+
           <div className="map-flex-outer text-align-center">
           {Object.keys(createdMaps).length &&
             Object.keys(createdMaps).map(mapId => {
@@ -140,7 +136,7 @@ class SingleUser extends Component {
                     <img src="/img/pin.png" className="animated bounceInDown" />
                       <Link to={`/map/${mapId}`}>
                         <h2>
-                          {createdMaps[mapId].title} 
+                          {createdMaps[mapId].title}
                         </h2>
                         <h3><Count
                           of={db
@@ -148,7 +144,7 @@ class SingleUser extends Component {
                             .where("mapId", "==", mapId)}
                         /> Likes</h3>
                       </Link>
-                    
+
                     </div>
               );
             })}
