@@ -37,7 +37,7 @@ class LayeredMapsList extends Component {
       <div>
       { this.state.layeredMaps.length ?
            this.state.layeredMaps.map(map =>{
-             return <Link to = {`/layered-maps/${map.mid}`} key = {map.id} ><div>{map.mid}</div></Link>
+             return <Link to = {`/layered-maps/${map.mid}`} key = {map.mid} ><div>{map.name}</div></Link>
            })
 
      : null

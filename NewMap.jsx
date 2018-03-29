@@ -222,10 +222,7 @@ class NewMap extends Component {
                 addedMarkersArr.push(marker)
                 google.maps.event.addListener(marker, 'click', function() {
                   infowindow.setContent(
-                    '<div><strong>Work in Progress</strong><br>' +
-                      'Place:' +
-                      placeInfo.name +
-                      'Address' +
+                    '<div><strong>'+ placeInfo.name +'</strong><br>Address: ' +
                       placeInfo.address +
                       '<br><button id="removePlaceButton">Remove Place</div '
                   )
