@@ -210,12 +210,6 @@ class GoogleMap extends Component {
                 placeholder="New Map Name"
                 required
               />
-              <input
-                name="tags"
-                className="google-map-input google-input-margin"
-                placeholder="Enter Hashtags"
-                required
-              />
               <Button variant="raised" color="primary" className={classes.button} type="submit">
                 Submit
               </Button>

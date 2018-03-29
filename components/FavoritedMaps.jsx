@@ -22,7 +22,6 @@ class FavoritedMaps extends Component {
 
   onSaveClick = e => {
     e.preventDefault()
-    console.log(e.target.name.value)
     let places = {}
     for (var i = 0; i < this.state.checkedMaps.length; i++) {
       places[this.state.checkedMaps[i].title] = {
@@ -206,7 +205,7 @@ class FavoritedMaps extends Component {
                   <p key={map.mid}>
                     {this.state.createMap ?
                       <Checkbox
-                        className="margin-top-5"
+                        type="checkbox"
                         value={map.mid}
                         onChange={this.onCheckClick}
                         color="primary"
@@ -231,7 +230,7 @@ class FavoritedMaps extends Component {
               }
               {(this.state.layerMap && this.state.checkedMaps.length) &&
                 <form onSubmit={this.onSaveClick}>
-                  <input name = 'name' className="favorite-map-controls-buttons"  placeholder = "Enter Map Name" required />
+                  <input name = 'name' className=""  placeholder = "Enter Map Name" required />
                   <button className="favorite-map-controls-buttons"  type = 'submit'>
                     Save Layered Map
                   </button>
