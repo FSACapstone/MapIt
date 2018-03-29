@@ -13,10 +13,15 @@ class SearchBar extends Component {
       searchInput: ''
     }
 
+    this.clearSearchInput = this.clearSearchInput.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this);
     this.listen = this.listen.bind(this);
   }
 
+  componentDidMount() {
+    const searchBar = document.getElementById("searchUserInput")
+    console.log(searchBar)
+  }
   handleSubmit(event) {
     event.preventDefault()
     const displayName = event.target.displayName.value
@@ -32,6 +37,13 @@ class SearchBar extends Component {
         })
       })
       .catch(err => console.error(err))
+      event.target.displayName.value = ''
+  }
+
+  clearSearchInput() {
+    let searchBar = document.getElementsByClassName("ais-SearchBox-input")
+    console.log(searchBar.value)
+    searchBar.value = ''
   }
 
   Product({ hit }) {
@@ -56,7 +68,9 @@ class SearchBar extends Component {
       >
 
         <SearchBox
+          ref="search"
           onChange={(event) => this.listen(event)}
+          id="searchUserInput"
           className="search-users-input"
           name="name"
           type="text"
@@ -64,10 +78,8 @@ class SearchBar extends Component {
         />
         {
           searchInput !== '' ?
-          <div className="search-users-output">
-            <Link to="">
-              <Hits hitComponent={this.Product} />
-            </Link>
+          <div onClick={this.clearSearchInput} className="search-users-output">
+            <Hits hitComponent={this.Product} />
           </div>
           : null
         }

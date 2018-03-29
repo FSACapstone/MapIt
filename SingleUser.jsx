@@ -24,7 +24,7 @@ class SingleUser extends Component {
 
   componentDidMount() {
     this.updateUserView(this.props);
-    this.getAllUserMaps(this.props)
+    // this.getAllUserMaps(this.props)
   }
 
   componentWillReceiveProps(props) {
@@ -46,40 +46,40 @@ class SingleUser extends Component {
         );
       });
 
-    // db
-    //   .collection("maps")
-    //   .where("uid", "==", userId)
-    //   .get()
-    //   .then(querySnapshot => {
-    //     const mapObj = {};
-    //     querySnapshot.forEach(map => {
-    //       mapObj[map.id] = map.data();
-    //     });
-    //     this.setState({
-    //       createdMaps: mapObj
-    //     });
-    //   })
-    //   .then(() => this.setState({ loading: false }));
-  }
-
-  getAllUserMaps() {
-    const userId = this.props.match.params.uid;
-
     db
-      .collection('maps')
-      .where('uid', '==', userId)
+      .collection("maps")
+      .where("uid", "==", userId)
       .get()
       .then(querySnapshot => {
-        const mapObj = {}
+        const mapObj = {};
         querySnapshot.forEach(map => {
-          mapObj[map.id] = map.data()
-        })
+          mapObj[map.id] = map.data();
+        });
         this.setState({
-          createdMaps: mapObj,
-        })
+          createdMaps: mapObj
+        });
       })
-      .then(() => console.log(this.state))
+      .then(() => this.setState({ loading: false }));
   }
+
+  // getAllUserMaps() {
+  //   const userId = this.props.match.params.uid;
+
+  //   db
+  //     .collection('maps')
+  //     .where('uid', '==', userId)
+  //     .get()
+  //     .then(querySnapshot => {
+  //       const mapObj = {}
+  //       querySnapshot.forEach(map => {
+  //         mapObj[map.id] = map.data()
+  //       })
+  //       this.setState({
+  //         createdMaps: mapObj,
+  //       })
+  //     })
+  //     .then(() => console.log(this.state))
+  // }
 
   deleteMap(mapId) {
     const { signedInUser } = this.props
