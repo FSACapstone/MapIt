@@ -30,21 +30,32 @@ class LayeredMapsList extends Component {
             })
   }
   render() {
-    let place = 'Layered Map'
-    console.log(this.state)
+    const { user } = this.props
+    console.log(user);
 
     return (
-      <div>
+      <div className="text-align-center">
+      <h1>{user.displayName}'s Layered Maps</h1>
+      <div className="map-flex-outer text-align-center">
       { this.state.layeredMaps.length ?
            this.state.layeredMaps.map(map =>{
-             return <Link to = {`/layered-maps/${map.mid}`} key = {map.id} ><div>{map.mid}</div></Link>
-           })
+             return ( 
+              <div className="map-flex-inner" key={map.mid}>
+                <Link to={`/layered-maps/${map.mid}`}>
+                  <img src="/img/pin.png" className="animated bounceInDown" />
+                  <div><p className="text-bold">{map.name} </p></div>
+                </Link>
+              </div>
+           )
+          })
 
      : null
       }
+      </div>
       </div>
     )
   }
 }
 
 export default withRouter(LayeredMapsList)
+
