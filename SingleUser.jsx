@@ -204,7 +204,8 @@ class SingleUser extends Component {
                     </div>
               );
             })
-          : <h1>No Maps</h1>
+            
+          : <div className="text-align-center"><h1>No Maps</h1><h1><a href="/">You Should Make Some 🌎</a></h1></div>
           }
             </div>
       </div>

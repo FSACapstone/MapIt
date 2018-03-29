@@ -293,6 +293,7 @@ ul li {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
  }
 
  .follow-flex {
@@ -300,6 +301,10 @@ ul li {
   flex-direction: row;
   justify-content: space-around;
  }
+
+.follow-flex > div {
+  margin: 0px 20px;
+}
 
  .follow-flex-inner {
   display: flex;
@@ -424,4 +429,8 @@ ul li {
 
 .MuiButton-raisedPrimary-118 {
   margin-left: 5px !important;
+}
+
+.MuiTypography-root-71 a {
+  color: #fff !important;
 }
