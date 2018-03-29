@@ -400,9 +400,9 @@ ul li {
  }
 
  .favorite-map-controls {
-  position: absolute;
+  position: relative;
   width: 20vw;
-  height: 50vh;
+  height: 100%;
   background-color: #fefefe;
   border: 2px solid #333;
  }
@@ -422,4 +422,6 @@ ul li {
   right: 0; bottom: 0;
 }
 
-
+.MuiButton-raisedPrimary-118 {
+  margin-left: 5px !important;
+}
