@@ -22,7 +22,7 @@ class FavoritedMaps extends Component {
 
   onSaveClick = e => {
     e.preventDefault()
-    console.log(this.state.checkedMaps)
+    console.log(e.target.name.value)
     let places = {}
     for (var i = 0; i < this.state.checkedMaps.length; i++) {
       places[this.state.checkedMaps[i].title] = {
@@ -32,20 +32,21 @@ class FavoritedMaps extends Component {
     db.collection('layeredMaps').add({
       places: places,
       uid: this.props.user.uid,
-      center: this.state.center
-    }).then(map =>{
+      center: this.state.center,
+      name: e.target.name.value
+    }).then(map => {
       console.log(map.id)
-     let id =  map.id
-     db.collection('layeredMaps').doc(id).set({
-       mid: id
-     },{merge:true})
+      let id = map.id
+      db.collection('layeredMaps').doc(id).set({
+        mid: id
+      }, { merge: true })
     })
     this.props.history.push(`/layered-maps`)
   }
 
   onCreateClick = e => {
     e.preventDefault()
-    this.setState({createMap:!this.state.createMap})
+    this.setState({ createMap: !this.state.createMap })
 
   }
 
@@ -96,22 +97,22 @@ class FavoritedMaps extends Component {
             position: latLng,
             icon: 'https://www.google.com/mapfiles/marker_green.png',
           })
-          google.maps.event.addListener(marker, 'click', function() {
+          google.maps.event.addListener(marker, 'click', function () {
             infowindow.setContent(
               '<div><strong>' +
-                placeName +
-                '</strong><br>Address:' +
-                placeAddress +
-                '<br> From:' +
-                map.title +
-                '</div> '
+              placeName +
+              '</strong><br>Address:' +
+              placeAddress +
+              '<br> From:' +
+              map.title +
+              '</div> '
             )
             infowindow.open(this.map, this)
           })
         })()
       }
     })
-    this.setState({layerMap: true})
+    this.setState({ layerMap: true })
   }
 
   onCheckClick = (event, checked) => {
@@ -132,8 +133,26 @@ class FavoritedMaps extends Component {
       })
     }
   }
+  componentDidUpdate(){
+    const mapRef = this.refs.map
+    const node = ReactDOM.findDOMNode(mapRef)
+    const mapConfig = Object.assign(
+      {},
+
+      {
+        center: { lat: 20, lng: -70 }, // sets center of google map to NYC.
+        zoom: 2, // sets zoom. Lower numbers are zoomed further out.
+        mapTypeId: 'roadmap', // optional main map layer. Terrain, satellite, hybrid or roadmap--if unspecified, defaults to roadmap.
+      }
+    )
+    var infowindow = new google.maps.InfoWindow()
+
+    this.map = new google.maps.Map(node, mapConfig)
+  }
   componentDidMount() {
     var uid = this.props.user.uid
+    var google1 = this.props.google
+    console.log(this.props)
     db
       .collection('favoritedMaps')
       .where('userId', '==', uid)
@@ -152,10 +171,11 @@ class FavoritedMaps extends Component {
         })
       })
       .then(() => this.setState({ loading: false }))
+
   }
 
   render() {
-    console.log(this.state)
+
     if (this.state.loading === true) return <CirclularProgress size={200} color={'secondary'} />
     const styles = {
       block: {
@@ -165,61 +185,65 @@ class FavoritedMaps extends Component {
         marginBottom: 16,
       },
     }
- 
+
     const style = {
       width: '100vw',
       height: '100vh',
     }
- 
+
     return (
       <div>
-      <div ref="newmap" className="google-map-favorite" style={style} />
-      <div className="favorite-map-controls text-align-center">
-      <h2>Favorite Maps</h2>
-        {this.state.maps.length ? (
-          <div style={styles.block}>
-            {this.state.maps.map(map => {
-              return (
- 
- 
-                <p key={map.mid}>
-                 { this.state.createMap ?
-                   <Checkbox
-                    className="margin-top-5"
-                    value={map.mid}
-                    onChange={this.onCheckClick}
-                    color="primary"
-                    style={styles.checkbox}
-                  />
-                  : null }
-                  <Link to = {`map/${map.mid}`} >{map.title} </Link>
-                </p>
- 
-              )
-            })}
-            {this.state.checkedMaps.length ? (
-              <div>
-                <button className="favorite-map-controls-buttons" onClick={this.onLayerClick}>
-                  Layer Map
+      <div ref="map" className="google-map-favorite" style={style} />
+        <div ref="newmap" className="google-map-favorite" style={style} />
+        <div className="favorite-map-controls text-align-center">
+          <h2>Favorite Maps</h2>
+          {this.state.maps.length ? (
+            <div style={styles.block}>
+              {this.state.maps.map(map => {
+                return (
+
+
+                  <p key={map.mid}>
+                    {this.state.createMap ?
+                      <Checkbox
+                        className="margin-top-5"
+                        value={map.mid}
+                        onChange={this.onCheckClick}
+                        color="primary"
+                        style={styles.checkbox}
+                      />
+                      : null}
+                    <Link to={`map/${map.mid}`} >{map.title} </Link>
+                  </p>
+
+                )
+              })}
+              {this.state.checkedMaps.length ? (
+                <div>
+                  <button className="favorite-map-controls-buttons" onClick={this.onLayerClick}>
+                    Layer Map
                 </button>
-                
-              </div>
-            ) : null }
-            { (!this.state.createMap) &&
-            <button className="favorite-map-controls-buttons" onClick = {this.onCreateClick}>Create A Layered Map</button>
-            }
-            { (this.state.layerMap && this.state.checkedMaps.length) &&
-            <button className="favorite-map-controls-buttons" onClick={this.onSaveClick}>
-            Save Layered Map
-          </button>
-            }
-          </div>
-          
-        ) : null }
+
+                </div>
+              ) : null}
+              {(!this.state.createMap) &&
+                <button className="favorite-map-controls-buttons" onClick={this.onCreateClick}>Create A Layered Map</button>
+              }
+              {(this.state.layerMap && this.state.checkedMaps.length) &&
+                <form onSubmit={this.onSaveClick}>
+                  <input name = 'name' className="favorite-map-controls-buttons"  placeholder = "Enter Map Name" required />
+                  <button className="favorite-map-controls-buttons"  type = 'submit'>
+                    Save Layered Map
+                  </button>
+                </form>
+              }
+            </div>
+
+          ) : null}
         </div>
       </div>
     )
   }
- }
+}
 
- export default withRouter(FavoritedMaps)
+export default withRouter(FavoritedMaps)
