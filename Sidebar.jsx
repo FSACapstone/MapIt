@@ -61,28 +61,41 @@ class Sidebar extends Component {
           <div>
             <Link to={`/user/${user.uid}`}>
               <img src={user.photoURL} />
-              <h2>
-              {user.displayName}
-              </h2>
+              <h2>{user.displayName}</h2>
             </Link>
           </div>
           <hr />
           <div>
             <div className="sidebar-flex-info">
               <Link to={`/following/${user.uid}`}>
-                <Typography color="inherit" className={classes.typography}>Following: <Count of={this.following} /></Typography>
+                <Typography color="inherit" className={classes.typography}>
+                  Following: <Count of={this.following} />
+                </Typography>
               </Link>
               <Link to={`/followers/${user.uid}`}>
-                <Typography color="inherit" className={classes.typography}>Followers: <Count of={this.followers} /></Typography>
+                <Typography color="inherit" className={classes.typography}>
+                  Followers: <Count of={this.followers} />
+                </Typography>
               </Link>
               <Link to={`/user/${user.uid}`}>
-                <Typography color="inherit" className={classes.typography}>Maps: <Count of={this.mapsCreated} /></Typography>
+                <Typography color="inherit" className={classes.typography}>
+                  Maps: <Count of={this.mapsCreated} />
+                </Typography>
               </Link>
               <Link to={`/favorite-maps`}>
-                <Typography color="inherit" className={classes.typography}>Favorite Maps</Typography>
+                <Typography color="inherit" className={classes.typography}>
+                  Favorite Maps
+                </Typography>
               </Link>
               <Link to={`/layered-maps`}>
-                <Typography color="inherit" className={classes.typography}>Layered Maps</Typography>
+                <Typography color="inherit" className={classes.typography}>
+                  Layered Maps
+                </Typography>
+              </Link>
+              <Link to={`/searchmaps`}>
+                <Typography color="inherit" className={classes.typography}>
+                  Search Maps 🔎
+                </Typography>
               </Link>
             </div>
           </div>

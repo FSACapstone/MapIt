@@ -24,6 +24,7 @@ import FavoritedMaps from './components/FavoritedMaps'
 import LayeredMapsList from './components/maps/LayeredMaps'
 import LayeredMap from './components/maps/LayeredMap'
 import Tags from './Tags'
+import SearchTags from './components/maps/SearchTags'
 
 const db = firebase.firestore()
 
@@ -189,6 +190,11 @@ class App extends Component {
                 exact
                 path="/favorite-maps"
                 render={() => <FavoritedMaps user={user} google={{ ...this.props.google }} />}
+              />
+              <Route
+                exact
+                path="/searchmaps"
+                render={() => <SearchTags />}
               />
               <Route exact path="/layered-maps" render={() => <LayeredMapsList user={user} />} />
               <Route exact path="/followers/:userId" render={() => <FollowersUsers />} />
