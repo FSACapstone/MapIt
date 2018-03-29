@@ -1,0 +1,122 @@
+[debug] [2018-03-29T17:58:24.180Z] ----------------------------------------------------------------------
+[debug] [2018-03-29T17:58:24.185Z] Command:       /usr/local/Cellar/node/8.9.1/bin/node /Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt/node_modules/.bin/firebase serve --only functions,hosting
+[debug] [2018-03-29T17:58:24.185Z] CLI Version:   3.17.6
+[debug] [2018-03-29T17:58:24.185Z] Platform:      darwin
+[debug] [2018-03-29T17:58:24.185Z] Node Version:  v8.9.1
+[debug] [2018-03-29T17:58:24.186Z] Time:          Thu Mar 29 2018 13:58:24 GMT-0400 (EDT)
+[debug] [2018-03-29T17:58:24.186Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-29T17:58:24.206Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-29T17:58:24.207Z] > authorizing via signed-in user
+[debug] [2018-03-29T17:58:24.210Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-03-29T17:58:24.212Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/_mD3J5zccVDF-IwMv991FHVtCn064DFwX1YTRxTTz5U',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu Mar 29 2018 13:58:24 GMT-0400 (EDT)
+[debug] [2018-03-29T17:58:24.613Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-29T17:58:24.631Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/map-it-fsa  
+  
+ Thu Mar 29 2018 13:58:24 GMT-0400 (EDT)
+[debug] [2018-03-29T17:58:25.068Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-29T17:58:25.069Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/map-it-fsa/tokens  
+  
+ Thu Mar 29 2018 13:58:25 GMT-0400 (EDT)
+[debug] [2018-03-29T17:58:25.384Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-29T17:58:25.387Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/map-it-fsa  
+  
+ Thu Mar 29 2018 13:58:25 GMT-0400 (EDT)
+[debug] [2018-03-29T17:58:25.737Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-03-29T17:58:27.517Z] Fetching environment
+[debug] [2018-03-29T17:58:27.522Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469:getServerAppConfig  
+  
+ Thu Mar 29 2018 13:58:27 GMT-0400 (EDT)
+[debug] [2018-03-29T17:58:27.523Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469/clients/_:getWebAppConfig  
+  
+ Thu Mar 29 2018 13:58:27 GMT-0400 (EDT)
+[debug] [2018-03-29T17:58:27.972Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[debug] [2018-03-29T17:58:28.113Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-29T17:58:28.113Z] Starting @google-cloud/functions-emulator
+[debug] [2018-03-29T17:58:31.243Z] Parsing function triggers
+[info] ✔  functions: helloWorld: http://localhost:5001/map-it-fsa/us-central1/helloWorld
+[info] Shutting down...
+[debug] [2018-03-29T18:36:23.265Z] Error: write EPIPE
+    at _errnoException (util.js:1024:11)
+    at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2018-03-29T18:36:23.267Z] Error: write EPIPE
+    at _errnoException (util.js:1024:11)
+    at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2018-03-29T18:46:29.717Z] ----------------------------------------------------------------------
+[debug] [2018-03-29T18:46:29.721Z] Command:       /usr/local/Cellar/node/8.9.1/bin/node /Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt/node_modules/.bin/firebase serve --only functions,hosting
+[debug] [2018-03-29T18:46:29.721Z] CLI Version:   3.17.6
+[debug] [2018-03-29T18:46:29.721Z] Platform:      darwin
+[debug] [2018-03-29T18:46:29.721Z] Node Version:  v8.9.1
+[debug] [2018-03-29T18:46:29.722Z] Time:          Thu Mar 29 2018 14:46:29 GMT-0400 (EDT)
+[debug] [2018-03-29T18:46:29.722Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-29T18:46:29.765Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-29T18:46:29.766Z] > authorizing via signed-in user
+[debug] [2018-03-29T18:46:29.777Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-03-29T18:46:29.777Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/_mD3J5zccVDF-IwMv991FHVtCn064DFwX1YTRxTTz5U',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu Mar 29 2018 14:46:29 GMT-0400 (EDT)
+[debug] [2018-03-29T18:46:30.133Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-29T18:46:30.151Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/map-it-fsa  
+  
+ Thu Mar 29 2018 14:46:30 GMT-0400 (EDT)
+[debug] [2018-03-29T18:46:30.550Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-29T18:46:30.551Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/map-it-fsa/tokens  
+  
+ Thu Mar 29 2018 14:46:30 GMT-0400 (EDT)
+[debug] [2018-03-29T18:46:33.500Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-29T18:46:33.502Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/map-it-fsa  
+  
+ Thu Mar 29 2018 14:46:33 GMT-0400 (EDT)
+[debug] [2018-03-29T18:46:33.887Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/ChristopherMcIntosh/Documents/git/projects/1801-Capstone/MapIt'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-03-29T18:46:35.482Z] Fetching environment
+[debug] [2018-03-29T18:46:35.486Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469:getServerAppConfig  
+  
+ Thu Mar 29 2018 14:46:35 GMT-0400 (EDT)
+[debug] [2018-03-29T18:46:35.487Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469/clients/_:getWebAppConfig  
+  
+ Thu Mar 29 2018 14:46:35 GMT-0400 (EDT)
+[debug] [2018-03-29T18:46:36.052Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[debug] [2018-03-29T18:46:36.084Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-29T18:46:36.084Z] Starting @google-cloud/functions-emulator
+[debug] [2018-03-29T18:46:39.216Z] Parsing function triggers
+[info] ✔  functions: helloWorld: http://localhost:5001/map-it-fsa/us-central1/helloWorld
+[info] Shutting down...
+[debug] [2018-03-29T19:50:32.300Z] Error: write EPIPE
+    at _errnoException (util.js:1024:11)
+    at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2018-03-29T19:50:32.304Z] Error: write EPIPE
+    at _errnoException (util.js:1024:11)
+    at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
+[error] 
+[error] Error: An unexpected error has occurred.
