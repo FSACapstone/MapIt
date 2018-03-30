@@ -137,9 +137,6 @@ class NewMap extends Component {
                       '<div><strong>' +
                         place.name +
                         '</strong><br>' +
-                        'Place ID: ' +
-                        place.place_id +
-                        '<br>' +
                         place.formatted_address +
                         '<button id="addPlaceButton">Add Place</button></div '
                     )

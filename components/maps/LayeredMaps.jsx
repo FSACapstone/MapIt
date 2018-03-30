@@ -35,11 +35,11 @@ class LayeredMapsList extends Component {
 
     return (
       <div className="text-align-center">
-      <h1>{user.displayName}'s Layered Maps</h1>
+      <h1>{user.displayName}'s Stacked Maps</h1>
       <div className="map-flex-outer text-align-center">
       { this.state.layeredMaps.length ?
            this.state.layeredMaps.map(map =>{
-             return ( 
+             return (
               <div className="map-flex-inner" key={map.mid}>
                 <Link to={`/layered-maps/${map.mid}`}>
                   <img src="/img/pin.png" className="animated bounceInDown" />

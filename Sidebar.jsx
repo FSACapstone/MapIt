@@ -89,7 +89,7 @@ class Sidebar extends Component {
               </Link>
               <Link to={`/layered-maps`}>
                 <Typography color="inherit" className={classes.typography}>
-                  Layered Maps
+                  Stacked Maps
                 </Typography>
               </Link>
               <Link to={`/searchmaps`}>
