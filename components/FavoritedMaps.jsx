@@ -220,19 +220,19 @@ class FavoritedMaps extends Component {
               {this.state.checkedMaps.length ? (
                 <div>
                   <button className="favorite-map-controls-buttons" onClick={this.onLayerClick}>
-                    Layer Map
+                    Stack Map
                 </button>
 
                 </div>
               ) : null}
               {(!this.state.createMap) &&
-                <button className="favorite-map-controls-buttons" onClick={this.onCreateClick}>Create A Layered Map</button>
+                <button className="favorite-map-controls-buttons" onClick={this.onCreateClick}>Create A Stacked Map</button>
               }
               {(this.state.layerMap && this.state.checkedMaps.length) &&
                 <form onSubmit={this.onSaveClick}>
                   <input name = 'name' className=""  placeholder = "Enter Map Name" required />
                   <button className="favorite-map-controls-buttons"  type = 'submit'>
-                    Save Layered Map
+                    Save Stacked Map
                   </button>
                 </form>
               }

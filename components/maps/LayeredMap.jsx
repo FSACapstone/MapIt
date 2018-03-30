@@ -21,6 +21,7 @@ class LayeredMap extends Component {
       .doc(this.props.match.params.id)
       .get()
       .then(map => {
+        console.log(map)
         let placesObj = map.data().places
         this.setState({center: map.data().center})
         for(var place in placesObj){
