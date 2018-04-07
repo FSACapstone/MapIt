@@ -89,6 +89,3 @@ class SearchBar extends Component {
 }
 
 export default withRouter(SearchBar)
-
-// <input className='google-map-input' name="displayName" type='text' placeholder='Search Users' />
-// <input type="text" name="displayName" />

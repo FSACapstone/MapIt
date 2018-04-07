@@ -1,0 +1,50 @@
+[debug] [2018-04-07T22:49:27.476Z] ----------------------------------------------------------------------
+[debug] [2018-04-07T22:49:27.477Z] Command:       /usr/local/bin/node /Users/nlaureano/Fullstack/senior-phase/MapIt/node_modules/.bin/firebase serve --only functions,hosting
+[debug] [2018-04-07T22:49:27.477Z] CLI Version:   3.17.6
+[debug] [2018-04-07T22:49:27.477Z] Platform:      darwin
+[debug] [2018-04-07T22:49:27.477Z] Node Version:  v9.2.1
+[debug] [2018-04-07T22:49:27.478Z] Time:          Sat Apr 07 2018 18:49:27 GMT-0400 (EDT)
+[debug] [2018-04-07T22:49:27.478Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-04-07T22:49:27.490Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-04-07T22:49:27.490Z] > authorizing via signed-in user
+[debug] [2018-04-07T22:49:27.492Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-04-07T22:49:27.492Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/IP5XRF_TKoZO7jVz1zShYP1igQeoCJ-kbR3EzvbrpHw',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Sat Apr 07 2018 18:49:27 GMT-0400 (EDT)
+[debug] [2018-04-07T22:49:28.122Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-07T22:49:28.133Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/map-it-fsa  
+  
+ Sat Apr 07 2018 18:49:28 GMT-0400 (EDT)
+[debug] [2018-04-07T22:49:28.730Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-07T22:49:28.731Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/map-it-fsa/tokens  
+  
+ Sat Apr 07 2018 18:49:28 GMT-0400 (EDT)
+[debug] [2018-04-07T22:49:29.345Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-07T22:49:29.345Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/map-it-fsa  
+  
+ Sat Apr 07 2018 18:49:29 GMT-0400 (EDT)
+[debug] [2018-04-07T22:49:30.578Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/nlaureano/Fullstack/senior-phase/MapIt'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-04-07T22:49:31.465Z] Fetching environment
+[debug] [2018-04-07T22:49:31.468Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469:getServerAppConfig  
+  
+ Sat Apr 07 2018 18:49:31 GMT-0400 (EDT)
+[debug] [2018-04-07T22:49:31.469Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/770393365469/clients/_:getWebAppConfig  
+  
+ Sat Apr 07 2018 18:49:31 GMT-0400 (EDT)
+[debug] [2018-04-07T22:49:32.530Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-07T22:49:32.548Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-07T22:49:32.549Z] Starting @google-cloud/functions-emulator
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[debug] [2018-04-07T22:49:33.602Z] Parsing function triggers
+[info] ✔  functions: helloWorld: http://localhost:5001/map-it-fsa/us-central1/helloWorld

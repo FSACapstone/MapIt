@@ -1,30 +1,35 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import GoogleMap from './GoogleMap'
-import Login from './Login'
-import Sidebar from './Sidebar'
-import SingleUser from './SingleUser'
-import { GoogleApiWrapper } from 'google-maps-react'
 import firebase, { auth } from '~/fire'
-import NavBar from './Navbar'
-import NewMap from './NewMap'
-import CircularLoad from './CircularProgress'
-import FollowingUsers from './FollowingUsers'
-import FollowersUsers from './FollowersUsers'
-import CreatedMap from './components/CreatedMap'
-import AllMaps from './components/AllMaps'
+import { GoogleApiWrapper } from 'google-maps-react'
 import Drawer from 'material-ui/Drawer'
 import algoliasearch from 'algoliasearch'
+
+import { Login, Sidebar, NavBar, CircularLoad } from './components'
+import { GoogleMap, NewMap, CreatedMap, AllMaps, LayeredMapsList, LayeredMap, Tags, SearchTags } from './components/maps'
+import { SingleUser, FollowingUsers, FollowersUsers, FavoritedMaps } from './components/users'
+
+// import GoogleMap from './GoogleMap'
+// import Login from './Login'
+// import Sidebar from './Sidebar'
+// import SingleUser from './SingleUser'
+// import NavBar from './Navbar'
+// import NewMap from './NewMap'
+// import CircularLoad from './CircularProgress'
+// import FollowingUsers from './FollowingUsers'
+// import FollowersUsers from './FollowersUsers'
+// import CreatedMap from './components/CreatedMap'
+// import AllMaps from './components/AllMaps'
+// import FavoritedMaps from './components/FavoritedMaps'
+// import LayeredMapsList from './components/maps/LayeredMaps'
+// import LayeredMap from './components/maps/LayeredMap'
+// import Tags from './Tags'
+// import SearchTags from './components/maps/SearchTags'
 
 const algolia = algoliasearch('2N7N3I0FJ2', 'd163ceea9b530ca67676dc76cac7ee53')
 
 const index = algolia.initIndex('mapstack')
 index.setSettings({ hitsPerPage: 3 })
-import FavoritedMaps from './components/FavoritedMaps'
-import LayeredMapsList from './components/maps/LayeredMaps'
-import LayeredMap from './components/maps/LayeredMap'
-import Tags from './Tags'
-import SearchTags from './components/maps/SearchTags'
 
 const db = firebase.firestore()
 
@@ -191,11 +196,7 @@ class App extends Component {
                 path="/favorite-maps"
                 render={() => <FavoritedMaps user={user} google={{ ...this.props.google }} />}
               />
-              <Route
-                exact
-                path="/searchmaps"
-                render={() => <SearchTags />}
-              />
+              <Route exact path="/searchmaps" render={() => <SearchTags />} />
               <Route exact path="/layered-maps" render={() => <LayeredMapsList user={user} />} />
               <Route exact path="/followers/:userId" render={() => <FollowersUsers />} />
               <Route
