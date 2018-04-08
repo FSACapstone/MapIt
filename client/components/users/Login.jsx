@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { withStyles } from 'material-ui/styles'
 import firebase, { auth } from '~/fire'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import { AccountCircle } from 'material-ui-icons'
 

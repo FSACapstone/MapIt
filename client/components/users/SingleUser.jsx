@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
-import Follow from './Follow'
-import UsersCreatedMaps from './components/users/UsersCreatedMaps'
 import { withRouter, Link } from 'react-router-dom'
 import firebase from '~/fire'
-import Count from './Count'
-import CircularLoad from './CircularProgress'
 import Button from 'material-ui/Button'
+import { Follow, UsersCreatedMaps, Count, CircularLoad } from '../'
 
 const db = firebase.firestore()
 

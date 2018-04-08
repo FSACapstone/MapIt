@@ -1,11 +1,7 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import Follow from "./Follow";
-import UsersCreatedMaps from "./components/users/UsersCreatedMaps";
-import { withRouter } from "react-router-dom";
-import firebase from "~/fire";
-import Count from "./Count";
-import CircularLoad from "./CircularProgress";
+import React, { Component } from 'react'
+import { Link, withRouter } from 'react-router-dom'
+import firebase from '~/fire'
+import { Follow, Count, CircularLoad, UsersCreatedMaps } from '../'
 
 const db = firebase.firestore()
 
@@ -15,8 +11,8 @@ class FollowersUsers extends Component {
     this.state = {
       followers: [],
       userPage: {},
-      loading: true
-    };
+      loading: true,
+    }
 
     this.findFollowers = this.findFollowers.bind(this)
   }
@@ -26,12 +22,13 @@ class FollowersUsers extends Component {
   }
 
   findFollowers() {
-    const user = this.props.match.params.userId;
+    const user = this.props.match.params.userId
 
-    db.collection("users")
-    .where("uid", "==", user)
-    .get()
-    .then(querySnapshot => querySnapshot.forEach(doc => this.setState({userPage: doc.data()})));
+    db
+      .collection('users')
+      .where('uid', '==', user)
+      .get()
+      .then(querySnapshot => querySnapshot.forEach(doc => this.setState({ userPage: doc.data() })))
 
     db
       .collection('relationships')
@@ -48,37 +45,34 @@ class FollowersUsers extends Component {
             .then(follower => {
               followerUser[followerId] = follower.data()
             })
-            .then(() => this.setState({ followers: followerUser }));
-        });
+            .then(() => this.setState({ followers: followerUser }))
+        })
       })
-      .then(() => this.setState({loading: false}));
+      .then(() => this.setState({ loading: false }))
   }
 
   render() {
-    const { followers, userPage } = this.state;
-    if (this.state.loading === true) return <CircularLoad size={200} color={`secondary`} />;
+    const { followers, userPage } = this.state
+    if (this.state.loading === true) return <CircularLoad size={200} color={`secondary`} />
     return (
       <div className="text-align-center">
-      <h1>{userPage.displayName}</h1>
-      <h2>Followers</h2>
-      <div className="following-page-flex">
-        {Object.keys(followers).length &&
-          Object.keys(followers).map(followersId => {
-            return (
-              <div key={followersId}>
-                <Link to={`/user/${followersId}`}>
-                  <img
-                    src={followers[followersId].photoURL}
-                    className="margin-top-5"
-                  />
-                </Link>
-                <p>{followers[followersId].displayName}</p>
-              </div>
-            );
-          })}
-          </div>
+        <h1>{userPage.displayName}</h1>
+        <h2>Followers</h2>
+        <div className="following-page-flex">
+          {Object.keys(followers).length &&
+            Object.keys(followers).map(followersId => {
+              return (
+                <div key={followersId}>
+                  <Link to={`/user/${followersId}`}>
+                    <img src={followers[followersId].photoURL} className="margin-top-5" />
+                  </Link>
+                  <p>{followers[followersId].displayName}</p>
+                </div>
+              )
+            })}
+        </div>
       </div>
-    );
+    )
   }
 }
 

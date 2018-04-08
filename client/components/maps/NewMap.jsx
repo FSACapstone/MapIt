@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { withRouter, Link } from 'react-router-dom'
 import firebase from '~/fire'
-import GoogleMapButton from './GoogleMapButton'
+import GoogleMapButton from '../'
 
 const db = firebase.firestore()
 const searchMarkersArray = []

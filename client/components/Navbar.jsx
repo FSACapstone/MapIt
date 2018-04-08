@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import firebase, { auth } from '~/fire'
+
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
@@ -12,8 +14,8 @@ import Switch from 'material-ui/Switch'
 import { FormControlLabel, FormGroup } from 'material-ui/Form'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import Home from 'material-ui-icons/Home'
-import SearchBar from './SearchBar'
-import firebase, { auth } from '~/fire'
+
+import SearchBar from '../'
 
 const db = firebase.firestore()
 

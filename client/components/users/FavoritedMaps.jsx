@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import { withRouter, Link } from 'react-router-dom'
 import firebase from '~/fire'
 import Checkbox from 'material-ui/Checkbox'
-import ReactDOM from 'react-dom'
-import CirclularProgress from '../CircularProgress'
+import CirclularProgress from '../'
 
 const db = firebase.firestore()
 

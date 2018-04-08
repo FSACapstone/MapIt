@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import firebase, { auth } from '~/fire'
 import { withRouter } from 'react-router-dom'
+import firebase, { auth } from '~/fire'
 
 const db = firebase.firestore()
 

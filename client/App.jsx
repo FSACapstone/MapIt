@@ -151,9 +151,12 @@ class App extends Component {
   }
 
   render() {
+
     const { user, documentId, numFollowers, numFollowing } = this.state
+
     if (this.state.loading === true) return <CircularLoad size={200} color={`secondary`} />
     if (!user) return <Login user={user} />
+
     return (
       <div>
         <Tags />

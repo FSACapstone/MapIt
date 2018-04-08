@@ -7,5 +7,6 @@ export { default as Sidebar } from './Sidebar'
 export { default as Count } from './Count'
 export { default as CircularLoad } from './CircularLoad'
 
+export { GoogleMap, GoogleMapButton, NewMap, AllMaps, CreatedMap, LayeredMapsList, LayeredMap, Tags, SearchTags, SearchMaps } from './maps'
 
-export { Login, Signup } from './auth-form'
+export { Login, SingleUser, UsersCreatedMaps, FavoritedMaps, Follow, FollowersUsers, FollowingUsers, SearchBar } from './users'

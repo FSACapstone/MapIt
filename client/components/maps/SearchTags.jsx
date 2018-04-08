@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { Route, Link } from 'react-router-dom'
 import firebase from '~/fire'
 import { Map as DataMap } from 'fireview'
-import Count from '../../Count'
+import Count from '../'
 
 const db = firebase.firestore()
 

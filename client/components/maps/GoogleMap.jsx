@@ -11,8 +11,10 @@ import { FormControl, FormHelperText } from 'material-ui/Form'
 import { Search } from 'material-ui-icons'
 
 const db = firebase.firestore()
+
 let tags
 let title
+
 class GoogleMap extends Component {
   constructor(props) {
     super(props)
@@ -26,7 +28,7 @@ class GoogleMap extends Component {
       title: '',
       tags: '',
       center: {},
-      goClicked: true
+      goClicked: true,
     }
   }
 
@@ -183,8 +185,7 @@ class GoogleMap extends Component {
               type="text"
               placeholder="Search Locations"
             />
-            {
-              goClicked &&
+            {goClicked && (
               <Button
                 variant="raised"
                 color="primary"
@@ -192,7 +193,7 @@ class GoogleMap extends Component {
                 onClick={this.onSearchClick}>
                 GO
               </Button>
-            }
+            )}
             {centerMap && (
               <Button variant="raised" color="primary" onClick={this.onCreateClick}>
                 Create New Map

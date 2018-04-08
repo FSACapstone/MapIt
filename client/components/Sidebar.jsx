@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
+import firebase from '~/fire'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
-import firebase from '~/fire'
-import Count from './Count'
-import SearchMaps from './components/maps/SearchMaps'
+import { Count, SearchMaps } from '../'
 
 const db = firebase.firestore()
 
