@@ -1,36 +1,36 @@
-import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom'
-import GoogleMap from './GoogleMap'
-import Login from './Login'
-import Sidebar from './Sidebar'
-import SingleUser from './SingleUser'
-import { GoogleApiWrapper } from 'google-maps-react'
-import firebase, { auth } from '~/fire'
-import NavBar from './Navbar'
-import NewMap from './NewMap'
-import CircularLoad from './CircularProgress'
-import FollowingUsers from './FollowingUsers'
-import FollowersUsers from './FollowersUsers'
-import CreatedMap from './components/CreatedMap'
-import AllMaps from './components/AllMaps'
-import Drawer from 'material-ui/Drawer'
-import algoliasearch from 'algoliasearch'
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import GoogleMap from './maps/GoogleMap';
+import Login from './Login';
+import Sidebar from './Sidebar';
+import SingleUser from './users/SingleUser';
+import { GoogleApiWrapper } from 'google-maps-react';
+import firebase, { auth } from '~/fire';
+import NavBar from './Navbar';
+import NewMap from './maps/NewMap';
+import CircularLoad from './CircularProgress';
+import FollowingUsers from './users/FollowingUsers';
+import FollowersUsers from './users/FollowersUsers';
+import CreatedMap from './maps/CreatedMap';
+import AllMaps from './maps/AllMaps';
+import Drawer from 'material-ui/Drawer';
+import algoliasearch from 'algoliasearch';
 
-const algolia = algoliasearch('2N7N3I0FJ2', 'd163ceea9b530ca67676dc76cac7ee53')
+const algolia = algoliasearch('2N7N3I0FJ2', 'd163ceea9b530ca67676dc76cac7ee53');
 
-const index = algolia.initIndex('mapstack')
-index.setSettings({ hitsPerPage: 3 })
-import FavoritedMaps from './components/FavoritedMaps'
-import LayeredMapsList from './components/maps/LayeredMaps'
-import LayeredMap from './components/maps/LayeredMap'
-import Tags from './Tags'
-import SearchTags from './components/maps/SearchTags'
+const index = algolia.initIndex('mapstack');
+index.setSettings({ hitsPerPage: 3 });
+import FavoritedMaps from './maps/FavoritedMaps';
+import LayeredMapsList from './maps/LayeredMaps';
+import LayeredMap from './maps/LayeredMap';
+import Tags from './maps/Tags';
+import SearchTags from './maps/SearchTags';
 
-const db = firebase.firestore()
+const db = firebase.firestore();
 
 class App extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       loading: true,
       user: null,
@@ -39,7 +39,7 @@ class App extends Component {
       numFollowers: 0,
       numFollowing: 0,
       left: false,
-    }
+    };
   }
 
   logOut = () => {
@@ -48,68 +48,68 @@ class App extends Component {
       .then(() => {
         this.setState({
           user: null,
-        })
+        });
       })
-      .catch(err => console.error(err))
+      .catch(err => console.error(err));
   }
 
   logIn = () => {
-    const google = new firebase.auth.GoogleAuthProvider()
+    const google = new firebase.auth.GoogleAuthProvider();
     auth
       .signInWithRedirect(google)
       .then(result => {
-        const user = result.user
+        const user = result.user;
         this.setState({
           user,
-        })
+        });
       })
-      .catch(err => console.error(err))
+      .catch(err => console.error(err));
   }
 
   handleToggle = () => this.setState({ open: !this.state.open })
 
   componentDidMount() {
     db.collection('users').onSnapshot(querySnapshot => {
-      let usersArr = []
+      let usersArr = [];
       querySnapshot.forEach(doc => {
-        const key = doc.id
-        const data = doc.data()
-        data.objectID = key
+        const key = doc.id;
+        const data = doc.data();
+        data.objectID = key;
 
-        usersArr.push(data)
-      })
-      console.log(usersArr)
-      index.saveObjects(usersArr).then(() => console.log('users saved to algolia'))
-    })
+        usersArr.push(data);
+      });
+      console.log(usersArr);
+      index.saveObjects(usersArr).then(() => console.log('users saved to algolia'));
+    });
 
     auth.onAuthStateChanged(user => {
       if (user) {
-        this.setState({ user })
+        this.setState({ user });
       } else {
-        this.setState({ loading: false })
-        return
+        this.setState({ loading: false });
+        return;
       }
       db
         .collection('relationships')
         .where('following', '==', user.uid)
         .onSnapshot(querySnapshot => {
-          let relationships = []
+          let relationships = [];
           querySnapshot.forEach(doc => {
-            relationships.push(doc.data())
-          })
-          this.setState({ numFollowers: relationships.length })
-        })
+            relationships.push(doc.data());
+          });
+          this.setState({ numFollowers: relationships.length });
+        });
 
       db
         .collection('relationships')
         .where('follower', '==', user.uid)
         .onSnapshot(querySnapshot => {
-          let relationships = []
+          let relationships = [];
           querySnapshot.forEach(doc => {
-            relationships.push(doc.data())
-          })
-          this.setState({ numFollowing: relationships.length })
-        })
+            relationships.push(doc.data());
+          });
+          this.setState({ numFollowing: relationships.length });
+        });
 
       db
         .collection('users')
@@ -127,28 +127,28 @@ class App extends Component {
                 uid: this.state.user.uid,
               })
               .then(user => {
-                console.log('user added', user)
-              })
+                console.log('user added', user);
+              });
           }
-          this.setState({ documentId: querySnapshot.docs[0].id })
+          this.setState({ documentId: querySnapshot.docs[0].id });
         })
         .then(() => {
-          this.setState({ loading: false })
-        })
-    })
+          this.setState({ loading: false });
+        });
+    });
   }
 
   toggleDrawer = (side, open) => () => {
-    console.log(this.state.left)
+    console.log(this.state.left);
     this.setState({
       [side]: open,
-    })
+    });
   }
 
   render() {
-    const { user, documentId, numFollowers, numFollowing } = this.state
-    if (this.state.loading === true) return <CircularLoad size={200} color={`secondary`} />
-    if (!user) return <Login user={user} />
+    const { user, documentId, numFollowers, numFollowing } = this.state;
+    if (this.state.loading === true) return <CircularLoad size={200} color="secondary" />;
+    if (!user) return <Login user={user} />;
     return (
       <div>
         <Tags />
@@ -191,11 +191,7 @@ class App extends Component {
                 path="/favorite-maps"
                 render={() => <FavoritedMaps user={user} google={{ ...this.props.google }} />}
               />
-              <Route
-                exact
-                path="/searchmaps"
-                render={() => <SearchTags />}
-              />
+              <Route exact path="/searchmaps" render={() => <SearchTags />} />
               <Route exact path="/layered-maps" render={() => <LayeredMapsList user={user} />} />
               <Route exact path="/followers/:userId" render={() => <FollowersUsers />} />
               <Route
@@ -243,10 +239,10 @@ class App extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyBNO9SHxnyzMG6J1FCDYcle7DjXMjg6jBU',
-})(App)
+})(App);

@@ -40,7 +40,7 @@
     "babel-polyfill": "^6.26.0",
     "chokidar": "^1.7.0",
     "debounce": "^1.1.0",
-    "firebase": "^4.11.0",
+    "firebase": "^4.12.1",
     "firebase-admin": "^5.11.0",
     "fireview": "0.0.7",
     "google-maps-react": "^1.1.4",
