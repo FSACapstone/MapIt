@@ -1,20 +1,20 @@
-import React, { Component } from 'react'
-import firebase, { auth } from '~/fire'
-import { withRouter } from 'react-router-dom'
+import React, { Component } from 'react';
+import firebase, { auth } from '~/fire';
+import { withRouter } from 'react-router-dom';
 
-const db = firebase.firestore()
+const db = firebase.firestore();
 
 class Follow extends Component {
   componentDidMount() {
-    this.listen(this.props)
+    this.listen(this.props);
   }
 
   componentWillReceiveProps(props) {
-    this.listen(props)
+    this.listen(props);
   }
 
   componentWillUnmount() {
-    this.unsubscribe && this.unsubscribe()
+    this.unsubscribe && this.unsubscribe();
   }
 
   listen({ followerId, followingId }) {
@@ -27,31 +27,31 @@ class Follow extends Component {
           return this.setState({
             relationshipRef: querySnapshot.docs[0].ref,
             relationshipExists: true,
-          })
+          });
         }
         this.setState({
           relationshipRef: null,
           relationshipExists: false,
-        })
-      })
+        });
+      });
   }
 
   handleFollow = event => {
-    event.preventDefault()
-    const { followerId, followingId } = this.props
+    event.preventDefault();
+    const { followerId, followingId } = this.props;
     db.collection('relationships').add({
       follower: followerId,
       following: followingId,
-    })
+    });
   }
 
   handleUnfollow = event => {
-    event.preventDefault()
-    return this.state.relationshipRef.delete()
+    event.preventDefault();
+    return this.state.relationshipRef.delete();
   }
 
   render() {
-    const { relationshipExists } = this.state || {}
+    const { relationshipExists } = this.state || {};
     return relationshipExists ? (
       <button className="follow-button" onClick={this.handleUnfollow}>
         Unfollow
@@ -60,8 +60,8 @@ class Follow extends Component {
       <button className="follow-button" onClick={this.handleFollow}>
         Follow
       </button>
-    )
+    );
   }
 }
 
-export default withRouter(Follow)
+export default withRouter(Follow);

@@ -1,47 +1,47 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-import AppBar from 'material-ui/AppBar'
-import Toolbar from 'material-ui/Toolbar'
-import Typography from 'material-ui/Typography'
-import IconButton from 'material-ui/IconButton'
-import MenuIcon from 'material-ui-icons/Menu'
-import AccountCircle from 'material-ui-icons/AccountCircle'
-import Switch from 'material-ui/Switch'
-import { FormControlLabel, FormGroup } from 'material-ui/Form'
-import Menu, { MenuItem } from 'material-ui/Menu'
-import Home from 'material-ui-icons/Home'
-import SearchBar from './SearchBar'
-import firebase, { auth } from '~/fire'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import IconButton from 'material-ui/IconButton';
+import MenuIcon from 'material-ui-icons/Menu';
+import AccountCircle from 'material-ui-icons/AccountCircle';
+import Switch from 'material-ui/Switch';
+import { FormControlLabel, FormGroup } from 'material-ui/Form';
+import Menu, { MenuItem } from 'material-ui/Menu';
+import Home from 'material-ui-icons/Home';
+import SearchBar from './SearchBar';
+import firebase, { auth } from '~/fire';
 
-const db = firebase.firestore()
+const db = firebase.firestore();
 
 class MenuAppBar extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       auth: true,
       anchorEl: null,
-    }
+    };
   }
 
   handleChange = (event, checked) => {
-    this.setState({ auth: checked })
+    this.setState({ auth: checked });
   }
 
   handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget })
+    this.setState({ anchorEl: event.currentTarget });
   }
 
   handleClose = () => {
-    this.setState({ anchorEl: null })
+    this.setState({ anchorEl: null });
   }
 
   handleSubmit = event => {
-    event.preventDefault()
-    const displayName = event.target.displayName.value
+    event.preventDefault();
+    const displayName = event.target.displayName.value;
 
     db
       .collection('users')
@@ -49,11 +49,11 @@ class MenuAppBar extends React.Component {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          let data = doc.data()
-          this.props.history.push(`/user/${data.uid}`)
-        })
+          let data = doc.data();
+          this.props.history.push(`/user/${data.uid}`);
+        });
       })
-      .catch(err => console.error(err))
+      .catch(err => console.error(err));
   }
 
   logOut() {
@@ -62,18 +62,18 @@ class MenuAppBar extends React.Component {
       .then(() => {
         this.setState({
           user: null,
-        })
+        });
       })
-      .catch(err => console.error(err))
+      .catch(err => console.error(err));
 
-    this.setState({ anchorEl: null })
+    this.setState({ anchorEl: null });
   }
 
   render() {
-    const { classes, toggleDrawer } = this.props
-    const { auth, anchorEl } = this.state
-    const open = Boolean(anchorEl)
-    const user = this.props.user
+    const { classes, toggleDrawer } = this.props;
+    const { auth, anchorEl } = this.state;
+    const open = Boolean(anchorEl);
+    const user = this.props.user;
 
     return (
       <div className={classes.root}>
@@ -88,7 +88,7 @@ class MenuAppBar extends React.Component {
                 <MenuIcon />
               </IconButton>
               <Typography variant="title" color="inherit" className={classes.flex}>
-                <Link to={`/`} className="mapstack">
+                <Link to="/" className="mapstack">
                   MapStack
                 </Link>
               </Typography>
@@ -127,7 +127,7 @@ class MenuAppBar extends React.Component {
           </AppBar>
         )}
       </div>
-    )
+    );
   }
 }
 
@@ -146,10 +146,10 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
-}
+};
 
 MenuAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
-}
+};
 
-export default withStyles(styles)(MenuAppBar)
+export default withStyles(styles)(MenuAppBar);

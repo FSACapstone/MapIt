@@ -1,38 +1,34 @@
-import React, { Component } from 'react'
-import Follow from './Follow'
-import UsersCreatedMaps from './components/users/UsersCreatedMaps'
-import { withRouter, Link } from 'react-router-dom'
-import firebase from '~/fire'
-import Count from './Count'
-import CircularLoad from './CircularProgress'
-import Button from 'material-ui/Button'
+import React, { Component } from 'react';
+import Follow from './Follow';
+import { withRouter, Link } from 'react-router-dom';
+import firebase from '~/fire';
+import Count from './Count';
+import CircularLoad from '../CircularProgress';
+import Button from 'material-ui/Button';
 
-const db = firebase.firestore()
+const db = firebase.firestore();
 
 class SingleUser extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       numFollowers: 0,
       numFollowing: 0,
       user: {},
-      relationshipDocId: '',
-      relationshipExists: false,
       createdMaps: {},
-    }
+    };
   }
 
   componentDidMount() {
     this.updateUserView(this.props);
-    // this.getAllUserMaps(this.props)
   }
 
   componentWillReceiveProps(props) {
-    this.updateUserView(props)
+    this.updateUserView(props);
   }
 
   updateUserView(props) {
-    const userId = props.match.params.uid
+    const userId = props.match.params.uid;
     db
       .collection('users')
       .where('uid', '==', userId)
@@ -41,13 +37,13 @@ class SingleUser extends Component {
         querySnapshot.forEach(user => {
           this.setState({
             user: user.data(),
-          })
-        })
-      })
+          });
+        });
+      });
 
     db
-      .collection("maps")
-      .where("uid", "==", userId)
+      .collection('maps')
+      .where('uid', '==', userId)
       .get()
       .then(querySnapshot => {
         const mapObj = {};
@@ -55,33 +51,13 @@ class SingleUser extends Component {
           mapObj[map.id] = map.data();
         });
         this.setState({
-          createdMaps: mapObj
+          createdMaps: mapObj,
         });
       })
       .then(() => this.setState({ loading: false }));
   }
 
-  // getAllUserMaps() {
-  //   const userId = this.props.match.params.uid;
-
-  //   db
-  //     .collection('maps')
-  //     .where('uid', '==', userId)
-  //     .get()
-  //     .then(querySnapshot => {
-  //       const mapObj = {}
-  //       querySnapshot.forEach(map => {
-  //         mapObj[map.id] = map.data()
-  //       })
-  //       this.setState({
-  //         createdMaps: mapObj,
-  //       })
-  //     })
-  //     .then(() => console.log(this.state))
-  // }
-
   deleteMap(mapId) {
-    const { signedInUser } = this.props
     db
       .collection('maps')
       .doc(mapId)
@@ -96,34 +72,34 @@ class SingleUser extends Component {
               db
                 .collection('favoritedMaps')
                 .doc(doc.id)
-                .delete()
-            })
+                .delete();
+            });
           })
-          .then(() => this.getAllUserMaps())
-      })
+          .then(() => this.getAllUserMaps());
+      });
   }
 
   get followers() {
-    const userId = this.props.match.params.uid
-    return db.collection('relationships').where('following', '==', userId)
+    const userId = this.props.match.params.uid;
+    return db.collection('relationships').where('following', '==', userId);
   }
 
   get following() {
-    const userId = this.props.match.params.uid
-    return db.collection('relationships').where('follower', '==', userId)
+    const userId = this.props.match.params.uid;
+    return db.collection('relationships').where('follower', '==', userId);
   }
 
   get mapsCreated() {
-    const userId = this.props.match.params.uid
-    return db.collection('maps').where('uid', '==', userId)
+    const userId = this.props.match.params.uid;
+    return db.collection('maps').where('uid', '==', userId);
   }
 
   render() {
-    const { user, numFollowing, numFollowers, loading, createdMaps } = this.state
-    const signedInUser = this.props.signedInUser
-    const userId = this.props.match.params.uid
+    const { user, createdMaps } = this.state;
+    const signedInUser = this.props.signedInUser;
+    const userId = this.props.match.params.uid;
 
-    if (!user.uid) return <CircularLoad size={200} color={`secondary`} />
+    if (!user.uid) return <CircularLoad size={200} color="secondary" />;
     return (
       <div className="single-user-flex">
         <div className="">
@@ -198,7 +174,7 @@ class SingleUser extends Component {
                     </div>
                   ) : null}
                 </div>
-              )
+              );
             })
           ) : (
             <div className="text-align-center">
@@ -210,7 +186,7 @@ class SingleUser extends Component {
           )}
         </div>
       </div>
-    )
+    );
   }
 }
-export default withRouter(SingleUser)
+export default withRouter(SingleUser);

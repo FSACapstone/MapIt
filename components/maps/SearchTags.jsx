@@ -1,35 +1,34 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import { Route, Link } from 'react-router-dom'
-import firebase from '~/fire'
-import { Map as DataMap } from 'fireview'
-import Count from '../../Count'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import firebase from '~/fire';
+import { Map as DataMap } from 'fireview';
+import Count from '../users/Count';
 
-const db = firebase.firestore()
+const db = firebase.firestore();
 
 export default class SearchTags extends Component {
   constructor(props) {
-    super(props)
-    this.state = { value: [] }
+    super(props);
+    this.state = { value: [] };
 
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
   }
 
   get query() {
-    const tag = this.state.value[0]
-    let query = db.collection('maps')
+    const tag = this.state.value[0];
+    let query = db.collection('maps');
     for (const tag of this.state.value) {
-      query = query.where(`tags.${tag}`, '==', true)
+      query = query.where(`tags.${tag}`, '==', true);
     }
-    return query
+    return query;
   }
 
   handleChange(evt) {
     const tagsInput = evt.target.value
       .toLowerCase()
       .split(/\s+/)
-      .filter(x => x)
-    this.setState({ value: tagsInput })
+      .filter(x => x);
+    this.setState({ value: tagsInput });
   }
 
   render() {
@@ -64,6 +63,6 @@ export default class SearchTags extends Component {
           />
         </div>
       </div>
-    )
+    );
   }
 }

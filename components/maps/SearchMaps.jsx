@@ -1,20 +1,19 @@
-import React, { Component } from 'react'
-import firebase, { auth } from '~/fire'
-import { withRouter } from 'react-router-dom'
-// import { QuerySnapshot } from "@google-cloud/firestore";
+import React, { Component } from 'react';
+import firebase, { auth } from '~/fire';
+import { withRouter } from 'react-router-dom';
 
-const db = firebase.firestore()
+const db = firebase.firestore();
 
 class SearchMaps extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(event) {
-    event.preventDefault()
-    let tag = event.target.tag.value.toLowerCase()
+    event.preventDefault();
+    let tag = event.target.tag.value.toLowerCase();
 
     db
       .collection('tags')
@@ -23,15 +22,15 @@ class SearchMaps extends Component {
       .then(querySnapshot => {
         if (querySnapshot.exists) {
           Object.keys(querySnapshot.data()).forEach(map => {
-            console.log('map -->', map)
-          })
+            console.log('map -->', map);
+          });
         } else {
-          console.log('Tag not found')
+          console.log('Tag not found');
         }
         // this.props.history.push(`/user/${data.uid}`);
         // });
       })
-      .catch(err => console.error(err))
+      .catch(err => console.error(err));
   }
 
   render() {
@@ -39,8 +38,8 @@ class SearchMaps extends Component {
       <form onSubmit={this.handleSubmit}>
         <input className="google-map-input" name="tag" type="text" placeholder="Search Map Tags" />
       </form>
-    )
+    );
   }
 }
 
-export default withRouter(SearchMaps)
+export default withRouter(SearchMaps);

@@ -1,28 +1,25 @@
-import React, { Component } from 'react'
-import { withRouter, Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-import Typography from 'material-ui/Typography'
-import Divider from 'material-ui/Divider'
-import firebase from '~/fire'
-import Count from './Count'
-import SearchMaps from './components/maps/SearchMaps'
+import React, { Component } from 'react';
+import { withRouter, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import Typography from 'material-ui/Typography';
+import firebase from '~/fire';
+import Count from './users/Count';
 
-const db = firebase.firestore()
+const db = firebase.firestore();
 
 class Sidebar extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {}
 
   handleSubmit(event) {
-    event.preventDefault()
-    const displayName = event.target.displayName.value
-    const { user } = this.props
+    event.preventDefault();
+    const displayName = event.target.displayName.value;
 
     db
       .collection('users')
@@ -30,30 +27,30 @@ class Sidebar extends Component {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          let data = doc.data()
-          this.props.history.push(`/user/${data.uid}`)
-        })
+          let data = doc.data();
+          this.props.history.push(`/user/${data.uid}`);
+        });
       })
-      .catch(err => console.error(err))
+      .catch(err => console.error(err));
   }
 
   get followers() {
-    const { user } = this.props
-    return db.collection('relationships').where('following', '==', user.uid)
+    const { user } = this.props;
+    return db.collection('relationships').where('following', '==', user.uid);
   }
 
   get following() {
-    const { user } = this.props
-    return db.collection('relationships').where('follower', '==', user.uid)
+    const { user } = this.props;
+    return db.collection('relationships').where('follower', '==', user.uid);
   }
 
   get mapsCreated() {
-    const { user } = this.props
-    return db.collection('maps').where('uid', '==', user.uid)
+    const { user } = this.props;
+    return db.collection('maps').where('uid', '==', user.uid);
   }
 
   render() {
-    const { user, classes } = this.props
+    const { user, classes } = this.props;
 
     return (
       <div id="sidebar">
@@ -82,17 +79,17 @@ class Sidebar extends Component {
                   Maps: <Count of={this.mapsCreated} />
                 </Typography>
               </Link>
-              <Link to={`/favorite-maps`}>
+              <Link to="/favorite-maps">
                 <Typography color="inherit" className={classes.typography}>
                   Favorite Maps
                 </Typography>
               </Link>
-              <Link to={`/layered-maps`}>
+              <Link to="/layered-maps">
                 <Typography color="inherit" className={classes.typography}>
                   Stacked Maps
                 </Typography>
               </Link>
-              <Link to={`/searchmaps`}>
+              <Link to="/searchmaps">
                 <Typography color="inherit" className={classes.typography}>
                   Search Maps 🔎
                 </Typography>
@@ -101,7 +98,7 @@ class Sidebar extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -110,10 +107,10 @@ const styles = {
     margin: '0.2rem',
     'font-size': '1rem',
   },
-}
+};
 
 Sidebar.propTypes = {
   classes: PropTypes.object.isRequired,
-}
+};
 
-export default withStyles(styles)(withRouter(Sidebar))
+export default withStyles(styles)(withRouter(Sidebar));
